@@ -232,7 +232,7 @@ Week 7 - Week 16 from the IIITD Academic calendar
 
 Date - 30/01/2021
 
-Attendees - Team Members, Ravi Bhasin(S), Jagadanand Dwivedi(S), [Tanuj Dabas](mailto:tanuj17118@iiitd.ac.in), Nikhil Chauhan, Sehaj Singh, Kartikeya Verma
+Attendees - Team Members, Ravi Bhasin(S), Jagadanand Dwivedi(S), Tanuj Dabas, Nikhil Chauhan, Sehaj Singh, Kartikeya Verma
 
 Duration - 40 min
 
