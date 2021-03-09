@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import {
+  ThemeProvider,
+  CSSReset,
+  theme,
+  Box,
+  Image,
+  Badge,
+  Text,
+  Icon,
+  Stack,
+  Avatar,
+  AvatarBadge,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  FormLabel,
+  Input,
+  FormHelperText,
+  FormErrorMessage,
+  Grid,
+  Switch,
+  InputGroup,
+  InputRightElement,
+  Flex,
+  Tag,
+  Heading
+} from '@chakra-ui/react'
+import Header from './components/Header'
+import Events from './components/Events'
+import Clubs from './components/Clubs'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
 
-export default App;
+const App = () => (
+  <ThemeProvider theme={theme}>
+    <CSSReset />
+    <Header></Header>
+    <Events></Events>
+    <Clubs></Clubs>
+  </ThemeProvider>
+)
+
+export default App
