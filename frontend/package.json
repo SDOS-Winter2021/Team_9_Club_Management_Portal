@@ -6,9 +6,12 @@
   "main": "src/index.js",
   "dependencies": {
     "@chakra-ui/core": "0.5.2",
-    "@emotion/core": "10.0.27",
-    "@emotion/styled": "10.0.27",
+    "@chakra-ui/react": "^1.3.4",
+    "@emotion/core": "^10.0.28",
+    "@emotion/react": "^11.1.5",
+    "@emotion/styled": "^11.0.0",
     "emotion-theming": "10.0.27",
+    "framer-motion": "^3.10.2",
     "react": "16.12.0",
     "react-dom": "16.12.0",
     "react-scripts": "3.0.1"
