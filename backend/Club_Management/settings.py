@@ -32,7 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "stakeholder.apps.StakeholderConfig",
+   
+  'stakeholder.apps.StakeholderConfig',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -77,13 +78,19 @@ WSGI_APPLICATION = "Club_Management.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'djongo',
+        "CLIENT": {
+          "name": 'CLUB_MANAGEMENT_PORTAL_DB',
+           "host": 'mongodb+srv://Admin:UorNOwLkoopfBZWS@cluster0.zm97q.mongodb.net/CLUB_MANAGEMENT_PORTAL_DB?retryWrites=true&w=majority',
+           "username": 'Admin',
+           "password": 'UorNOwLkoopfBZWS',
+           "authMechanism": "SCRAM-SHA-1",
+        }, 
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
