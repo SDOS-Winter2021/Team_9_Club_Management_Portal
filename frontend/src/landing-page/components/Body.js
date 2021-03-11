@@ -13,6 +13,7 @@ import {
 
 import Head from 'next/head';
 import GoogleButton from "./GButton.js";
+import './index.css'
 
 const Body = () => {
     return (

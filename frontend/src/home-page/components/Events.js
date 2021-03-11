@@ -39,8 +39,7 @@ const Events = () => {
             textAlign="center"
             mb={5}
             color="twitter.900"
-            maxWidth="sm"
-          >
+            maxWidth="sm">
             Event 1
           </Text>
           <Box
