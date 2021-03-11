@@ -159,7 +159,7 @@ class KUBIC(models.Model):
 
  # all club model end here
 
-class CLUB_GENERAl(models.Model):
+class CLUB_GENERAL(models.Model):
     Name=models.CharField(max_length=100,blank=False)
     Description=models.TextField(blank=False)
     Coordinator1=models.CharField(max_length=100,blank=False)

@@ -17,4 +17,5 @@ admin.site.register(THE65SQUARE)
 admin.site.register(PHILOSOC)
 admin.site.register(ROBOTICS)
 admin.site.register(KUBIC)
+admin.site.register(CLUB_GENERAL)
 
