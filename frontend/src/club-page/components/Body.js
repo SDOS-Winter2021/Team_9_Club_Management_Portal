@@ -1,4 +1,4 @@
-import React, { Component,ReactNode }  from 'react';
+import React, { Component,ReactNode ,View}  from 'react';
 import {Flex,
     Box,
     Heading,
@@ -71,7 +71,7 @@ const Body = () => {
               text={'Email ID'}
             />
             <Feature
-              icon={<Icon as={IoLaptopOutline} color={'green.500'} w={5} h={5} />}
+              icon={<Icon as={IoLaptopOutline} color={'blue.500'} w={5} h={5} />}
               iconBg={useColorModeValue('blue.100', 'blue.900')}
               text={'Website'}
             />
@@ -99,11 +99,15 @@ const Body = () => {
           />
         </Flex>
       </SimpleGrid>
-
-      <Text textTransform={'uppercase'} color={'red.400'} fontWeight={600} fontSize={'sm'} bg={useColorModeValue('red.50', 'red.900')} p={2} alignSelf={'flex-start'} rounded={'md'} mt={50} paddingRight={2}>
+      <SimpleGrid columns={{ base: 1, md: 5 }} spacing={10} mt={50}>
+          <Text textTransform={'uppercase'} color={'#12d5e3'} fontWeight={600} fontSize={'sm'} bg={useColorModeValue('white', 'white')} p={2} alignSelf={'flex-start'} rounded={'md'} align="center" border="2px" borderColor="#12d5e3">
+            Propose Event
+          </Text>
+      </SimpleGrid>
+      <Text textTransform={'uppercase'} color={'red.400'} fontWeight={600} fontSize={'sm'} bg={useColorModeValue('red.50', 'red.900')} p={2} alignSelf={'flex-start'} rounded={'md'} mt={50} paddingRight={2} align="center">
             Upcoming Events
           </Text>
-      <Text textTransform={'uppercase'} color={'red.400'} fontWeight={600} fontSize={'sm'} bg={useColorModeValue('red.50', 'red.900')} p={2} alignSelf={'flex-start'} rounded={'md'} mt={50} paddingRight={2}>
+      <Text textTransform={'uppercase'} color={'red.400'} fontWeight={600} fontSize={'sm'} bg={useColorModeValue('red.50', 'red.900')} p={2} alignSelf={'flex-start'} rounded={'md'} mt={50} paddingRight={2} align="center">
             Previous Events
           </Text>
     </Container>

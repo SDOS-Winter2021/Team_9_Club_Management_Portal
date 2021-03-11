@@ -11,10 +11,31 @@ import {Flex,
     createIcon,
     SimpleGrid,
     Image,
+    color,
 } from '@chakra-ui/react';
+import {
+  IoPencil,
+  IoTrashOutline
 
+} from 'react-icons/io5';
 import Head from 'next/head';
 
+const Feature = ({ text, icon, iconBg }: FeatureProps) => {
+  return (
+    <Stack direction={'row'} align={'center'}>
+      <Flex
+        w={8}
+        h={8}
+        align={'center'}
+        justify={'center'}
+        rounded={'full'}
+        bg={iconBg}>
+        {icon}
+      </Flex>
+      <Text fontWeight={600} color="white">{text}</Text>
+    </Stack>
+  );
+};
 const Body = () => {
     return (
       <Box bg={'gray.800'} position={'relative'}>
@@ -49,6 +70,7 @@ const Body = () => {
                 ))}
               </SimpleGrid>
             </Stack>
+
           </Stack>
           </Stack>
           <Stack paddingLeft="500">
@@ -59,6 +81,28 @@ const Body = () => {
       <Text fontSize={'3xl'} color={'white'} paddingTop="100">  Admin Information</Text>
       <Stack direction={{ base: 'row', lg: 'row' }}>
         <Stack>
+        <Feature
+              mt={10}
+              icon={
+                <Icon as={IoPencil} color={'purple.500'} w={5} h={5} />
+              }
+              iconBg={useColorModeValue('yellow.100', 'yellow.900')}
+              text={'Edit'} 
+              />
+        </Stack>
+        <Stack ml="100">
+        <Feature
+              mt={10}
+              icon={
+                <Icon as={IoTrashOutline} color={'purple.500'} w={5} h={5} />
+              }
+              iconBg={useColorModeValue('yellow.100', 'yellow.900')}
+              text={'Delete'}
+              />
+        </Stack>
+      </Stack>
+      <Stack direction={{ base: 'row', lg: 'row' }}>
+        <Stack>
           <Text fontSize={'xl'} color={'white'} paddingTop="100">  Club Receipt</Text>
           <Image src="https://templates.invoicehome.com/receipt-template-us-band-blue-750px.png" width="300px" height="500px"/>
         </Stack>
@@ -67,6 +111,7 @@ const Body = () => {
           <Image src="https://templates.invoicehome.com/receipt-template-us-band-blue-750px.png" width="300px" height="500px"/>
         </Stack>
         </Stack>
+        
       </Container>
     </Box>
     )
