@@ -34,7 +34,7 @@ import Clubs from './components/Clubs'
 
 const App = () => (
   <ThemeProvider theme={theme}>
-    <CSSReset />
+    <CSSReset/>
     <Header></Header>
     <Events></Events>
     <Clubs></Clubs>
