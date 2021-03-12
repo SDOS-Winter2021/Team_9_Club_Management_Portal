@@ -20,6 +20,7 @@ import {
 } from 'react-icons/io5';
 import Head from 'next/head';
 
+
 const Feature = ({ text, icon, iconBg }: FeatureProps) => {
   return (
     <Stack direction={'row'} align={'center'}>

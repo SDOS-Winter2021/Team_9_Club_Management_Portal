@@ -24,7 +24,6 @@ const Body = () => {
           rel="stylesheet"
         />
       </Head>
-
       <Container maxW='3xl'>
         <Stack
           as="Box"
