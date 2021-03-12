@@ -27,13 +27,12 @@ SECRET_KEY = "iw5_v3eol$+ioc2hd+dbxb9gt-r+gskqwg_+@f4!u(ub40v%il"
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+SITE_ID=2
 
 # Application definition
 
 INSTALLED_APPS = [
-   
-  'stakeholder.apps.StakeholderConfig',
+   'stakeholder',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -41,7 +40,16 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    'rest_framework.authtoken',
+     'rest_auth',
     "frontend",
+     'django.contrib.sites',
+     'allauth',
+     'allauth.account',
+     'rest_auth.registration',
+     'allauth.socialaccount',
+     'allauth.socialaccount.providers.facebook',
+     'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
