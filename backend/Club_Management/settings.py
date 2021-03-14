@@ -27,12 +27,12 @@ SECRET_KEY = "iw5_v3eol$+ioc2hd+dbxb9gt-r+gskqwg_+@f4!u(ub40v%il"
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+SITE_ID=2
 
 # Application definition
 
 INSTALLED_APPS = [
-    "stakeholder.apps.StakeholderConfig",
+   'stakeholder',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -40,7 +40,16 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    'rest_framework.authtoken',
+     'rest_auth',
     "frontend",
+     'django.contrib.sites',
+     'allauth',
+     'allauth.account',
+     'rest_auth.registration',
+     'allauth.socialaccount',
+     'allauth.socialaccount.providers.facebook',
+     'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -77,13 +86,19 @@ WSGI_APPLICATION = "Club_Management.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'djongo',
+        "CLIENT": {
+          "name": 'CLUB_MANAGEMENT_PORTAL_DB',
+           "host": 'mongodb+srv://Admin:UorNOwLkoopfBZWS@cluster0.zm97q.mongodb.net/CLUB_MANAGEMENT_PORTAL_DB?retryWrites=true&w=majority',
+           "username": 'Admin',
+           "password": 'UorNOwLkoopfBZWS',
+           "authMechanism": "SCRAM-SHA-1",
+        }, 
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
