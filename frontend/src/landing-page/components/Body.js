@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 
 import Head from 'next/head';
-import GoogleButton from "./GButton.js";
+import GoogleButton from "./GLogin.js";
 import './index.css'
 
 const Body = () => {

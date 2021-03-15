@@ -61,6 +61,10 @@ const Body = () => {
               <FormLabel>Additional Information</FormLabel>
               <Input type="text" />
             </FormControl>
+            <FormControl id="Poster">
+              <FormLabel>Poster/Image</FormLabel>
+              <Input type="file" />
+            </FormControl>
             <Stack spacing={10}>
               <Button
                 bg={'blue.400'}
