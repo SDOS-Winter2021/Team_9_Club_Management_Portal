@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "rest_framework",
     'rest_framework.authtoken',
      'rest_auth',
+     'corsheaders',
     "frontend",
      'django.contrib.sites',
      'allauth',
@@ -60,9 +61,13 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = "Club_Management.urls"
+CORS_ORIGIN_WHITELIST = [
+     'http://localhost:3000'
+]
 
 TEMPLATES = [
     {
