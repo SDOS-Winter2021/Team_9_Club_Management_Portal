@@ -3,7 +3,7 @@ from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
 from rest_framework import viewsets
 from rest_framework.parsers import FileUploadParser
-from .models import CLUB
+from .models import CLUB, USER_DETAILS
 from .serializers import CLUBSerializer
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
@@ -61,7 +61,7 @@ def CLUB_DETAIL(request,pk):
 	try:
 		clubs=CLUB.objects.get(pk=pk)
 	except CLUB.DoesNotExist :
-		return JsonResponse({'message: The given club doenot exist'},status=status.HTTP_404_NOT_FOUND)
+		return JsonResponse({'message: The given club does not exist'},status=status.HTTP_404_NOT_FOUND)
 	if(request.method=='GET'):
 		club_serializer=CLUBSerializer(clubs)
 		return JsonResponse(club_serializer.data)
@@ -89,4 +89,23 @@ def CLUB_EVENT_PENDING(request):
 			clubs=clubs.filter(approved=False)
 		club_serializer=CLUBSerializer(clubs,many=True)
 		return JsonResponse(club_serializer.data,safe=False)
+
+@api_view(['GET','PUT'])
+def USERS(request):
+	print(request)
+	if request.method=='PUT':
+		parser_class=(FileUploadParser,)
+		user_data=json.loads(request.data['request'])
+		print(user_data)
+		return JsonResponse({"pog":"pog"})
+	elif request.method=='GET':
+		return JsonResponse({"pog":"pog"})
+		#name=request.GET.get('google_id',None)
+		#if(name is not None):
+		#	clubs=users.filter(club_name__icontains=name)
+		#club_serializer=CLUBSerializer(clubs,many=True)
+		#return JsonResponse(club_serializer.data,safe=False) 
+	#elif(request.method=='GET'):
+	#	club_serializer=CLUBSerializer(clubs)
+	#	return JsonResponse(club_serializer.data)
 

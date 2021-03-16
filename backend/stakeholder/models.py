@@ -34,6 +34,10 @@ class CLUB_GENERAL(models.Model):
     website_link=models.URLField(max_length=200)
 
 
-
+class USER_DETAILS(models.Model):
+    access_token = models.CharField(max_length=1000)
+    google_id = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
 
      
