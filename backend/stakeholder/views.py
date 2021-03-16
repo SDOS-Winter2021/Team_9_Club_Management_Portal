@@ -9,6 +9,7 @@ from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
 from rest_framework.decorators import api_view
+import json
 from datetime import datetime, timedelta
 # Create your views here.
 def home(request):
@@ -38,9 +39,18 @@ def CLUB_LIST(request):
 		club_serializer=CLUBSerializer(clubs,many=True)
 		return JsonResponse(club_serializer.data,safe=False)
 	elif request.method=='POST':
-		club_data=request.data
-		print("THIS IS DATA",club_data)
-		club_serializer=CLUBSerializer(data=club_data)
+		#club_data=JSONParser.parse(request)
+		clubs=CLUB()
+		parser_class=(FileUploadParser,)
+		club_data=json.loads(request.data['request'])
+		#print(club_data)
+		print(request.data)
+		club_serializer=CLUBSerializer(data=request.data)
+		if('file' in request.data):
+			f=request.data['file']
+			clubs.payment_receipt_student.save(f.name,f,save=True)
+		club_serializer=CLUBSerializer(clubs,data=club_data)
+		#print("THIS IS DATA",club_data,club_serializer.is_valid())
 		if(club_serializer.is_valid()):
 			club_serializer.save()
 			return JsonResponse(club_serializer.data, status=status.HTTP_201_CREATED)
@@ -57,11 +67,13 @@ def CLUB_DETAIL(request,pk):
 		return JsonResponse(club_serializer.data)
 	elif request.method=='PUT':
 		parser_class=(FileUploadParser,)
-		club_data=request.data
+		club_data=json.loads(request.data['request'])
 		if('file' in request.data):
 			f=request.data['file']
 			clubs.payment_receipt_student.save(f.name,f,save=True)
 		club_serializer=CLUBSerializer(clubs,data=club_data)
+		#print(club_serializer.is_valid(),club_data,type(club_data))
+		#print(club_serializer.is_valid(),club_data)
 		if(club_serializer.is_valid()):
 			club_serializer.save()
 			return JsonResponse(club_serializer.data)
