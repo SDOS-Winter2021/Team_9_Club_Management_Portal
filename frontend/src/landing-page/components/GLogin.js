@@ -20,6 +20,7 @@ export default function GoogleButton() {
         buttonText="Sign in with Google"
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
+        isSignedIn={true}
       />
       </Center>
     );

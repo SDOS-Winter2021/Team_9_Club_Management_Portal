@@ -92,14 +92,16 @@ def CLUB_EVENT_PENDING(request):
 
 @api_view(['GET','PUT'])
 def USERS(request):
-	print(request)
+	#print(request)
 	if request.method=='PUT':
-		parser_class=(FileUploadParser,)
-		user_data=json.loads(request.data['request'])
+		parser_class=(JSONParser,)
+		user_data=json.loads(request.body.decode('utf-8'))
 		print(user_data)
-		return JsonResponse({"pog":"pog"})
-	elif request.method=='GET':
-		return JsonResponse({"pog":"pog"})
+		return JsonResponse({"response":"1"})
+	#elif request.method=='GET':
+	#	u  = json.loads(request.data['request'])
+	#	print(u)
+	#	return JsonResponse({"pog":"pog"})
 		#name=request.GET.get('google_id',None)
 		#if(name is not None):
 		#	clubs=users.filter(club_name__icontains=name)

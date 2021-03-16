@@ -7,4 +7,5 @@ class CLUBAdmin(admin.ModelAdmin):
 admin.site.register(CLUB,CLUBAdmin)
 admin.site.register(Users)
 admin.site.register(CLUB_GENERAL)
+admin.site.register(USER_DETAILS)
 

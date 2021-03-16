@@ -6,16 +6,16 @@ import axios from "axios";
  */
 const googleLogin = async (accessToken,profileObj) => {
     console.log("allo sending info");
-    console.log({accessToken});
-    console.log({profileObj});
-    let res = await axios.post(
-      "http://127.0.0.1:8000/rest-auth/google/",
-      {
-        access_token: accessToken,
-        email: profileObj.email,
-        googleid: profileObj.googleId,
-        name: profileObj.name,
-      }
+    var request = {
+      'access_token': accessToken,
+      'google_id': profileObj.googleId,
+      'email': profileObj.email,
+      'name': profileObj.name,
+    }
+    console.log(request);
+    let res = await axios.put(
+      "http://127.0.0.1:8000/api/user/login",
+      JSON.stringify(request)
     );
     console.log(res);
     return await res.status;
