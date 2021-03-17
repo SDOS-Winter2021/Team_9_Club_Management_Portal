@@ -93,7 +93,7 @@ def CLUB_EVENT_PENDING(request):
 @api_view(['GET','PUT'])
 def USERS(request):
 	if request.method=='PUT':
-		parser_class=(JSONParser,)
+			parser_class=(JSONParser,)
 		user_data=json.loads(request.body.decode('utf-8'))
 		users=USER_DETAILS.objects.all()
 		return JsonResponse({"response":"1"})
