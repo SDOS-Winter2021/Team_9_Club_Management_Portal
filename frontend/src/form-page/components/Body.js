@@ -23,7 +23,7 @@ export default function Body (){
   const [prereq, setprereq] = React.useState("");
   const [prizemoney, setprizemoney] = React.useState("");
   const [addinfo, setaddinfo] = React.useState("");
-  const [poster, setposter] = React.useState("");
+  const [poster, setposter] = React.useState([]);
 
   const handleSubmit = async(event) => {
     //var event_info = {
@@ -44,11 +44,10 @@ export default function Body (){
       event_info.append('Pre-Requisites', prereq);
       event_info.append('Prize Money', prizemoney);
       event_info.append('Additional Information', addinfo);
-      event_info.append('Poster/Image', poster);
+      event_info.append('Poster', poster);
 
       let eResponse  = await eventOut(event_info)
       console.log(eResponse);
-      event.preventDefault();
     }
       
   return (
@@ -100,7 +99,7 @@ export default function Body (){
             </FormControl>
             <FormControl id="Poster">
               <FormLabel>Poster/Image</FormLabel>
-              <Input type="file" value={poster} onChange={e => setposter(e.target.value)}/>
+              <Input type="file" onChange={e => setposter(e.target.files[0])}/>
             </FormControl>
             <Stack spacing={10}>
               <Button bg={'blue.400'} color={'white'} _hover={{   bg: 'blue.500', }} onClick={handleSubmit}>
