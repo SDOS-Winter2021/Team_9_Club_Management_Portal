@@ -10,3 +10,4 @@ urlpatterns = [
     url(r'^api/clubs/upcoming$',views.CLUB_UPCOMING),
     url(r'^api/user/login$', csrf_exempt(views.USERS)),
     url(r'^api/clubs/event$', csrf_exempt(views.EVENTS)),
+]

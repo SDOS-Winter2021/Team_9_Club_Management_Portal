@@ -49,12 +49,17 @@ class Clubs extends React.Component {
       .then((data) => this.setState({ clubs: data.data }));
   };
 
+  Redirect_Club = (name) => {
+    console.log("Sending you to Club Page ------------->");
+    
+  };
+
   render() {
     return (
       <div>
         {
         this.state.clubs.map((user, i) =>
-        <Box bg="#fffff" border="2px" width="90%" ml="5%" mb="2px" flexDirection="row">
+        <Box bg="#fffff" border="2px" width="90%" ml="5%" mb="2px" flexDirection="row" onClick={() =>this.Redirect_Club(this.state.clubs[i]["club_name"])}>
           <Flex display="flex" flexDirection="row">
             {this.state.clubs.length !== 0 ? (
               <Text ml={3} mt={3} mb={3} fontWeight="bold">

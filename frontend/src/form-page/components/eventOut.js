@@ -9,8 +9,8 @@ const eventOut = async (request) => {
     for (var key of request.entries()) {
       console.log(key[0] + ', ' + key[1]);
   }
-    let res = await axios.put(
-      "http://127.0.0.1:8000/api/clubs/event",
+    let res = await axios.post(
+      "http://127.0.0.1:8000/api/clubs",
       request,
       {
         headers: {

@@ -4,10 +4,7 @@ import GoogleLogin from 'react-google-login';
 import googleLogin from "./googleLogin"
 
 const responseGoogle = async(response) => {
-  console.log(response);
-  var x=response.accessToken
-  var z=response.profileObj
-  let googleResponse  = await googleLogin(x,z)
+  let googleResponse  = await googleLogin(response)
   console.log(googleResponse);
   }
 
@@ -21,6 +18,8 @@ export default function GoogleButton() {
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
         isSignedIn={true}
+        accessType="offline"
+        responseType="code"
       />
       </Center>
     );
