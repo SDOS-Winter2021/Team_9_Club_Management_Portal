@@ -26,25 +26,18 @@ export default function Body (){
   const [poster, setposter] = React.useState([]);
 
   const handleSubmit = async(event) => {
-    //var event_info = {
-    //  'Name': name,
-    //  'Date-Time': datetime,
-    //  'Location': location,
-    //  'Description': description,
-    //  'Pre-Requisites': prereq,
-    //  'Prize Money': prizemoney,
-    //  'Additional Information': addinfo,
-    //  'Poster/Image': poster,
-    //}
+    var data = {"name":name,"date_time":"2021-03-19T18:00:00Z","location":location,"description":description,"approved":"True","club_name":"Peeyush's club"};
     var event_info = new FormData();
-      event_info.append('Name', name);
-      event_info.append('Date-Time', datetime);
-      event_info.append('Location', location);
-      event_info.append('Description', description);
-      event_info.append('Pre-Requisites', prereq);
-      event_info.append('Prize Money', prizemoney);
-      event_info.append('Additional Information', addinfo);
-      event_info.append('Poster', poster);
+    data=JSON.stringify(data);
+      // event_info.append('Name', name);
+      // event_info.append('Date-Time', datetime);
+      // event_info.append('Location', location);
+      // event_info.append('Description', description);
+      // event_info.append('Pre-Requisites', prereq);
+      // event_info.append('Prize Money', prizemoney);
+      // event_info.append('Additional Information', addinfo);
+      event_info.append('poster', poster);
+      event_info.append('request',data);
 
       let eResponse  = await eventOut(event_info)
       console.log(eResponse);

@@ -5,7 +5,7 @@ from rest_framework import viewsets
 from rest_framework.parsers import FileUploadParser
 from .models import CLUB,Users,CLUB_GENERAL,USER_DETAILS
 from .serializers import CLUBSerializer,UsersSerializer,CLUB_GENERALSerializer,USER_DETAILSSerializer
-
+from .utils import MultipartJsonParser
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 from rest_framework import status
@@ -44,7 +44,7 @@ def CLUB_LIST(request):
 	elif request.method=='POST':
 		#club_data=JSONParser.parse(request)
 		clubs=CLUB()
-		parser_class=(FileUploadParser,)
+		parser_classes = (MultipartJsonParser,JSONParser)
 		club_data=json.loads(request.data['request'])
 		#print(club_data)
 		print(request.data)
@@ -74,7 +74,7 @@ def CLUB_DETAIL(request,pk):
 		club_serializer=CLUBSerializer(clubs)
 		return JsonResponse(club_serializer.data)
 	elif request.method=='PUT':
-		parser_class=(FileUploadParser,)
+		parser_classes = (MultipartJsonParser,JSONParser)
 		club_data=json.loads(request.data['request'])
 		if 'poster' in request.data:
 			p=request.data['poster']
