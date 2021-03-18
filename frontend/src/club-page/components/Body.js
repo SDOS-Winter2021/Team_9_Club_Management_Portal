@@ -25,9 +25,9 @@ import {
   Route,
   Switch
 } from "react-router-dom";
-
+import history from './../../history';
 import Head from 'next/head';
-import App from "./form-page/App"
+
 interface FeatureProps {
   text: string;
   iconBg: string;
@@ -49,16 +49,7 @@ const Feature = ({ text, icon, iconBg }: FeatureProps) => {
     </Stack>
   );
 };
-const Switcher = () => {
-  return (
-    <Router>
-      <Switch>
-        {console.log("reached")}
-        <Route path="/app" component={App}/>
-      </Switch>
-    </Router>
-  );
-}
+
 const Body = () => {
     return (
       <Container maxW={'5xl'} py={12}>
@@ -115,7 +106,7 @@ const Body = () => {
           />
         </Flex>
       </SimpleGrid>
-      <Button spacing={10} mt={50} onClick={Switcher} bg={useColorModeValue('white', 'white')} rounded={'md'}  border="2px" borderColor="#12d5e3">
+      <Button spacing={10} mt={50} onClick={() => history.push('/form')} bg={useColorModeValue('white', 'white')} rounded={'md'}  border="2px" borderColor="#12d5e3">
           <Text textTransform={'uppercase'} color={'#12d5e3'} fontWeight={600} fontSize={'sm'} p={2} alignSelf={'flex-start'} align="center">
             Propose Event
           </Text>

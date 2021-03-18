@@ -1,7 +1,37 @@
 import React, { Component, ReactNode } from "react";
 import { IoPencil, IoTrashOutline } from "react-icons/io5";
 import Head from "next/head";
-
+import {
+  ThemeProvider,
+  CSSReset,
+  theme,
+  Box,
+  Image,
+  Badge,
+  Text,
+  Icon,
+  Stack,
+  Avatar,
+  AvatarBadge,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  FormLabel,
+  Input,
+  FormHelperText,
+  FormErrorMessage,
+  Grid,
+  Switch,
+  InputGroup,
+  InputRightElement,
+  Flex,
+  Tag,
+  Heading,
+  Container,
+  SimpleGrid,
+  useColorModeValue,
+} from '@chakra-ui/react'
 const Feature = ({ text, icon, iconBg }: FeatureProps) => {
   return (
     <Stack direction={"row"} align={"center"}>

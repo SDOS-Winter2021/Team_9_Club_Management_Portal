@@ -60,7 +60,7 @@ class Events extends React.Component {
       <Grid p={10} gap={6} templateColumns="repeat(auto-fit, minmax(350px, 1fr))">
         {
         this.state.events.map((user, i) =>
-        <Box display="flex" flexDirection="column" alignItems="left" justifyContent="center" p={10} key={i} onClick={() =>this.Redirect_Event(this.state.events[i]["club_name"])}>
+        <Box display="flex" flexDirection="column" alignItems="left" justifyContent="center" p={10} key={i} onClick={() =>this.Redirect_Event(this.state.events[i]["club_name"])} key={this.state.events[i]["club_name"]}>
           <Box bg="#ffffff" rounded="lg" width="sm" minHeight="sm" border="1px solid lightgrey" overflow="hidden">
             <Box>
               <Image size="100px" fallbackSrc="https://via.placeholder.com/150" src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" width="100%" height="245px" minHeight="245px"/>
