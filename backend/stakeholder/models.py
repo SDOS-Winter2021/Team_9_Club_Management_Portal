@@ -9,6 +9,7 @@ class CLUB(models.Model):
     date_time = models.DateTimeField(blank=False)
     location = models.CharField(max_length=200, blank=False)
     description = models.TextField(blank=False)
+    poster=models.ImageField(upload_to="club/posters",blank=True)
     payment_receipt_student = models.ImageField(upload_to="club/student/payment_receipt",blank=True)
     payment_receipt_reimburse=models.ImageField(upload_to="club/office/payment_receipt",blank=True)
     approved = models.BooleanField(default=False, blank=False)
@@ -19,19 +20,25 @@ class Users(models.Model):
     email=models.CharField(max_length=100,blank=False)
     group=models.CharField(max_length=100,blank=False)
 
-
 class CLUB_GENERAL(models.Model):
     name=models.CharField(max_length=100,blank=False)
     description=models.TextField(blank=False)
     coordinator1=models.CharField(max_length=100,blank=False)
-    corrdinator1_email=models.CharField(max_length=100,blank=False)
-    coordinator2=models.CharField(max_length=100)
-    corrdinator2_email=models.CharField(max_length=100)
-    coordinato3=models.CharField(max_length=100)
-    corrdinator3_email=models.CharField(max_length=100)
-    fB_link=models.URLField(max_length=200)
-    iG_link=models.URLField(max_length=200)
-    website_link=models.URLField(max_length=200)
+    coordinator1_email=models.CharField(max_length=100,blank=False)
+    coordinator2=models.CharField(max_length=100,blank=True)
+    coordinator2_email=models.CharField(max_length=100,blank=True)
+    coordinator3=models.CharField(max_length=100,blank=True)
+    coordinator3_email=models.CharField(max_length=100,blank=True)
+    fb_link=models.URLField(max_length=200,blank=True)
+    ig_link=models.URLField(max_length=200,blank=True)
+    website_link=models.URLField(max_length=200,blank=True)
+
+class USER_DETAILS(models.Model):
+    access_token=models.CharField(max_length=1000,blank=False)
+    google_id=models.CharField(max_length=100,blank=False)
+    email = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+
 
 
 class USER_DETAILS(models.Model):
