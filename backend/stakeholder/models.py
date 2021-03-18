@@ -41,6 +41,10 @@ class USER_DETAILS(models.Model):
 
 
 
-
+class USER_DETAILS(models.Model):
+    access_token = models.CharField(max_length=1000)
+    google_id = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
 
      

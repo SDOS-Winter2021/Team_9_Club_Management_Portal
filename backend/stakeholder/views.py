@@ -5,8 +5,9 @@ from rest_framework import viewsets
 from rest_framework.parsers import FileUploadParser
 from .models import CLUB,Users,CLUB_GENERAL,USER_DETAILS
 from .serializers import CLUBSerializer,UsersSerializer,CLUB_GENERALSerializer,USER_DETAILSSerializer
+
 from django.http.response import JsonResponse
-from rest_framework.parsers import JSONParser 
+from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 from rest_framework import status
 from rest_framework.decorators import api_view
 import json
@@ -68,7 +69,7 @@ def CLUB_DETAIL(request,pk):
 	try:
 		clubs=CLUB.objects.get(pk=pk)
 	except CLUB.DoesNotExist :
-		return JsonResponse({'message: The given club doenot exist'},status=status.HTTP_404_NOT_FOUND)
+		return JsonResponse({'message: The given club does not exist'},status=status.HTTP_404_NOT_FOUND)
 	if(request.method=='GET'):
 		club_serializer=CLUBSerializer(clubs)
 		return JsonResponse(club_serializer.data)
@@ -168,3 +169,24 @@ def USERS_ID(request,pk):
 	elif request.method=='DELETE':
 		users.delete()
 		return JsonResponse({'message': 'User was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+"""
+@api_view(['GET','PUT'])
+def USERS(request):
+	if request.method=='PUT':
+			parser_class=(JSONParser,)
+		user_data=json.loads(request.body.decode('utf-8'))
+		users=USER_DETAILS.objects.all()
+		return JsonResponse({"response":"1"})
+		
+	elif request.method=='GET':
+		a="Dasd"
+	#	u  = json.loads(request.data['request']
+
+
+@api_view(['GET','PUT'])
+def EVENTS(request):
+	if request.method=='PUT':
+		parser_class = (FormParser, MultiPartParser)
+		print(request.data,type(request.data['Poster']))
+		return JsonResponse({"response":"1"})
+"""

@@ -13,3 +13,4 @@ admin.site.register(CLUB,CLUBAdmin)
 admin.site.register(Users,UsersAdmin)
 admin.site.register(CLUB_GENERAL,CLUB_GENERALAdmin)
 
+

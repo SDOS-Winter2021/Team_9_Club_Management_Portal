@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf.urls import url
 from stakeholder import views
-
+from django.views.decorators.csrf import csrf_exempt
 urlpatterns = [
     path('', views.home, name="homepage"),
     url(r'^api/clubs$',views.CLUB_LIST),#list all club events which are approved it is passed a parameter 'name' which is name of club
