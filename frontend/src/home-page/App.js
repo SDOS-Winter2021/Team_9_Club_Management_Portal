@@ -27,6 +27,7 @@ import {
   Tag,
   Heading
 } from '@chakra-ui/react'
+import axios from "axios";
 import Header from './components/Header'
 import Events from './components/Events'
 import Clubs from './components/Clubs'
@@ -34,7 +35,7 @@ import Clubs from './components/Clubs'
 
 const App = () => (
   <ThemeProvider theme={theme}>
-    <CSSReset />
+    <CSSReset/>
     <Header></Header>
     <Events></Events>
     <Clubs></Clubs>

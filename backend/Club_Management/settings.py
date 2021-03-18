@@ -27,13 +27,12 @@ SECRET_KEY = "iw5_v3eol$+ioc2hd+dbxb9gt-r+gskqwg_+@f4!u(ub40v%il"
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+SITE_ID=2
 
 # Application definition
 
 INSTALLED_APPS = [
-   
-  'stakeholder.apps.StakeholderConfig',
+   'stakeholder',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -41,10 +40,21 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    'rest_framework.authtoken',
+     'rest_auth',
+     'corsheaders',
     "frontend",
+     'django.contrib.sites',
+     'allauth',
+     'allauth.account',
+     'rest_auth.registration',
+     'allauth.socialaccount',
+     'allauth.socialaccount.providers.facebook',
+     'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -52,9 +62,14 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    
 ]
 
 ROOT_URLCONF = "Club_Management.urls"
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = [
+     'http://localhost:3000','http://localhost:8081'
+]
 
 TEMPLATES = [
     {
