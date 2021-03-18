@@ -1,19 +1,4 @@
 import React, { Component, ReactNode } from "react";
-import {
-  Flex,
-  Box,
-  Heading,
-  Container,
-  Text,
-  Button,
-  Stack,
-  Icon,
-  useColorModeValue,
-  createIcon,
-  SimpleGrid,
-  Image,
-  color,
-} from "@chakra-ui/react";
 import { IoPencil, IoTrashOutline } from "react-icons/io5";
 import Head from "next/head";
 

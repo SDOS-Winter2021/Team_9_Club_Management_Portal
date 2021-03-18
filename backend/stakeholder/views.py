@@ -6,7 +6,7 @@ from rest_framework.parsers import FileUploadParser
 from .models import CLUB, USER_DETAILS
 from .serializers import CLUBSerializer
 from django.http.response import JsonResponse
-from rest_framework.parsers import JSONParser 
+from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 from rest_framework import status
 from rest_framework.decorators import api_view
 import json
@@ -92,22 +92,20 @@ def CLUB_EVENT_PENDING(request):
 
 @api_view(['GET','PUT'])
 def USERS(request):
-	#print(request)
 	if request.method=='PUT':
-		parser_class=(JSONParser,)
+			parser_class=(JSONParser,)
 		user_data=json.loads(request.body.decode('utf-8'))
-		print(user_data)
+		users=USER_DETAILS.objects.all()
 		return JsonResponse({"response":"1"})
-	#elif request.method=='GET':
-	#	u  = json.loads(request.data['request'])
-	#	print(u)
-	#	return JsonResponse({"pog":"pog"})
-		#name=request.GET.get('google_id',None)
-		#if(name is not None):
-		#	clubs=users.filter(club_name__icontains=name)
-		#club_serializer=CLUBSerializer(clubs,many=True)
-		#return JsonResponse(club_serializer.data,safe=False) 
-	#elif(request.method=='GET'):
-	#	club_serializer=CLUBSerializer(clubs)
-	#	return JsonResponse(club_serializer.data)
+		
+	elif request.method=='GET':
+		a="Dasd"
+	#	u  = json.loads(request.data['request']
 
+
+@api_view(['GET','PUT'])
+def EVENTS(request):
+	if request.method=='PUT':
+		parser_class = (FormParser, MultiPartParser)
+		print(request.data,type(request.data['Poster']))
+		return JsonResponse({"response":"1"})

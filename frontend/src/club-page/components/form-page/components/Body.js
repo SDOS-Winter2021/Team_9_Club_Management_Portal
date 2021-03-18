@@ -23,31 +23,22 @@ export default function Body (){
   const [prereq, setprereq] = React.useState("");
   const [prizemoney, setprizemoney] = React.useState("");
   const [addinfo, setaddinfo] = React.useState("");
-  const [poster, setposter] = React.useState([]);
+  const [poster, setposter] = React.useState("");
 
   const handleSubmit = async(event) => {
-    //var event_info = {
-    //  'Name': name,
-    //  'Date-Time': datetime,
-    //  'Location': location,
-    //  'Description': description,
-    //  'Pre-Requisites': prereq,
-    //  'Prize Money': prizemoney,
-    //  'Additional Information': addinfo,
-    //  'Poster/Image': poster,
-    //}
-    var event_info = new FormData();
-      event_info.append('Name', name);
-      event_info.append('Date-Time', datetime);
-      event_info.append('Location', location);
-      event_info.append('Description', description);
-      event_info.append('Pre-Requisites', prereq);
-      event_info.append('Prize Money', prizemoney);
-      event_info.append('Additional Information', addinfo);
-      event_info.append('Poster', poster);
-
+    var event_info = {
+      'Name': name,
+      'Date-Time': datetime,
+      'Location': location,
+      'Description': description,
+      'Pre-Requisites': prereq,
+      'Prize Money': prizemoney,
+      'Additional Information': addinfo,
+      'Poster/Image': poster,
+    }
       let eResponse  = await eventOut(event_info)
       console.log(eResponse);
+      event.preventDefault();
     }
       
   return (
@@ -99,7 +90,7 @@ export default function Body (){
             </FormControl>
             <FormControl id="Poster">
               <FormLabel>Poster/Image</FormLabel>
-              <Input type="file" onChange={e => setposter(e.target.files[0])}/>
+              <Input type="file" value={poster} onChange={e => setposter(e.target.value)}/>
             </FormControl>
             <Stack spacing={10}>
               <Button bg={'blue.400'} color={'white'} _hover={{   bg: 'blue.500', }} onClick={handleSubmit}>
