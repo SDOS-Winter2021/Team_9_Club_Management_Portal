@@ -45,7 +45,7 @@ def CLUB_LIST(request):
 		#club_data=JSONParser.parse(request)
 		clubs=CLUB()
 		if('Poster' in request.data):
-    			f=request.data['Poster']
+			f=request.data['Poster']
 			clubs.payment_receipt_student.save(f.name,f,save=True)
 		parser_class=(FormParser, MultiPartParser)
 		data_recv = request.data.copy()
