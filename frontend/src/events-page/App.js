@@ -18,7 +18,7 @@ import Body from './components/Body'
 import Header from './components/Header'
 
 
-const App = () => (
+const Events_Page = () => (
   <ThemeProvider theme={theme}>
     <CSSReset/>
     <Header></Header>
@@ -26,4 +26,4 @@ const App = () => (
   </ThemeProvider>
 )
 
-export default App
+export default Events_Page

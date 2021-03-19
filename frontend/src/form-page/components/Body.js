@@ -37,15 +37,18 @@ export default function Body (){
     //  'Poster/Image': poster,
     //}
     var event_info = new FormData();
-      event_info.append('Name', name);
-      event_info.append('Date-Time', datetime);
-      event_info.append('Location', location);
-      event_info.append('Description', description);
+      event_info.append('name', name);
+      event_info.append('date_time', datetime);
+      event_info.append('location', location);
+      event_info.append('description', description);
+      event_info.append('approved', "true");
+      event_info.append('club_name', "dasdsa");
       event_info.append('Pre-Requisites', prereq);
       event_info.append('Prize Money', prizemoney);
       event_info.append('Additional Information', addinfo);
       event_info.append('Poster', poster);
 
+      console.log(name);
       let eResponse  = await eventOut(event_info)
       console.log(eResponse);
     }

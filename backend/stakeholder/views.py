@@ -44,17 +44,14 @@ def CLUB_LIST(request):
 	elif request.method=='POST':
 		#club_data=JSONParser.parse(request)
 		clubs=CLUB()
-		parser_class=(FileUploadParser,)
-		club_data=json.loads(request.data['request'])
-		#print(club_data)
-		print(request.data)
-		#club_serializer=CLUBSerializer(data=request.data)
-		if 'poster' in request.data:
-			p=request.data['poster']
-			clubs.poster.save(p.name,p,save=True)
-		if('file' in request.data):
-			f=request.data['file']
+		if('Poster' in request.data):
+			f=request.data['Poster']
 			clubs.payment_receipt_student.save(f.name,f,save=True)
+		parser_class=(FormParser, MultiPartParser)
+		data_recv = request.data.copy()
+		data_recv.pop('Poster')
+		club_data=json.loads(json.dumps(data_recv))
+		print(club_data,type(club_data))
 		club_serializer=CLUBSerializer(clubs,data=club_data)
 		#print("THIS IS DATA",club_data,club_serializer.is_valid())
 		if(club_serializer.is_valid()):
@@ -173,7 +170,7 @@ def USERS_ID(request,pk):
 @api_view(['GET','PUT'])
 def USERS(request):
 	if request.method=='PUT':
-			parser_class=(JSONParser,)
+		parser_class=(JSONParser,)
 		user_data=json.loads(request.body.decode('utf-8'))
 		users=USER_DETAILS.objects.all()
 		return JsonResponse({"response":"1"})

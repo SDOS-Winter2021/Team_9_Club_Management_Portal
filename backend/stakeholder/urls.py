@@ -12,5 +12,6 @@ urlpatterns = [
     url(r'^api/clubinfo/(?P<pk>[0-9]+)$',views.CLUB_GENERAL_ID),
     url(r'^api/users$',views.ADD_USERS),
     url(r'^api/users/(?P<pk>[0-9]+)$',views.USERS_ID),
+    #url(r'^api/user/login$', csrf_exempt(views.USERS)),
 
 ]

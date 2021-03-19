@@ -17,11 +17,11 @@ import {
 import Body from './components/Body'
 
 
-const App = () => (
+const Form_Page = () => (
   <ThemeProvider theme={theme}>
     <CSSReset/>
     <Body></Body>
   </ThemeProvider>
 )
 
-export default App
+export default Form_Page
