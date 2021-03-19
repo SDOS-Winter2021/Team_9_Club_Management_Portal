@@ -73,7 +73,7 @@ class Events extends React.Component {
               </Box>
               {this.state.events.length !== 0 ? (
                 <Text fontWeight="bold" fontSize="xl" >
-                  {this.state.events[i]["description"]}
+                  {this.state.events[i]["name"]}
                 </Text>
               ) : null}
               {this.state.events.length !== 0 ? (

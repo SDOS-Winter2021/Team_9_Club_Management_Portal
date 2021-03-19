@@ -28,6 +28,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import axios from "axios";
+import history from './../../history';
 
 class Clubs extends React.Component {
   constructor() {
@@ -45,21 +46,24 @@ class Clubs extends React.Component {
   getClubs = () => {
     console.log("Getting Clubs");
     axios
-      .get("http://127.0.0.1:8000/api/clubs")
+      .get("http://127.0.0.1:8000/api/clubinfo")
       .then((data) => this.setState({ clubs: data.data }));
   };
 
-  Redirect_Club = (name) => {
+  Redirect_Club = (name,id) => {
     console.log("Sending you to Club Page ------------->");
-    
+    console.log(name);
+    console.log(id);
+    history.push(`/club/${name}@${id}`)
   };
 
   render() {
     return (
       <div>
+
         {
         this.state.clubs.map((user, i) =>
-        <Box bg="#fffff" border="2px" width="90%" ml="5%" mb="2px" flexDirection="row" onClick={() =>this.Redirect_Club(this.state.clubs[i]["club_name"])}>
+        <Box bg="#fffff" border="2px" width="90%" ml="5%" mb="2px" flexDirection="row" onClick={() =>this.Redirect_Club(this.state.clubs[i]["name"],this.state.clubs[i]["id"])} key={this.state.clubs[i]["id"]}>
           <Flex display="flex" flexDirection="row">
             {this.state.clubs.length !== 0 ? (
               <Text ml={3} mt={3} mb={3} fontWeight="bold">

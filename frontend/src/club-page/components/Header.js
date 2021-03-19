@@ -14,12 +14,13 @@ import {
   IoHomeOutline
 } from 'react-icons/io5';
 import Head from 'next/head';
+import history from './../../history';
 
-const Header = () => {
+const Header = (Info) => {
     return (
         <>
         <Flex flexDirection="row" mt={0} bg={'gray.700'} justifyContent="center">
-        <Icon as={IoHomeOutline} color={'gray.200'} w={5} h={5} justifySelf="flex-end"/>
+        <Icon as={IoHomeOutline} color={'gray.200'} w={5} h={5} justifySelf="flex-end" onClick={()=>{history.push(`/`)}}/>
         <Flex display="flex" flexDirection="column" alignItems="center" justifyContent="center" textAlign="center" mt={0} bg={'gray.700'}>
         <Flex
           display="flex"
@@ -28,10 +29,9 @@ const Header = () => {
           justifyContent="flex-start"
         >
           <Text fontSize="3xl" fontWeight="bold" >
-           Club Name
+           {Info.Info.name}
           </Text>
         </Flex>
-        <Text color="gray.500">1 Liner</Text>
       </Flex>
       </Flex>
       </>
