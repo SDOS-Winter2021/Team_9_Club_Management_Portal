@@ -91,28 +91,26 @@ class Events extends React.Component {
                   minHeight="245px"
                 />
               </Box>
-              <Box p={5} pb={8}>
-                <Box
-                  display="flex"
-                  justifyContent="flex-start"
-                  alignItems="flex-start"
-                  mb={1}
-                  flexDirection="row"
-                >
-                  <Badge
-                    variant="subtle"
-                    variantColor="teal"
-                    mr={2}
-                    rounded="lg"
-                    pl={2}
-                    pr={2}
-                  >
-                    NEW
-                  </Badge>
-                </Box>
+              {this.state.events.length !== 0 ? (
+                <Text fontWeight="bold" fontSize="xl">
+                  {this.state.events[i]["name"]}
+                </Text>
+              ) : null}
+              {this.state.events.length !== 0 ? (
+                <Text fontSize="sm" mb={3}>
+                  {this.state.events[i]["club_name"]}
+                </Text>
+              ) : null}
+              <Box
+                display="flex"
+                alignItems="center"
+                flexDirection="row"
+                justifyContent="flex-start"
+              >
+                <Icon name="star" color="yellow.400" mr={1} />
                 {this.state.events.length !== 0 ? (
-                  <Text fontWeight="bold" fontSize="xl">
-                    {this.state.events[i]["description"]}
+                  <Text fontWeight="bold" mr={1}>
+                    {this.state.events[i]["date_time"]}
                   </Text>
                 ) : null}
                 {this.state.events.length !== 0 ? (
