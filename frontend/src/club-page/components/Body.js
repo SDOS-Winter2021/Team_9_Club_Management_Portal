@@ -139,7 +139,7 @@ const Body = (Info_G,Info_E) => {
           <SimpleGrid columns={{ base: 1, md: 2 }} spacingX="10" spacingY="14">
             {
             Object.keys(Info_G.Info_E).map((user, i) =>
-            <Feat title={`${Info_G.Info_E[i].name}`} icon={<FaRegMinusSquare />} toGo={`event/${Info_G.Info_E[i].id}`}>
+            <Feat title={`${Info_G.Info_E[i].name}`} icon={<FaRegMinusSquare />} toGo={`${Info_G.Info_E[i].id}`} key={Info_G.Info_E[i].id}>
               {`${Info_G.Info_E[i].location}`} on {`${Info_G.Info_E[i].date_time}`}
             </Feat>
             )}
@@ -152,7 +152,7 @@ const Body = (Info_G,Info_E) => {
       <Box as="section" py="24">
         <Box maxW={{ base: 'xl', md: '5xl' }} mx="auto" px={{ base: '6', md: '8' }}>
           <SimpleGrid columns={{ base: 1, md: 2 }} spacingX="10" spacingY="14">
-            <Feat title="Support for multiple devices" icon={<IoLaptopOutline />}>
+            <Feat title="Some Event" icon={<IoLaptopOutline />}>
               Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
               invidunt ut labore.
             </Feat>
