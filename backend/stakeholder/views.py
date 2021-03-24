@@ -5,13 +5,26 @@ from rest_framework import viewsets
 from rest_framework.parsers import FileUploadParser
 from .models import CLUB,Users,CLUB_GENERAL,USER_DETAILS
 from .serializers import CLUBSerializer,UsersSerializer,CLUB_GENERALSerializer,USER_DETAILSSerializer
-
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 from rest_framework import status
 from rest_framework.decorators import api_view
 import json
 from datetime import datetime, timedelta
+import requests
+import urllib
+import google.oauth2.credentials
+import google_auth_oauthlib.flow
+import google_auth_oauthlib
+from google.oauth2 import service_account
+from oauthlib.oauth2 import WebApplicationClient
+from google.auth.transport.requests import AuthorizedSession
+import os 
+from requests_oauthlib import OAuth2Session
+from oauthlib.oauth2 import BackendApplicationClient
+from google_auth_oauthlib.flow import Flow
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 # Create your views here.
 def home(request):
     return render(request, 'stakeholder/index.html')
@@ -166,24 +179,37 @@ def USERS_ID(request,pk):
 	elif request.method=='DELETE':
 		users.delete()
 		return JsonResponse({'message': 'User was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
-"""
+
 @api_view(['GET','PUT'])
 def USERS(request):
+	os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+	API_SCOPE = ['https://mail.google.com/',]
+	JSON_PATH = 'C:/Users/Bhavay/Desktop/client_secret.json'
+	REDIRECT_URL = "http://localhost:3000/"
+	REDIRECT_URL2 = "http://127.0.0.1:8000/api/user/login"
+	flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file( JSON_PATH, scopes=API_SCOPE)
+	flow.redirect_uri = REDIRECT_URL2
 	if request.method=='PUT':
 		parser_class=(JSONParser,)
-		user_data=json.loads(request.body.decode('utf-8'))
-		users=USER_DETAILS.objects.all()
-		return JsonResponse({"response":"1"})
+		auth_url, _ = flow.authorization_url(prompt=None)
+		return JsonResponse({"response":auth_url})
 		
 	elif request.method=='GET':
-		a="Dasd"
-	#	u  = json.loads(request.data['request']
+		print("got this bitches,",request.query_params['code'])
+		flow.fetch_token(code=request.query_params['code'])
+		print(flow.credentials)
+		credentials=flow.credentials
+		temp = {
+		'token': credentials.token,
+		'refresh_token': credentials.refresh_token,
+		'id_token':credentials.id_token,
+		'token_uri': credentials.token_uri,
+		'client_id': credentials.client_id,
+		'client_secret': credentials.client_secret,
+		'scopes': credentials.scopes,
+		}
+		print(temp)
+		response = redirect('http://localhost:3000/home')
+		return response
 
 
-@api_view(['GET','PUT'])
-def EVENTS(request):
-	if request.method=='PUT':
-		parser_class = (FormParser, MultiPartParser)
-		print(request.data,type(request.data['Poster']))
-		return JsonResponse({"response":"1"})
-"""

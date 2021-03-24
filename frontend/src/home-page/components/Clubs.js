@@ -94,7 +94,7 @@ class Clubs extends React.Component {
               />
             </Flex>
           </Box>
-        ))}
+        )}
       </div>
     );
   }
