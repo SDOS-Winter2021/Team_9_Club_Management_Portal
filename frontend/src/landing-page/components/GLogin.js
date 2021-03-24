@@ -11,10 +11,10 @@ export default class GoogleButton extends React.Component{
     //console.log(response);
     let googleResponse  = await googleLogin()
     console.log(googleResponse.data["response"]);
-    var win = window.open(googleResponse.data["response"], '_blank');
-    win.location;
+    window.open(googleResponse.data["response"], '_self');
+    //win.location;
     //var windo = window.open("about:blank", "_self");
-    this.onClose()
+    //this.onClose()
     }
 
     onClose = () => {
