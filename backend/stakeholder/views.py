@@ -4,7 +4,7 @@ from rest_auth.registration.views import SocialLoginView
 from rest_framework import viewsets
 from rest_framework.parsers import FileUploadParser
 from .models import CLUB,Users,CLUB_GENERAL,USER_DETAILS
-from .serializers import CLUBSerializer,UsersSerializer,CLUB_GENERALSerializer,USER_DETAILSSerializer
+from .serializers import CLUBSerializer,UsersSerializer,CLUB_GENERALSerializer,USER_DETAILS_Serializer
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 from rest_framework import status
@@ -183,7 +183,7 @@ def USERS_ID(request,pk):
 @api_view(['GET','PUT'])
 def USERS(request):
 	os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
-	API_SCOPE = ['https://mail.google.com/',]
+	API_SCOPE = ['https://www.googleapis.com/auth/calendar.events','https://www.googleapis.com/auth/userinfo.profile']
 	JSON_PATH = 'C:/Users/Bhavay/Desktop/client_secret.json'
 	REDIRECT_URL = "http://localhost:3000/"
 	REDIRECT_URL2 = "http://127.0.0.1:8000/api/user/login"
@@ -195,9 +195,9 @@ def USERS(request):
 		return JsonResponse({"response":auth_url})
 		
 	elif request.method=='GET':
+		user=USER_DETAILS()
 		print("got this bitches,",request.query_params['code'])
 		flow.fetch_token(code=request.query_params['code'])
-		print(flow.credentials)
 		credentials=flow.credentials
 		temp = {
 		'token': credentials.token,
@@ -208,7 +208,10 @@ def USERS(request):
 		'client_secret': credentials.client_secret,
 		'scopes': credentials.scopes,
 		}
-		print(temp)
+		session = flow.authorized_session()
+		user_details = session.get('https://www.googleapis.com/userinfo/v2/me').json()
+		to_store = {'refresh_token':credentials.refresh_token,'access_token':credentials.token,'google_id':user_details['id'],'name':user_details['name']}
+		print(to_store)
 		response = redirect('http://localhost:3000/home')
 		return response
 

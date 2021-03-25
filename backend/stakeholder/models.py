@@ -34,17 +34,9 @@ class CLUB_GENERAL(models.Model):
     website_link=models.URLField(max_length=200,blank=True)
 
 class USER_DETAILS(models.Model):
-    access_token=models.CharField(max_length=1000,blank=False)
-    google_id=models.CharField(max_length=100,blank=False)
-    email = models.CharField(max_length=100)
-    name = models.CharField(max_length=100)
-
-
-
-class USER_DETAILS(models.Model):
+    refresh_token = models.CharField(max_length=1000,blank=False)
     access_token = models.CharField(max_length=1000)
-    google_id = models.CharField(max_length=100)
-    email = models.CharField(max_length=100)
+    google_id=models.CharField(max_length=100,blank=False)
     name = models.CharField(max_length=100)
-
-     
+    #email = models.CharField(max_length=100)
+ 
