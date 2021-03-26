@@ -34,8 +34,8 @@ class CLUB_GENERAL(models.Model):
     website_link=models.URLField(max_length=200,blank=True)
 
 class USER_DETAILS(models.Model):
-    refresh_token = models.CharField(max_length=1000,blank=False)
-    access_token = models.CharField(max_length=1000)
+    refresh_token = models.CharField(max_length=1000,blank=False,default=None)
+    access_token = models.CharField(max_length=1000,default=None)
     google_id=models.CharField(max_length=100,blank=False)
     name = models.CharField(max_length=100)
     #email = models.CharField(max_length=100)

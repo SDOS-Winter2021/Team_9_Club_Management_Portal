@@ -195,24 +195,19 @@ def USERS(request):
 		return JsonResponse({"response":auth_url})
 		
 	elif request.method=='GET':
-		user=USER_DETAILS()
+		users=USER_DETAILS()
 		print("got this bitches,",request.query_params['code'])
 		flow.fetch_token(code=request.query_params['code'])
 		credentials=flow.credentials
-		temp = {
-		'token': credentials.token,
-		'refresh_token': credentials.refresh_token,
-		'id_token':credentials.id_token,
-		'token_uri': credentials.token_uri,
-		'client_id': credentials.client_id,
-		'client_secret': credentials.client_secret,
-		'scopes': credentials.scopes,
-		}
+		#temp = { 'token': credentials.token, 'refresh_token': credentials.refresh_token, 'id_token':credentials.id_token, 'token_uri': credentials.token_uri, 'client_id': credentials.client_id, 'client_secret': credentials.client_secret, 'scopes': credentials.scopes, }
 		session = flow.authorized_session()
 		user_details = session.get('https://www.googleapis.com/userinfo/v2/me').json()
 		to_store = {'refresh_token':credentials.refresh_token,'access_token':credentials.token,'google_id':user_details['id'],'name':user_details['name']}
 		print(to_store)
+		users_serializer=USER_DETAILS_Serializer(users,data=to_store)
+		if(users_serializer.is_valid()):
+			users_serializer.save()
 		response = redirect('http://localhost:3000/home')
-		return response
+		return JsonResponse(users_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
