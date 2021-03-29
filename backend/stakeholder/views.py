@@ -180,6 +180,9 @@ def USERS_ID(request,pk):
 		users.delete()
 		return JsonResponse({'message': 'User was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
 
+
+admin =["abc@gmail.com"]
+
 @api_view(['GET','PUT'])
 def USERS(request):
 	os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
