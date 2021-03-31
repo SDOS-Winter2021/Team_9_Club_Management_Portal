@@ -16,8 +16,3 @@ class CLUB_GENERALSerializer(serializers.ModelSerializer):
 		model=CLUB_GENERAL
 		fields=('id','name','description','coordinator1','coordinator1_email','coordinator2','coordinator2_email','coordinator3','coordinator3_email','fb_link','ig_link','website_link')
 
-class USER_DETAILS_Serializer(serializers.ModelSerializer):
-	class Meta:
-		model=USER_DETAILS
-		fields=('refresh_token','access_token','google_id','name')
-

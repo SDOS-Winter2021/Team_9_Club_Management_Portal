@@ -14,6 +14,7 @@ class USER_DETAILSAdmin(admin.ModelAdmin):
 admin.site.register(CLUB,CLUBAdmin)
 admin.site.register(Users,UsersAdmin)
 admin.site.register(CLUB_GENERAL,CLUB_GENERALAdmin)
-admin.site.register(USER_DETAILS,USER_DETAILSAdmin)
+admin.site.register(GoogleCredentials)
+
 
 
