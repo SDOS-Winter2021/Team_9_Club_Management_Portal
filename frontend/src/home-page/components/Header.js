@@ -17,20 +17,8 @@ import GoogleButton from "./GLogout";
 const Header = () => {
   return (
     <>
-      <Flex
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-        textAlign="center"
-        mt={4}
-      >
-        <Flex
-          display="flex"
-          flexDirection="row"
-          alignItems="flex-start"
-          justifyContent="flex-start"
-        >
+      <Flex display="flex" flexDirection="column" alignItems="center" justifyContent="center" textAlign="center" mt={4} >
+        <Flex display="flex" flexDirection="row" alignItems="flex-start" justifyContent="flex-start" >
           <Text fontSize="3xl" fontWeight="bold">
             ⚡️Club Management Portal
           </Text>
@@ -40,9 +28,9 @@ const Header = () => {
         </Flex>
         <Text color="gray.500">Sup</Text>
       </Flex>
-      <Box bgGradient="linear(red.400 0%, orange.500 35%, yellow.400 95%)" px={4}>
+      <Box bgGradient="linear(teal.500 55%, green.400 95%)" px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-          <Text fontSize="xl">
+          <Text fontSize="xl" fontWeight="medium">
             Welcome, ABC
           </Text>
           <Button maxW={'xs'} variant={'outline'} leftIcon={<FcGoogle />} bg="white">
