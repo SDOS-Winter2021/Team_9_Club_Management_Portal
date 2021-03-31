@@ -63,7 +63,7 @@ const Feature = ({ time, location, c1, c2, c3 }: FeatureProps) => {
             <Text fontWeight={600}>
               {location}
             </Text>
-          </Stack>
+    </Stack>
   );
 };
 

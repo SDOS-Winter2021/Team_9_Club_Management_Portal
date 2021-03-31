@@ -40,7 +40,7 @@ const Header = () => {
         </Flex>
         <Text color="gray.500">Sup</Text>
       </Flex>
-      <Box bg={useColorModeValue("orange.300", "gray.900")} px={4}>
+      <Box bgGradient="linear(red.400 0%, orange.500 35%, yellow.400 95%)" px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <Text fontSize="xl">
             Welcome, ABC
