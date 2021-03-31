@@ -62,6 +62,11 @@ class Clubs extends React.Component {
     console.log(id);
     history.push(`/club/${name}@${id}`)
   };
+  
+  Redirect_Social = (Link) => {
+    console.log("Sending you to Social Page ------------->");
+    window.open(Link, "_blank")
+  };
 
   render() {
     return (
@@ -69,7 +74,7 @@ class Clubs extends React.Component {
       <SimpleGrid columns={1} p={5} gap={6}>
         {
           this.state.clubs.map((user, i) =>
-          <Button justifyContent="space-between" p={6} border="1px" bg="cyan.400" _hover={{ bg: "cyan.500" }} rightIcon={<Flex flexDirection="row"><Button bg="cyan.400" _hover={{ bg: "cyan.600" }}><Icon as={IoLogoFacebook} color={"black"} w={5} h={5}/></Button><Button bg="cyan.400" _hover={{ bg: "cyan.600" }}><Icon as={IoLogoInstagram} color={"black"} w={5} h={5}/></Button></Flex>} onClick={() =>this.Redirect_Club(this.state.clubs[i]["name"],this.state.clubs[i]["id"])} key={this.state.clubs[i]["id"]}>
+          <Button justifyContent="space-between" p={6} border="1px" bg="cyan.400" _hover={{ bg: "cyan.500" }} rightIcon={<Flex flexDirection="row"><Button bg="cyan.400" _hover={{ bg: "cyan.600" }} onClick={(e) =>{ e.stopPropagation(); this.Redirect_Social(this.state.clubs[i]["fb_link"])}}><Icon as={IoLogoFacebook} color={"black"} w={5} h={5}/></Button><Button bg="cyan.400" _hover={{ bg: "cyan.600" }} onClick={(e) =>{ e.stopPropagation(); this.Redirect_Social(this.state.clubs[i]["ig_link"])}}><Icon as={IoLogoInstagram} color={"black"} w={5} h={5}/></Button></Flex>} onClick={() =>this.Redirect_Club(this.state.clubs[i]["name"],this.state.clubs[i]["id"])} key={this.state.clubs[i]["id"]}>
               {console.log(this.state.clubs[i])}
               <Text>
                 {this.state.clubs[i]["name"]}
