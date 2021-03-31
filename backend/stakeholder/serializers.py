@@ -14,7 +14,3 @@ class CLUB_GENERALSerializer(serializers.ModelSerializer):
 	class Meta:
 		model=CLUB_GENERAL
 		fields=('id','name','description','coordinator1','coordinator1_email','coordinator2','coordinator2_email','coordinator3','coordinator3_email','fb_link','ig_link','website_link')
-class USER_DETAILSSerializer(serializers.ModelSerializer):
-	class Meta:
-		model=USER_DETAILS
-		fileds=('id','access_token','google_id','email','name')

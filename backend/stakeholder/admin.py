@@ -12,5 +12,6 @@ class CLUB_GENERALAdmin(admin.ModelAdmin):
 admin.site.register(CLUB,CLUBAdmin)
 admin.site.register(Users,UsersAdmin)
 admin.site.register(CLUB_GENERAL,CLUB_GENERALAdmin)
+admin.site.register(GoogleCredentials)
 
 

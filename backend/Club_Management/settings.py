@@ -29,6 +29,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 SITE_ID=2
 
+AUTHENTICATION_BACKENDS = (
+
+ 'django.contrib.auth.backends.ModelBackend',
+)
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,18 +43,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
     "rest_framework",
-    'rest_framework.authtoken',
-     'rest_auth',
      'corsheaders',
     "frontend",
-     'django.contrib.sites',
-     'allauth',
-     'allauth.account',
-     'rest_auth.registration',
-     'allauth.socialaccount',
-     'allauth.socialaccount.providers.facebook',
-     'allauth.socialaccount.providers.google',
+
+
 ]
 
 MIDDLEWARE = [
@@ -139,17 +137,23 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "../frontend/build/static"),
 ]
+GOOGLE_OAUTH2_CLIENT_SECRETS_JSON = 'client_secrets.json'
+GOOGLE_OAUTH2_CLIENT_ID='426037707978-88edj8k1aka47he62l7l3l6rkf42tbmh.apps.googleusercontent.com'
+GOOGLE_OAUTH2_SECRET_KEY='3nwr-fEV3sigJ187nDOP1NoZ'
+GOOGLE_OAUTH2_TOKEN_URI='https://oauth2.googleapis.com/token'
+GOOGLE_OAUTH2_SCOPES=['https://www.googleapis.com/auth/calendar.events','https://www.googleapis.com/auth/userinfo.profile']
+GOOGLE_OAUTH2_API_SERVICE_NAME='calendar'
+GOOGLE_OAUTH2_API_VERSION='v3'
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static/"
 
-
+#AUTH_USER_MODEL='stakeholder.GoogleCredentials'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
