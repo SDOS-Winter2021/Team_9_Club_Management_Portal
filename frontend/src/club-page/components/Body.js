@@ -19,8 +19,6 @@ import {
   IoLogoFacebook,
   IoLogoInstagram,
   IoLaptopOutline,
-
-
 } from 'react-icons/io5';
 import { FaDrum ,FaRegMinusSquare} from "react-icons/fa";
 import {
@@ -92,7 +90,7 @@ const Body = (Info_G,Info_E) => {
             }>
             <Feature
               icon={
-                <Icon as={IoMailOpenOutline} color={'yellow.500'} w={5} h={5} />
+                <Icon as={IoMailOpenOutline} color={'yellow.500'} w={5} h={5}/>
               }
               iconBg={useColorModeValue('yellow.100', 'yellow.900')}
               text={`${Info_G.Info_G.coordinator1_email}`}

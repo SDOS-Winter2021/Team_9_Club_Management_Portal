@@ -12,16 +12,8 @@ export default class GoogleButton extends React.Component{
     let googleResponse  = await googleLogin()
     console.log(googleResponse.data["response"]);
     window.open(googleResponse.data["response"], '_self');
-    //win.location;
-    //var windo = window.open("about:blank", "_self");
-    //this.onClose()
     }
 
-    onClose = () => {
-      window.opener = null;
-      window.open("", "_self");
-      window.close();
-    };
 
   render(){
     return (

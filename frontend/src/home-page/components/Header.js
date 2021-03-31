@@ -10,7 +10,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import axios from "axios";
-
+import { FcGoogle } from 'react-icons/fc';
 import React from "react";
 import GoogleButton from "./GLogout";
 
@@ -40,10 +40,14 @@ const Header = () => {
         </Flex>
         <Text color="gray.500">Sup</Text>
       </Flex>
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+      <Box bg={useColorModeValue("orange.300", "gray.900")} px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-          <Text>Welcome, ABC</Text>
-          <GoogleButton></GoogleButton>
+          <Text fontSize="xl">
+            Welcome, ABC
+          </Text>
+          <Button maxW={'xs'} variant={'outline'} leftIcon={<FcGoogle />} bg="white">
+            <Text>Logout</Text>
+        </Button>
         </Flex>
       </Box>
     </>
