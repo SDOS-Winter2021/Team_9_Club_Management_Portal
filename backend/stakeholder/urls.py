@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^api/users/(?P<pk>[0-9]+)$',views.USERS_ID),
     url(r'^api/user/authorize$', views.authorize),
     url(r'^api/user/save$', views.oauth2callback),
+
 ]

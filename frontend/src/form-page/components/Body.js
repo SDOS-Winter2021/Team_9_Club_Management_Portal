@@ -39,6 +39,8 @@ export default function Body (){
       event_info.append('poster', poster);
       event_info.append('request',data);
 
+
+      console.log(name);
       let eResponse  = await eventOut(event_info)
       console.log(eResponse);
     }

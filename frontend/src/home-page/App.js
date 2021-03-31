@@ -33,7 +33,7 @@ import Events from './components/Events'
 import Clubs from './components/Clubs'
 
 
-const App = () => (
+const Club_Page = () => (
   <ThemeProvider theme={theme}>
     <CSSReset/>
     <Header></Header>
@@ -42,4 +42,4 @@ const App = () => (
   </ThemeProvider>
 )
 
-export default App
+export default Club_Page

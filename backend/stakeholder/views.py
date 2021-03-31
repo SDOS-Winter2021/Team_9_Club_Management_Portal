@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from .models import CLUB,Users,CLUB_GENERAL,GoogleCredentials
 from .serializers import CLUBSerializer,UsersSerializer,CLUB_GENERALSerializer
 from .utils import MultipartJsonParser
+
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 from rest_framework import status
@@ -13,6 +14,7 @@ from django.views.generic import TemplateView
 import json
 from datetime import datetime, timedelta
 from django.conf import settings
+
 import google.oauth2.credentials
 import google_auth_oauthlib.flow
 import google_auth_oauthlib
@@ -30,6 +32,7 @@ from django.urls import reverse
 import googleapiclient.discovery
 import logging
 from django.views.decorators.csrf import csrf_exempt
+
 # Create your views here.
 
 logger = logging.getLogger(__name__)
@@ -73,7 +76,13 @@ def CLUB_LIST(request):
 			clubs.poster.save(p.name,p,save=True)
 		if('file' in request.data):
 			f=request.data['file']
+
 			clubs.payment_receipt_student.save(f.name,f,save=True)
+		parser_class=(FormParser, MultiPartParser)
+		data_recv = request.data.copy()
+		data_recv.pop('Poster')
+		club_data=json.loads(json.dumps(data_recv))
+		print(club_data,type(club_data))
 		club_serializer=CLUBSerializer(clubs,data=club_data)
 		#print("THIS IS DATA",club_data,club_serializer.is_valid())
 		if(club_serializer.is_valid()):
@@ -299,3 +308,4 @@ def _get_flow(request, **kwargs):
     # the authorization flow. The redirect URI is required.
     flow.redirect_uri ="http://127.0.0.1:8000/api/user/save"
     return flow
+

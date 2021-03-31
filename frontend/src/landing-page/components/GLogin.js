@@ -2,26 +2,28 @@ import { Button, Center, Text } from '@chakra-ui/react';
 import React, { Component }  from 'react';
 import GoogleLogin from 'react-google-login';
 import googleLogin from "./googleLogin"
+import { FcGoogle } from 'react-icons/fc';
+import axios from "axios";
 
-const responseGoogle = async(response) => {
-  console.log(response);
-  var x=response.accessToken
-  var z=response.profileObj
-  let googleResponse  = await googleLogin(x,z)
-  console.log(googleResponse);
-  }
+export default class GoogleButton extends React.Component{
+    
+  responseGoogle = async() => {
+    //console.log(response);
+    let googleResponse  = await googleLogin()
+    console.log(googleResponse.data["response"]);
+    window.open(googleResponse.data["response"], '_self');
+    }
 
-export default function GoogleButton() {
+
+  render(){
     return (
-      
       <Center p={8}>
-        <GoogleLogin
-        clientId="431885344310-8rt98qaf06l6dgvhe6im3hshbtqom5u9.apps.googleusercontent.com"
-        buttonText="Sign in with Google"
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
-        isSignedIn={true}
-      />
+        <Button w={'full'} maxW={'md'} variant={'outline'} leftIcon={<FcGoogle />} onClick={this.responseGoogle}>
+          <Center>
+            <Text>Sign in with Google</Text>
+          </Center>
+        </Button>
       </Center>
-    );
+    )
   }
+}

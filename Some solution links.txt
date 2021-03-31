@@ -1,7 +1,0 @@
-DATABASES is improperly configured. error-->
-https://medium.com/@rajinkya26/update-96d45908eefe
-SQLdecode error-->
-https://stackoverflow.com/questions/55194079/how-to-solve-sqldecode-error-when-you-migrate-models-in-django
-
-connect to mongo atlas
-https://medium.com/@hrithviksood1/integrating-mongodb-atlas-with-django-using-djongo-962dfd1513eb

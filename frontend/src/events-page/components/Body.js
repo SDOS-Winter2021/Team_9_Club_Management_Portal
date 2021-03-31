@@ -1,27 +1,123 @@
 import React, { Component, ReactNode } from "react";
 import { IoPencil, IoTrashOutline } from "react-icons/io5";
 import Head from "next/head";
+import {
+  ThemeProvider,
+  CSSReset,
+  theme,
+  Box,
+  Image,
+  Badge,
+  Text,
+  Icon,
+  Stack,
+  Avatar,
+  AvatarBadge,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  FormLabel,
+  Input,
+  FormHelperText,
+  FormErrorMessage,
+  Grid,
+  Switch,
+  InputGroup,
+  InputRightElement,
+  Flex,
+  Tag,
+  Heading,
+  Container,
+  SimpleGrid,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import history from "../../history";
+import { render } from "react-dom";
 
-const Feature = ({ text, icon, iconBg }: FeatureProps) => {
-  return (
-    <Stack direction={"row"} align={"center"}>
-      <Flex
-        w={8}
-        h={8}
-        align={"center"}
-        justify={"center"}
-        rounded={"full"}
-        bg={iconBg}
-      >
-        {icon}
-      </Flex>
-      <Text fontWeight={600} color="white">
-        {text}
-      </Text>
-    </Stack>
+export default function Body({ eventid }) {
+  const eventID = eventid;
+  console.log(eventID);
+  const [eventInfo, setEventInfo] = useState([]);
+
+  useEffect(() => {
+    async function getEventInfo(eventID) {
+      let res = await axios
+        .get(`http://127.0.0.1:8000/api/clubs/${eventID}`)
+        .then((data) => setEventInfo(data.data));
+    }
+    getEventInfo(eventID);
+  }, []);
+
+  console.log(eventInfo["name"]);
+
+  const Feature = ({ text, icon, iconBg }: FeatureProps) => {
+    return (
+      <Stack direction={"row"} align={"center"}>
+        <Flex
+          w={8}
+          h={8}
+          align={"center"}
+          justify={"center"}
+          rounded={"full"}
+          bg={iconBg}
+        >
+          {icon}
+        </Flex>
+        <Text fontWeight={600} color="white">
+          {text}
+        </Text>
+      </Stack>
+    );
+  };
+
+  const StatsText = ({ children }: { children: ReactNode }) => (
+    <Text as={"span"} fontWeight={700} color={"white"}>
+      {children}
+    </Text>
   );
-};
-const Body = () => {
+
+  const stats = [
+    {
+      title: "Location",
+      content: (
+        <>
+          {eventInfo.length !== 0 ? (
+            <StatsText>{eventInfo["location"]}</StatsText>
+          ) : null}
+        </>
+      ),
+    },
+    {
+      title: "Pre-Reqs",
+      content: (
+        <>
+          <StatsText>None</StatsText>
+        </>
+      ),
+    },
+    {
+      title: "Prize Money",
+      content: (
+        <>
+          {eventInfo.length !== 0 ? (
+            <StatsText>{eventInfo["id"]}</StatsText>
+          ) : null}
+        </>
+      ),
+    },
+    {
+      title: "Additional Info",
+      content: (
+        <>
+          <StatsText>NA</StatsText>
+        </>
+      ),
+    },
+  ];
+
   return (
     <Box bg={"gray.800"} position={"relative"}>
       <Container maxW={"7xl"} zIndex={10} position={"relative"}>
@@ -35,9 +131,11 @@ const Body = () => {
                 py={{ base: 4, md: 20, xl: 5 }}
               >
                 <Box mb={{ base: 8, md: 20 }}>
-                  <Text fontSize={"xl"} color={"white"}>
-                    Event Description
-                  </Text>
+                  {eventInfo.length !== 0 ? (
+                    <Text fontSize={"xl"} color={"white"}>
+                      {eventInfo["description"]}
+                    </Text>
+                  ) : null}
                 </Box>
                 <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
                   {stats.map((stat) => (
@@ -119,46 +217,4 @@ const Body = () => {
       </Container>
     </Box>
   );
-};
-
-const StatsText = ({ children }: { children: ReactNode }) => (
-  <Text as={"span"} fontWeight={700} color={"white"}>
-    {children}
-  </Text>
-);
-
-const stats = [
-  {
-    title: "Location",
-    content: (
-      <>
-        <StatsText>Date Time</StatsText> Location
-      </>
-    ),
-  },
-  {
-    title: "Pre-Reqs",
-    content: (
-      <>
-        <StatsText>None</StatsText>
-      </>
-    ),
-  },
-  {
-    title: "Prize Money",
-    content: (
-      <>
-        <StatsText>10k</StatsText>
-      </>
-    ),
-  },
-  {
-    title: "Additional Info",
-    content: (
-      <>
-        <StatsText>Nop</StatsText>
-      </>
-    ),
-  },
-];
-export default Body;
+}
