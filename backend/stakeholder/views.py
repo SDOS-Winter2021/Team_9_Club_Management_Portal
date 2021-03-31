@@ -29,6 +29,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 import googleapiclient.discovery
 import logging
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 logger = logging.getLogger(__name__)
@@ -228,19 +229,19 @@ def authorize(request):
 	# 	return oauth2callback(request)
 	authorization_url, state = _get_authorization_url(request)
 	request.session['state'] = state
-	return redirect(to=authorization_url)
-
+	print("GEnerated this")
+	return redirect(authorization_url)
+ 
 @login_required
+@api_view(['GET'])
 def oauth2callback(request):
-    flow = _get_flow(request, state=request.session['state'])
-
-    # Note: to test this locally, set OAUTHLIB_INSECURE_TRANSPORT=1 in your .env file
-    # (cf. https://stackoverflow.com/questions/27785375/testing-flask-oauthlib-locally-without-https)
-    print("THIS IS REQUEST: ",request)
-    flow.fetch_token(code=request.GET.get('code'))
-    _save_credentials(user=request.user, credentials=flow.credentials)
-
-    return render(request, 'stakeholder/index.html')
+	if(request.method=='GET'):
+		print("INHER")
+		flow = _get_flow(request, state=request.session['state'])
+		print("THIS IS REQUEST: ",request)
+		flow.fetch_token(code=request.GET.get('code'))
+		_save_credentials(user=request.user, credentials=flow.credentials)
+		return render(request, 'stakeholder/index.html')
 
 @login_required
 def create_meeting(request):
@@ -296,5 +297,5 @@ def _get_flow(request, **kwargs):
 
     # Indicate where the API server will redirect the user after the user completes
     # the authorization flow. The redirect URI is required.
-    flow.redirect_uri = "http://127.0.0.1:8000/api/user/save"
+    flow.redirect_uri ="http://127.0.0.1:8000/api/user/save"
     return flow
