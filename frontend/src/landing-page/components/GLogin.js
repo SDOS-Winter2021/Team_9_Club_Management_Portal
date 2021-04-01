@@ -7,22 +7,26 @@ import axios from "axios";
 
 export default class GoogleButton extends React.Component{
     
-  responseGoogle = async() => {
-    //console.log(response);
-    let googleResponse  = await googleLogin()
+  responseGoogle = async(response) => {
+    console.log(response);
+    let googleResponse  = await googleLogin(response)
     console.log(googleResponse.data["response"]);
-    window.open(googleResponse.data["response"], '_self');
+    //window.open(googleResponse.data["response"], '_self');
     }
+  
 
 
   render(){
     return (
       <Center p={8}>
-        <Button w={'full'} maxW={'md'} variant={'outline'} leftIcon={<FcGoogle />} onClick={this.responseGoogle}>
-          <Center>
-            <Text>Sign in with Google</Text>
-          </Center>
-        </Button>
+        <GoogleLogin
+            clientId={"431885344310-8rt98qaf06l6dgvhe6im3hshbtqom5u9.apps.googleusercontent.com"}
+            render={renderProps => ( <Button w={'full'} maxW={'md'} variant={'outline'} leftIcon={<FcGoogle />} onClick={renderProps.onClick} disabled={renderProps.disabled}> Sign in with Google </Button>)}
+            buttonText="Continue with Google"
+            onSuccess={this.responseGoogle}
+            onFailure={this.responseGoogle}
+            isSignedIn={true}
+        />
       </Center>
     )
   }
