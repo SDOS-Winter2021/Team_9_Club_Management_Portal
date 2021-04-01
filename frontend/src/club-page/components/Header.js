@@ -19,14 +19,11 @@ import history from './../../history';
 const Header = (Info) => {
     return (
         <>
+        {console.log(Info)}
         <Flex flexDirection="row" mt={0} bg={'gray.700'} justifyContent="center">
         <Icon as={IoHomeOutline} color={'gray.200'} w={5} h={5} justifySelf="flex-end" onClick={()=>{history.push(`/`)}}/>
         <Flex display="flex" flexDirection="column" alignItems="center" justifyContent="center" textAlign="center" mt={0} bg={'gray.700'}>
-        <Flex
-          display="flex"
-          flexDirection="row"
-          alignItems="flex-start"
-          justifyContent="flex-start"
+        <Flex display="flex" flexDirection="row" alignItems="flex-start" justifyContent="flex-start"
         >
           <Text fontSize="3xl" fontWeight="bold" >
            {Info.Info.name}
