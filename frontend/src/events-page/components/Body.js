@@ -31,190 +31,172 @@ import {
   Container,
   SimpleGrid,
   useColorModeValue,
+  StackDivider,
+  Button,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import history from "../../history";
 import { render } from "react-dom";
 
-export default function Body({ eventid }) {
-  const eventID = eventid;
-  console.log(eventID);
-  const [eventInfo, setEventInfo] = useState([]);
-
-  useEffect(() => {
-    async function getEventInfo(eventID) {
-      let res = await axios
-        .get(`http://127.0.0.1:8000/api/clubs/${eventID}`)
-        .then((data) => setEventInfo(data.data));
-    }
-    getEventInfo(eventID);
-  }, []);
-
-  console.log(eventInfo["name"]);
-
-  const Feature = ({ text, icon, iconBg }: FeatureProps) => {
-    return (
-      <Stack direction={"row"} align={"center"}>
-        <Flex
-          w={8}
-          h={8}
-          align={"center"}
-          justify={"center"}
-          rounded={"full"}
-          bg={iconBg}
-        >
-          {icon}
-        </Flex>
-        <Text fontWeight={600} color="white">
-          {text}
-        </Text>
-      </Stack>
-    );
-  };
-
-  const StatsText = ({ children }: { children: ReactNode }) => (
-    <Text as={"span"} fontWeight={700} color={"white"}>
-      {children}
-    </Text>
-  );
-
-  const stats = [
-    {
-      title: "Location",
-      content: (
-        <>
-          {eventInfo.length !== 0 ? (
-            <StatsText>{eventInfo["location"]}</StatsText>
-          ) : null}
-        </>
-      ),
-    },
-    {
-      title: "Pre-Reqs",
-      content: (
-        <>
-          <StatsText>None</StatsText>
-        </>
-      ),
-    },
-    {
-      title: "Prize Money",
-      content: (
-        <>
-          {eventInfo.length !== 0 ? (
-            <StatsText>{eventInfo["id"]}</StatsText>
-          ) : null}
-        </>
-      ),
-    },
-    {
-      title: "Additional Info",
-      content: (
-        <>
-          <StatsText>NA</StatsText>
-        </>
-      ),
-    },
-  ];
-
+export default function Body(event) {
+  const eventInfo = event.eventid;
+  console.log(eventInfo);
   return (
-    <Box bg={"gray.800"} position={"relative"}>
-      <Container maxW={"7xl"} zIndex={10} position={"relative"}>
-        <Stack direction={{ base: "row", lg: "row" }}>
-          <Stack>
-            <Stack direction={{ base: "column", lg: "row" }}>
-              <Stack
-                flex={1}
-                color={"gray.400"}
-                justify={{ lg: "center" }}
-                py={{ base: 4, md: 20, xl: 5 }}
-              >
-                <Box mb={{ base: 8, md: 20 }}>
-                  {eventInfo.length !== 0 ? (
-                    <Text fontSize={"xl"} color={"white"}>
-                      {eventInfo["description"]}
-                    </Text>
-                  ) : null}
-                </Box>
-                <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
-                  {stats.map((stat) => (
-                    <Box key={stat.title}>
-                      <Text
-                        fontFamily={"heading"}
-                        fontSize={"3xl"}
-                        color={"white"}
-                        mb={3}
-                      >
-                        {stat.title}
-                      </Text>
-                      <Text fontSize={"xl"} color={"gray.400"}>
-                        {stat.content}
-                      </Text>
-                    </Box>
-                  ))}
-                </SimpleGrid>
-              </Stack>
-            </Stack>
+    <>
+      <Container maxW={"5xl"} py={12}>
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
+          <Stack spacing={4}>
+            <Text
+              textTransform={"uppercase"}
+              color={"black"}
+              fontWeight={600}
+              fontSize={"sm"}
+              bgGradient="linear(to-r,red.300 65%, orange.300 95%)"
+              p={2}
+              alignSelf={"flex-start"}
+              rounded={"md"}
+            >
+              Event Description
+            </Text>
+            <Text color={"gray.500"} fontSize={"lg"}>
+              {eventInfo["description"]}
+            </Text>
+            <Text
+              textTransform={"uppercase"}
+              color={"black"}
+              fontWeight={600}
+              fontSize={"sm"}
+              bgGradient="linear(to-r,red.300 65%, orange.300 95%)"
+              p={2}
+              alignSelf={"flex-start"}
+              rounded={"md"}
+            >
+              Date Time
+            </Text>
+            <Text color={"gray.500"} fontSize={"lg"}>
+              {eventInfo["date_time"]}
+            </Text>
+            <Text
+              textTransform={"uppercase"}
+              color={"black"}
+              fontWeight={600}
+              fontSize={"sm"}
+              bgGradient="linear(to-r,red.300 65%, orange.300 95%)"
+              p={2}
+              alignSelf={"flex-start"}
+              rounded={"md"}
+            >
+              Location
+            </Text>
+            <Text color={"gray.500"} fontSize={"lg"}>
+              {eventInfo["location"]}
+            </Text>
+            <Text
+              textTransform={"uppercase"}
+              color={"black"}
+              fontWeight={600}
+              fontSize={"sm"}
+              bgGradient="linear(to-r,red.300 65%, orange.300 95%)"
+              p={2}
+              alignSelf={"flex-start"}
+              rounded={"md"}
+            >
+              Prize Money
+            </Text>
+            <Text color={"gray.500"} fontSize={"lg"}>
+              {"Add Here"}
+            </Text>
           </Stack>
-          <Stack paddingLeft="500">
+          <Flex>
             <Image
-              src="https://i.pinimg.com/736x/43/29/c2/4329c2824fec2873b5e0569180e482cf.jpg"
-              width="300px"
-              height="500px"
-            />
-          </Stack>
-        </Stack>
-        <Flex flex={1} />
-        <Text fontSize={"3xl"} color={"white"} paddingTop="100">
-          {" "}
-          Admin Information
-        </Text>
-        <Stack direction={{ base: "row", lg: "row" }}>
-          <Stack>
-            <Feature
-              mt={10}
-              icon={<Icon as={IoPencil} color={"purple.500"} w={5} h={5} />}
-              iconBg={useColorModeValue("yellow.100", "yellow.900")}
-              text={"Edit"}
-            />
-          </Stack>
-          <Stack ml="100">
-            <Feature
-              mt={10}
-              icon={
-                <Icon as={IoTrashOutline} color={"purple.500"} w={5} h={5} />
+              maxHeight="400px"
+              rounded={"md"}
+              alt={"feature image"}
+              src={
+                "https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg"
               }
-              iconBg={useColorModeValue("yellow.100", "yellow.900")}
-              text={"Delete"}
             />
-          </Stack>
-        </Stack>
-        <Stack direction={{ base: "row", lg: "row" }}>
-          <Stack>
-            <Text fontSize={"xl"} color={"white"} paddingTop="100">
-              {" "}
-              Club Receipt
+          </Flex>
+        </SimpleGrid>
+        <Heading ml={5} marginTop={20}>
+          Admin Information
+        </Heading>
+        <SimpleGrid columns={1} p={5} gap={6} maxWidth="25%">
+          <Button
+            justifyContent="space-evenly"
+            p={4}
+            border="1px"
+            bgGradient="linear(to-r, purple.500,red.200)"
+            _hover={{ bgGradient: "linear(to-r, purple.700,red.400)" }}
+            leftIcon={<Icon as={IoPencil} color={"black"} w={5} h={5} />}
+          >
+            <Text>{"Edit Event"}</Text>
+          </Button>
+          <Button
+            justifyContent="space-evenly"
+            p={4}
+            border="1px"
+            bgGradient="linear(to-r, purple.500,red.200)"
+            _hover={{ bgGradient: "linear(to-r, purple.700,red.400)" }}
+            leftIcon={<Icon as={IoTrashOutline} color={"black"} w={5} h={5} />}
+          >
+            <Text>{"Delete Event"}</Text>
+          </Button>
+        </SimpleGrid>
+        <SimpleGrid
+          columns={{ base: 1, md: 2 }}
+          spacing={0}
+          justifyContent="center"
+        >
+          <Stack spacing={4}>
+            <Text
+              textTransform={"uppercase"}
+              color={"black"}
+              fontWeight={600}
+              fontSize={"lg"}
+              p={2}
+              alignSelf={"flex-start"}
+              rounded={"md"}
+            >
+              Event Reciept
             </Text>
-            <Image
-              src="https://templates.invoicehome.com/receipt-template-us-band-blue-750px.png"
-              width="300px"
-              height="500px"
-            />
+            <Flex>
+              <Image
+                maxHeight="400px"
+                rounded={"md"}
+                alt={"feature image"}
+                src={
+                  "https://templates.invoicehome.com/receipt-template-us-band-blue-750px.png"
+                }
+              />
+            </Flex>
           </Stack>
-          <Stack paddingLeft="300">
-            <Text fontSize={"xl"} color={"white"} paddingTop="100">
-              {" "}
-              Admin Receipt
+          <Stack spacing={4}>
+            <Text
+              textTransform={"uppercase"}
+              color={"black"}
+              fontWeight={600}
+              fontSize={"lg"}
+              p={2}
+              alignSelf={"flex-start"}
+              rounded={"md"}
+            >
+              Reimbursement Reciept
             </Text>
-            <Image
-              src="https://templates.invoicehome.com/receipt-template-us-band-blue-750px.png"
-              width="300px"
-              height="500px"
-            />
+            <Flex>
+              <Image
+                maxHeight="400px"
+                rounded={"md"}
+                alt={"feature image"}
+                src={
+                  "https://templates.invoicehome.com/receipt-template-us-band-blue-750px.png"
+                }
+              />
+            </Flex>
           </Stack>
-        </Stack>
+        </SimpleGrid>
       </Container>
-    </Box>
+    </>
   );
 }

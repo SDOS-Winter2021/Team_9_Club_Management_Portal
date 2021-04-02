@@ -14,15 +14,13 @@ import {
   theme,
 } from "@chakra-ui/react";
 
-import Body from "./components/Body";
+import Body from "./AddClub";
 
-const Form_Page = () => {
-  return (
-    <ThemeProvider theme={theme}>
-      <CSSReset />
-      <Body></Body>
-    </ThemeProvider>
-  );
-};
+const Club_Form_Page = () => (
+  <ThemeProvider theme={theme}>
+    <CSSReset />
+    <Body></Body>
+  </ThemeProvider>
+);
 
-export default Form_Page;
+export default Club_Form_Page;

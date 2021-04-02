@@ -16,25 +16,21 @@ import {
 import Head from 'next/head';
 import history from './../../history';
 
-const Header = () => {
+const Header = (Info) => {
     return (
-        
       <>
-      <Flex flexDirection="row" mt={0} bg={'gray.700'} justifyContent="center">
-      <Icon as={IoHomeOutline} color={'gray.200'} w={5} h={5} justifySelf="flex-end" onClick={()=>{history.push(`/`)}}/>
-      <Flex display="flex" flexDirection="column" alignItems="center" justifyContent="center" textAlign="center" mt={0} bg={'gray.700'}>
-      <Flex
-        display="flex"
-        flexDirection="row"
-        alignItems="flex-start"
-        justifyContent="flex-start"
-      >
+      <Flex flexDirection="row" mt={0} bgGradient="linear(teal.500 55%, green.400 95%)" justifyContent="center">
+      <Icon as={IoHomeOutline} w={5} h={5} justifySelf="flex-end" onClick={()=>{history.push(`/home`)}}/>
+      <Flex display="flex" flexDirection="column" alignItems="center" justifyContent="center" textAlign="center" mt={0} bgGradient="linear(teal.500 55%, green.400 95%)">
+      <Flex display="flex" flexDirection="row" alignItems="flex-start" justifyContent="flex-start">
         <Text fontSize="3xl" fontWeight="bold" >
-         Event Name
+         {Info.Info.name}
         </Text>
       </Flex>
-      <Text color="gray.500">Club Name</Text>
-    </Flex>
+        <Text color="black">
+          {Info.Info.club_name}
+        </Text>
+      </Flex>
     </Flex>
     </>
     )
