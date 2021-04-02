@@ -41,32 +41,6 @@ import {
 import { BsBuilding } from "react-icons/bs";
 import history from "../../history";
 
-interface FeatureProps {
-  time: string;
-  location: string;
-  c1: string;
-  c2: string;
-  c3: string;
-}
-const Feature = ({ time, location, c1, c2, c3 }: FeatureProps) => {
-  return (
-    <Stack direction={'row'} align={'center'}>
-            <Flex w={8} h={8} align={'center'} justify={'center'} rounded={'full'} bg={useColorModeValue(c1,c2)}> 
-              <Icon as={IoAlarmOutline} color={c3} w={5} h={5}/>
-            </Flex>
-            <Text fontWeight={600}>
-              {time}
-            </Text>
-            <Flex w={8} h={8} align={'center'} justify={'center'} rounded={'full'} bg={useColorModeValue(c1,c2)}> 
-              <Icon as={BsBuilding} color={c3} w={5} h={5}/>
-            </Flex>
-            <Text fontWeight={600}>
-              {location}
-            </Text>
-    </Stack>
-  );
-};
-
 
 class Events extends React.Component {
   constructor() {
@@ -107,7 +81,20 @@ class Events extends React.Component {
               {this.state.events[i]["name"]}
               </Button>
             </StatNumber>
-            <Feature  time={this.state.events[i]["date_time"]} location={this.state.events[i]["location"]} c1="gray.300" c2="gray.300" c3="black"/>
+            <Stack direction={'row'} align={'center'}>
+              <Flex w={8} h={8} align={'center'} justify={'center'} rounded={'full'} bg={"gray.300"}> 
+                <Icon as={IoAlarmOutline} color={"black"} w={5} h={5}/>
+              </Flex>
+              <Text fontWeight={600}>
+                {this.state.events[i]["date_time"]}
+              </Text>
+              <Flex w={8} h={8} align={'center'} justify={'center'} rounded={'full'} bg={"gray.300"}> 
+                <Icon as={BsBuilding} color={"black"} w={5} h={5}/>
+              </Flex>
+              <Text fontWeight={600}>
+                {this.state.events[i]["location"]}
+              </Text>
+            </Stack>
           </Stat>
         ))}
       </Grid>

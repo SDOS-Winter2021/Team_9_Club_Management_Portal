@@ -19,6 +19,8 @@ import {
   IoLogoFacebook,
   IoLogoInstagram,
   IoLaptopOutline,
+
+
 } from 'react-icons/io5';
 import { FaDrum ,FaRegMinusSquare} from "react-icons/fa";
 import {
@@ -27,44 +29,6 @@ import {
   Switch
 } from "react-router-dom";
 import Head from 'next/head';
-
-interface FeatProps {
-  title: string;
-  children: string;
-  icon: React.ReactElement;
-  toGo: String;
-}
-
-export const Feat = ({ title, children, icon, toGo }: FeatProps) => {
-  return (
-    <Stack spacing="6" direction={{ base: 'column', md: 'row' }}>
-      <Box fontSize="2xl">{icon}</Box>
-      <Stack spacing="1">
-        <Text fontWeight="extrabold" fontSize="lg">
-      <Button onClick={()=>history.push(`/event/${toGo}`)}>
-          {title}
-      </Button>
-        </Text>
-        <Box color={useColorModeValue('gray.600', 'gray.400')}>{children}</Box>
-      </Stack>
-    </Stack>
-  )
-}
-
-interface FeatureProps {
-  text: string;
-  iconBg: string;
-  icon?: ReactElement;
-}
-const Feature = ({ text, icon, iconBg }: FeatureProps) => {
-  return (
-    <Stack direction={'row'} align={'center'}>
-      <Flex w={8} h={8} align={'center'} justify={'center'} rounded={'full'} bg={iconBg}> {icon}
-      </Flex>
-      <Text fontWeight={600}>{text}</Text>
-    </Stack>
-  );
-};
 
 const Body = (Info_G,Info_E) => {
     return (
@@ -88,30 +52,26 @@ const Body = (Info_G,Info_E) => {
                 borderColor={useColorModeValue('gray.100', 'gray.700')}
               />
             }>
-            <Feature
-              icon={
-                <Icon as={IoMailOpenOutline} color={'yellow.500'} w={5} h={5}/>
-              }
-              iconBg={useColorModeValue('yellow.100', 'yellow.900')}
-              text={`${Info_G.Info_G.coordinator1_email}`}
-            />
-            <Feature
-              icon={<Icon as={IoLaptopOutline} color={'blue.500'} w={5} h={5} />}
-              iconBg={useColorModeValue('blue.100', 'blue.900')}
-              text={`${Info_G.Info_G.website_link}`}
-            />
-            <Feature
-              icon={<Icon as={IoLogoFacebook} color={'green.500'} w={5} h={5} />}
-              iconBg={useColorModeValue('green.100', 'green.900')}
-              text={`${Info_G.Info_G.fb_link}`}
-            />
-            <Feature
-              icon={
-                <Icon as={IoLogoInstagram} color={'purple.500'} w={5} h={5} />
-              }
-              iconBg={useColorModeValue('purple.100', 'purple.900')}
-              text={`${Info_G.Info_G.ig_link}`}
-            />
+            <Stack direction={'row'} align={'center'}>
+              <Flex w={8} h={8} align={'center'} justify={'center'} rounded={'full'} bg={'yellow.100'}> {<Icon as={IoMailOpenOutline} color={'yellow.500'} w={5} h={5}/>}
+              </Flex>
+              <Text fontWeight={600}>{Info_G.Info_G.coordinator1_email}</Text>
+            </Stack>
+            <Stack direction={'row'} align={'center'}>
+              <Flex w={8} h={8} align={'center'} justify={'center'} rounded={'full'} bg={'blue.100'}> {<Icon as={IoLaptopOutline} color={'blue.500'} w={5} h={5}/>}
+              </Flex>
+              <Text fontWeight={600}>{Info_G.Info_G.website_link}</Text>
+            </Stack>
+            <Stack direction={'row'} align={'center'}>
+              <Flex w={8} h={8} align={'center'} justify={'center'} rounded={'full'} bg={'green.100'}> {<Icon as={IoLogoFacebook} color={'green.500'} w={5} h={5}/>}
+              </Flex>
+              <Text fontWeight={600}>{Info_G.Info_G.fb_link}</Text>
+            </Stack>
+            <Stack direction={'row'} align={'center'}>
+              <Flex w={8} h={8} align={'center'} justify={'center'} rounded={'full'} bg={'purple.100'}> {<Icon as={IoLogoInstagram} color={'purple.500'} w={5} h={5}/>}
+              </Flex>
+              <Text fontWeight={600}>{Info_G.Info_G.ig_link}</Text>
+            </Stack>
           </Stack>
         </Stack>
         <Flex>
@@ -137,9 +97,17 @@ const Body = (Info_G,Info_E) => {
           <SimpleGrid columns={{ base: 1, md: 2 }} spacingX="10" spacingY="14">
             {
             Object.keys(Info_G.Info_E).map((user, i) =>
-            <Feat title={`${Info_G.Info_E[i].name}`} icon={<FaRegMinusSquare />} toGo={`${Info_G.Info_E[i].id}`} key={Info_G.Info_E[i].id}>
-              {`${Info_G.Info_E[i].location}`} on {`${Info_G.Info_E[i].date_time}`}
-            </Feat>
+            <Stack spacing="6" direction={{ base: 'column', md: 'row' }}>
+              <Box fontSize="2xl">{<FaRegMinusSquare/>}</Box>
+              <Stack spacing="1">
+                <Text fontWeight="extrabold" fontSize="lg">
+              <Button onClick={()=>history.push(`/event/${Info_G.Info_E[i].id}`)}>
+                  {Info_G.Info_E[i].name}
+              </Button>
+                </Text>
+                <Box color={'gray.600'}>{`${Info_G.Info_E[i].location}`} on {`${Info_G.Info_E[i].date_time}`}</Box>
+              </Stack>
+            </Stack>
             )}
           </SimpleGrid>
         </Box>
@@ -150,10 +118,20 @@ const Body = (Info_G,Info_E) => {
       <Box as="section" py="24">
         <Box maxW={{ base: 'xl', md: '5xl' }} mx="auto" px={{ base: '6', md: '8' }}>
           <SimpleGrid columns={{ base: 1, md: 2 }} spacingX="10" spacingY="14">
-            <Feat title="Some Event" icon={<IoLaptopOutline />}>
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-              invidunt ut labore.
-            </Feat>
+          {
+            Object.keys(Info_G.Info_E).map((user, i) =>
+            <Stack spacing="6" direction={{ base: 'column', md: 'row' }}>
+              <Box fontSize="2xl">{<FaRegMinusSquare/>}</Box>
+              <Stack spacing="1">
+                <Text fontWeight="extrabold" fontSize="lg">
+              <Button onClick={()=>history.push(`/event/${Info_G.Info_E[i].id}`)}>
+                  {Info_G.Info_E[i].name}
+              </Button>
+                </Text>
+                <Box color={'gray.600'}>{`${Info_G.Info_E[i].location}`} on {`${Info_G.Info_E[i].date_time}`}</Box>
+              </Stack>
+            </Stack>
+            )}
           </SimpleGrid>
         </Box>
       </Box>
