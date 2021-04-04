@@ -114,7 +114,8 @@ export default function Body(event) {
               rounded={"md"}
               alt={"feature image"}
               src={
-                "https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg"
+                `${event.poster}`
+                //"https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg"
               }
             />
           </Flex>
@@ -167,7 +168,8 @@ export default function Body(event) {
                 rounded={"md"}
                 alt={"feature image"}
                 src={
-                  "https://templates.invoicehome.com/receipt-template-us-band-blue-750px.png"
+                  `${event.payment_receipt_student}`
+                  //"https://templates.invoicehome.com/receipt-template-us-band-blue-750px.png"
                 }
               />
             </Flex>
@@ -190,7 +192,8 @@ export default function Body(event) {
                 rounded={"md"}
                 alt={"feature image"}
                 src={
-                  "https://templates.invoicehome.com/receipt-template-us-band-blue-750px.png"
+                  `${event.payment_receipt_reimburse}`
+                  //"https://templates.invoicehome.com/receipt-template-us-band-blue-750px.png"
                 }
               />
             </Flex>
