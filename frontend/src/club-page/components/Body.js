@@ -143,7 +143,7 @@ const Body = (Info_G, Info_E) => {
           </Flex>
         </SimpleGrid>
         {(() => {
-        if (localStorage.getItem("email") == Info_G.Info_G["email"]) {
+        if (sessionStorage.getItem("email") == Info_G.Info_G["email"]) {
           return (
             <>
               <Button

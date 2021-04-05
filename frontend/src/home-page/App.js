@@ -33,7 +33,8 @@ import Events from './components/Events'
 import Clubs from './components/Clubs'
 
 
-class Club_Page extends React.Component {
+
+class Home_Page extends React.Component {
   constructor() {
     super();
   }
@@ -44,6 +45,36 @@ class Club_Page extends React.Component {
 
   componentDidMount() {
     this.getUser();
+    // transfers sessionStorage from one tab to another
+    var sessionStorage_transfer = function(event) {
+      if(!event) { event = window.event; } // ie suq
+      if(!event.newValue) return;          // do nothing if no value to work with
+      if (event.key == 'getSessionStorage') {
+        // another tab asked for the sessionStorage -> send it
+        localStorage.setItem('sessionStorage', JSON.stringify(sessionStorage));
+        // the other tab should now have it, so we're done with it.
+        localStorage.removeItem('sessionStorage'); // <- could do short timeout as well.
+      } else if (event.key == 'sessionStorage' && !sessionStorage.length) {
+        // another tab sent data <- get it
+        var data = JSON.parse(event.newValue);
+        for (var key in data) {
+          sessionStorage.setItem(key, data[key]);
+        }
+      }
+    };
+
+    // listen for changes to localStorage
+    if(window.addEventListener) {
+      window.addEventListener("storage", sessionStorage_transfer, false);
+    } else {
+      window.attachEvent("onstorage", sessionStorage_transfer);
+    };
+
+    // Ask other tabs for session storage (this is ONLY to trigger event)
+    if (!sessionStorage.length) {
+      localStorage.setItem('getSessionStorage', 'foobar');
+      localStorage.removeItem('getSessionStorage', 'foobar');
+    };
   }
 
   getUser = () => {
@@ -59,11 +90,13 @@ class Club_Page extends React.Component {
     console.log(this.state.user_info.email)
     console.log(this.state.user_info)
     console.log(this.state.user_info.name)
-    localStorage.setItem('email', this.state.user_info.email);
-    localStorage.setItem('name', this.state.user_info.name);
+    sessionStorage.setItem('email', this.state.user_info.email);
+    sessionStorage.setItem('name', this.state.user_info.name);
+    sessionStorage.setItem('test', "test");
   };
+
   
-  
+
   render() {
     return (
       <>
@@ -78,4 +111,4 @@ class Club_Page extends React.Component {
     )
   }
 }
-export default Club_Page
+export default Home_Page

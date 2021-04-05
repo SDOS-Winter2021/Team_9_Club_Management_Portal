@@ -21,24 +21,55 @@ import getEvent from './components/getEvent'
 import { useState, useEffect } from 'react';
 
 
-export default function Club_Page(){
-  
-  var name = useParams().name;
+class Club_Page extends React.Component{
+  componentDidMount() {
+    var name = useParams().name;
 
-  const [event, setevent] = useState({});
-  const [general, setgeneral] = useState({});
-  
-  useEffect( () => {
-  async function fetchData() {
-  let eResponse_general  = await getData(name.slice(name.indexOf("@")+1,))
+    const [event, setevent] = useState({});
+    const [general, setgeneral] = useState({});
+    // transfers sessionStorage from one tab to another
+    var sessionStorage_transfer = function(event) {
+      if(!event) { event = window.event; } // ie suq
+      if(!event.newValue) return;          // do nothing if no value to work with
+      if (event.key == 'getSessionStorage') {
+        // another tab asked for the sessionStorage -> send it
+        localStorage.setItem('sessionStorage', JSON.stringify(sessionStorage));
+        // the other tab should now have it, so we're done with it.
+        localStorage.removeItem('sessionStorage'); // <- could do short timeout as well.
+      } else if (event.key == 'sessionStorage' && !sessionStorage.length) {
+        // another tab sent data <- get it
+        var data = JSON.parse(event.newValue);
+        for (var key in data) {
+          sessionStorage.setItem(key, data[key]);
+        }
+      }
+    };
+
+    // listen for changes to localStorage
+    if(window.addEventListener) {
+      window.addEventListener("storage", sessionStorage_transfer, false);
+    } else {
+      window.attachEvent("onstorage", sessionStorage_transfer);
+    };
+
+    // Ask other tabs for session storage (this is ONLY to trigger event)
+    if (!sessionStorage.length) {
+      localStorage.setItem('getSessionStorage', 'foobar');
+      localStorage.removeItem('getSessionStorage', 'foobar');
+    };
+
+    fetchData();
+  }
+
+  async fetchData() {
+  let eResponse_general  = await getData(this.name.slice(this.name.indexOf("@")+1,))
   setgeneral(eResponse_general.data)
 
-  let eResponse_event  = await getEvent(name.slice(0,name.indexOf("@")))
+  let eResponse_event  = await getEvent(this.name.slice(0,this.name.indexOf("@")))
   setevent(eResponse_event.data)
   }
-  fetchData();
-  }, []);
 
+  render() {
   return (
     <ThemeProvider theme={theme}>
     <CSSReset/>
@@ -46,4 +77,7 @@ export default function Club_Page(){
     <Body Info_G={general} Info_E={event}></Body>
   </ThemeProvider>
   )
+  }
 }
+
+export default Club_Page
