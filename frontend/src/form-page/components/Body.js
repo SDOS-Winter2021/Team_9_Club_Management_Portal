@@ -12,6 +12,8 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  Textarea,
+
 } from "@chakra-ui/react";
 
 import eventOut from "./eventOut";
@@ -21,9 +23,6 @@ export default function Body() {
   const [datetime, setdatetime] = React.useState("");
   const [location, setlocation] = React.useState("");
   const [description, setdescription] = React.useState("");
-  const [prereq, setprereq] = React.useState("");
-  const [prizemoney, setprizemoney] = React.useState("");
-  const [addinfo, setaddinfo] = React.useState("");
   const [poster, setposter] = React.useState([]);
 
   const handleSubmit = async (event) => {
@@ -32,21 +31,12 @@ export default function Body() {
       date_time: datetime,
       location: location,
       description: description,
-      approved: "True",
+      poster: poster,
+      approved: "False",
       club_name: "Peeyush's club",
     };
     var event_info = new FormData();
-    data = JSON.stringify(data);
-    // event_info.append('Name', name);
-    // event_info.append('Date-Time', datetime);
-    // event_info.append('Location', location);
-    // event_info.append('Description', description);
-    // event_info.append('Pre-Requisites', prereq);
-    // event_info.append('Prize Money', prizemoney);
-    // event_info.append('Additional Information', addinfo);
-    //if (poster !== "") {
-    //event_info.append("poster", poster);
-    //}
+    //data = JSON.stringify(data); //dunno about this
     event_info.append("request", data);
 
     console.log(name);
@@ -104,41 +94,19 @@ export default function Body() {
             </FormControl>
             <FormControl id="description">
               <FormLabel>Description</FormLabel>
-              <Input
+              <Textarea
                 type="text"
                 value={description}
                 onChange={(e) => setdescription(e.target.value)}
+                
                 required
-              />
-            </FormControl>
-            <FormControl id="prereqs">
-              <FormLabel>Pre-Requisites</FormLabel>
-              <Input
-                type="text"
-                value={prereq}
-                onChange={(e) => setprereq(e.target.value)}
-              />
-            </FormControl>
-            <FormControl id="prizemoney">
-              <FormLabel>Prize Money</FormLabel>
-              <Input
-                type="number"
-                value={prizemoney}
-                onChange={(e) => setprizemoney(e.target.value)}
-              />
-            </FormControl>
-            <FormControl id="additional-info">
-              <FormLabel>Additional Information</FormLabel>
-              <Input
-                type="text"
-                value={addinfo}
-                onChange={(e) => setaddinfo(e.target.value)}
               />
             </FormControl>
             <FormControl id="Poster">
               <FormLabel>Poster/Image</FormLabel>
               <Input
                 type="file"
+                value={poster}
                 onChange={(e) => setposter(e.target.files[0])}
               />
             </FormControl>

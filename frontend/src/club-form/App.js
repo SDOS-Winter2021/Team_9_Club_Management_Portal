@@ -14,7 +14,7 @@ import {
   theme,
 } from "@chakra-ui/react";
 
-import Body from "./AddClub";
+import Body from "./components/AddClub";
 
 const Club_Form_Page = () => (
   <ThemeProvider theme={theme}>

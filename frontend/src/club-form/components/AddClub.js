@@ -12,6 +12,7 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  Textarea,
 } from "@chakra-ui/react";
 import axios from "axios";
 
@@ -40,34 +41,22 @@ export default function Body() {
   };
 
   const handleSubmit = async (event) => {
-    //var data = {
-    //  name: name,
-    //  description: description,
-    //  coord1: coord1,
-    //  coord2: coord2,
-    //  coord3: coord3,
-    //  coord1email: coord1email,
-    //  coord2email: coord2email,
-    //  coord3email: coord3email,
-    //  fblink: fblink,
-    //  iglink: iglink,
-    //  weblink: weblink,
-    //};
+    var data = {
+      name: name,
+      description: description,
+      coord1: coord1,
+      coord2: coord2,
+      coord3: coord3,
+      coord1email: coord1email,
+      coord2email: coord2email,
+      coord3email: coord3email,
+      fblink: fblink,
+      iglink: iglink,
+      weblink: weblink,
+    };
     var club_info = new FormData();
-    club_info.append('name',name);
-    club_info.append('description',description);
-    club_info.append('coord1',coord1);
-    club_info.append('coord2',coord2);
-    club_info.append('coord3',coord3);
-    club_info.append('coord1email',coord1email);
-    club_info.append('coord2email',coord2email);
-    club_info.append('coord3email',coord3email);
-    club_info.append('fblink',fblink);
-    club_info.append('iglink',iglink);
-    club_info.append('weblink',weblink);
+    event_info.append("request", data);
     //data = JSON.stringify(data);
-    console.log(club_info);
-    //event_info.append("request", data);
     let eResponse = await clubOut(club_info);
     console.log(eResponse);
   };
@@ -104,7 +93,7 @@ export default function Body() {
             </FormControl>
             <FormControl id="description">
               <FormLabel>Description</FormLabel>
-              <Input
+              <Textarea
                 type="text"
                 value={description}
                 onChange={(e) => setdescription(e.target.value)}
@@ -178,6 +167,10 @@ export default function Body() {
             <FormControl id="weblink">
               <FormLabel>Website Link</FormLabel>
               <Input type="url" onChange={(e) => setweblink(e.target.value)} />
+            </FormControl>
+            <FormControl id="weblink">
+              <FormLabel>Logo</FormLabel>
+              <Input type="file" onChange={(e) => setweblink(e.target.value)} />
             </FormControl>
             <Stack spacing={10}>
               <Button
