@@ -31,34 +31,44 @@ export default function Body() {
   const clubOut = async (request) => {
     console.log("Sending Post request to add club");
     console.log(request);
-    let res = await axios.post("http://127.0.0.1:8000/api/clubinfo", request, {
+    let res = await axios.post("http://127.0.0.1:8000/api/clubinfo", request,{
       headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+      'Content-Type':  'application/x-www-form-urlencoded'
+    }});
     console.log(res);
     return await res.status;
   };
 
   const handleSubmit = async (event) => {
-    var data = {
-      name: name,
-      description: description,
-      coord1: coord1,
-      coord2: coord2,
-      coord3: coord3,
-      coord1email: coord1email,
-      coord2email: coord2email,
-      coord3email: coord3email,
-      fblink: fblink,
-      iglink: iglink,
-      weblink: weblink,
-    };
+    //var data = {
+    //  name: name,
+    //  description: description,
+    //  coord1: coord1,
+    //  coord2: coord2,
+    //  coord3: coord3,
+    //  coord1email: coord1email,
+    //  coord2email: coord2email,
+    //  coord3email: coord3email,
+    //  fblink: fblink,
+    //  iglink: iglink,
+    //  weblink: weblink,
+    //};
     var club_info = new FormData();
-    data = JSON.stringify(data);
-    console.log(data);
+    club_info.append('name',name);
+    club_info.append('description',description);
+    club_info.append('coord1',coord1);
+    club_info.append('coord2',coord2);
+    club_info.append('coord3',coord3);
+    club_info.append('coord1email',coord1email);
+    club_info.append('coord2email',coord2email);
+    club_info.append('coord3email',coord3email);
+    club_info.append('fblink',fblink);
+    club_info.append('iglink',iglink);
+    club_info.append('weblink',weblink);
+    //data = JSON.stringify(data);
+    console.log(club_info);
     //event_info.append("request", data);
-    let eResponse = await clubOut(data);
+    let eResponse = await clubOut(club_info);
     console.log(eResponse);
   };
 
@@ -152,7 +162,7 @@ export default function Body() {
             <FormControl id="fblink">
               <FormLabel>FB Link</FormLabel>
               <Input
-                type="text"
+                type="url"
                 value={fblink}
                 onChange={(e) => setfblink(e.target.value)}
               />
@@ -160,14 +170,14 @@ export default function Body() {
             <FormControl id="iglink">
               <FormLabel>Instagram Link</FormLabel>
               <Input
-                type="text"
+                type="url"
                 value={iglink}
                 onChange={(e) => setiglink(e.target.value)}
               />
             </FormControl>
             <FormControl id="weblink">
               <FormLabel>Website Link</FormLabel>
-              <Input type="text" onChange={(e) => setweblink(e.target.value)} />
+              <Input type="url" onChange={(e) => setweblink(e.target.value)} />
             </FormControl>
             <Stack spacing={10}>
               <Button
