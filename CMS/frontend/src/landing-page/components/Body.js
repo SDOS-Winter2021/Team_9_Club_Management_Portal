@@ -1,4 +1,5 @@
 import React, { Component }  from 'react';
+import { NavLink } from 'react-router-dom'
 import {
     Box,
     Heading,
@@ -38,9 +39,7 @@ const Body = () => {
               Portal
             </Text>
           </Heading>
-          <Text color='gray.500'>
-            (Fill this up)
-          </Text>
+          <NavLink to="/accounts/login">Google Login</NavLink>
           <Stack
             direction={'column'}
             spacing={3}

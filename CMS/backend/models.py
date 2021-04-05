@@ -1,9 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser,User,AbstractBaseUser,BaseUserManager,PermissionsMixin
-from django_extensions.db.models import TimeStampedModel
-from django.contrib import admin
-from django.contrib.postgres.fields import ArrayField
-from django.conf import settings
 # Create your models here.
 
 # club models here

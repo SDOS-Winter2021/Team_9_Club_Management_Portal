@@ -27,13 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
-# Application definition
-AUTHENTICATION_BACKENDS = (
-
- 'django.contrib.auth.backends.ModelBackend',
- # 'allauth.account.auth_backends.AuthenticationBackend'
-)
 INSTALLED_APPS = [
     'frontend',
     'backend',
@@ -44,10 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
- #         'allauth',   # <--
- # 'allauth.account',   # <--
- # 'allauth.socialaccount',   # <--
- # 'allauth.socialaccount.providers.google', 
+    'allauth',  
+    'allauth.account',   
+    'allauth.socialaccount',  
+    'allauth.socialaccount.providers.google', 
+    'django.contrib.sites',
 ]
 
 MIDDLEWARE = [
@@ -130,16 +124,23 @@ USE_L10N = True
 
 USE_TZ = True
 
-# GOOGLE_OAUTH2_CLIENT_SECRETS_JSON = 'client_secrets.json'
-# GOOGLE_OAUTH2_CLIENT_ID='426037707978-88edj8k1aka47he62l7l3l6rkf42tbmh.apps.googleusercontent.com'
-# GOOGLE_OAUTH2_SECRET_KEY='3nwr-fEV3sigJ187nDOP1NoZ'
-# GOOGLE_OAUTH2_TOKEN_URI='https://oauth2.googleapis.com/token'
-# GOOGLE_OAUTH2_SCOPES=['https://www.googleapis.com/auth/calendar.events','https://www.googleapis.com/auth/userinfo.profile','https://www.googleapis.com/auth/userinfo.email','openid']
-# GOOGLE_OAUTH2_API_SERVICE_NAME='calendar'
-# GOOGLE_OAUTH2_API_VERSION='v3'
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# For login
+SITE_ID = 1
+LOGIN_REDIRECT_URL = '/login'
+SOCIALACCOUNT_EMAIL_REQUIRED  = True
+SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_AUTO_SIGNUP = True

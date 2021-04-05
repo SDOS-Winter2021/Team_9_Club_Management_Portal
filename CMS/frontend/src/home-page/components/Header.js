@@ -12,7 +12,6 @@ import {
 import axios from "axios";
 import { FcGoogle } from 'react-icons/fc';
 import React from "react";
-import GoogleButton from "./GLogout";
 
 const Header = () => {
   return (
