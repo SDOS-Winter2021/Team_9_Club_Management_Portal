@@ -1,5 +1,9 @@
 from django.db import models
-
+from django.contrib.auth.models import AbstractUser,User,AbstractBaseUser,BaseUserManager,PermissionsMixin
+from django_extensions.db.models import TimeStampedModel
+from django.contrib import admin
+from django.contrib.postgres.fields import ArrayField
+from django.conf import settings
 # Create your models here.
 
 # club models here
@@ -21,6 +25,8 @@ class Users(models.Model):
 
 class CLUB_GENERAL(models.Model):
     name=models.CharField(max_length=100,blank=False)
+    logo=models.ImageField(upload_to="club/logo",blank=True)
+    club_email=models.CharField(max_length=100,blank=False)
     description=models.TextField(blank=False)
     coordinator1=models.CharField(max_length=100,blank=False)
     coordinator1_email=models.CharField(max_length=100,blank=False)
@@ -31,3 +37,18 @@ class CLUB_GENERAL(models.Model):
     fb_link=models.URLField(max_length=200,blank=True)
     ig_link=models.URLField(max_length=200,blank=True)
     website_link=models.URLField(max_length=200,blank=True)
+
+# class GoogleCredentials(TimeStampedModel):
+#     user = models.OneToOneField(User,primary_key=True,on_delete=models.CASCADE) # Deleting a user will automatically delete his/her Google credentials
+#     token = models.CharField(max_length=255, null=True)
+#     refresh_token = models.CharField(max_length=255, null=True)
+
+#     def to_dict(self):
+#         return dict(
+#             token=self.token,
+#             refresh_token=self.refresh_token,
+#             )
+#     def update_from_credentials(self, credentials):
+#         self.token = credentials.token
+#         self.refresh_token = credentials.refresh_token
+#         self.save()
