@@ -14,8 +14,14 @@ import {
 import Head from 'next/head';
 import GoogleButton from "./GLogin.js";
 import './index.css'
+import history from "./../../history";
 
-const Body = () => {
+export default class Body extends Component {
+  goNext = () => {
+    history.push("/home")
+  }
+
+  render() {
     return (
         <>
         <Head>
@@ -52,8 +58,11 @@ const Body = () => {
           </Stack>
         </Stack>
       </Container>
+      if (localStorage.getItem("email")) {
+        this.goNext()
+
+  }
       </>
     )
 }
-
-export default Body
+}
