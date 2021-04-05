@@ -58,19 +58,14 @@ def CLUB_LIST(request):
 		parser_classes = (MultipartJsonParser,JSONParser)
 		club_data=json.loads(request.data['request'])
 		#print(club_data)
-		print(request.data)
+		print(request.data,type(request.data),type(request.data['request']))
 		#club_serializer=CLUBSerializer(data=request.data)
 		if 'poster' in request.data:
 			p=request.data['poster']
 			clubs.poster.save(p.name,p,save=True)
 		if('file' in request.data):
 			f=request.data['file']
-
 			clubs.payment_receipt_student.save(f.name,f,save=True)
-		parser_class=(FormParser, MultiPartParser)
-		#data_recv = request.data.copy()
-		#data_recv.pop('Poster')
-		#club_data=json.loads(json.dumps(data_recv))
 		print(club_data,type(club_data))
 		club_serializer=CLUBSerializer(clubs,data=club_data)
 		#print("THIS IS DATA",club_data,club_serializer.is_valid())
@@ -130,9 +125,14 @@ def CLUB_GENERAL_ADD(request):
 		club_general_serializer=CLUB_GENERALSerializer(club_general,many=True)
 		return JsonResponse(club_general_serializer.data,safe=False)
 	elif request.method=='POST':
-		clubdata = json.loads(request.data)
+		parser_classes = (MultipartJsonParser,JSONParser)
+		clubdata = json.loads(request.data['request'])
+		club_general=CLUB_GENERAL()
 		print(clubdata, type(clubdata), "Request to Add club")
-		club_general_serializer=CLUB_GENERALSerializer(data=clubdata)
+		if 'logo' in request.data:
+			p=request.data['logo']
+			club_general.logo.save(p.name,p,save=True)
+		club_general_serializer=CLUB_GENERALSerializer(club_general,data=clubdata)
 		if(club_general_serializer.is_valid()):
 			club_general_serializer.save()
 			return JsonResponse(club_general_serializer.data,status=status.HTTP_201_CREATED)
