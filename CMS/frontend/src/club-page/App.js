@@ -19,13 +19,18 @@ import Header from "./components/Header";
 import getData from "./components/getData";
 import getEvent from "./components/getEvent";
 import { useState, useEffect } from "react";
+import { withRouter } from "react-router";
 
 class Club_Page extends React.Component {
-  componentDidMount() {
-    var name = useParams().name;
+s
+  state = {
+    general: [],
+    event: [],
+    name: "",
+  };
 
-    const [event, setevent] = useState({});
-    const [general, setgeneral] = useState({});
+  componentDidMount() {
+    this.setState({ name: this.props.match.params.name })
     // transfers sessionStorage from one tab to another
     var sessionStorage_transfer = function (event) {
       if (!event) {
@@ -66,23 +71,23 @@ class Club_Page extends React.Component {
     let eResponse_general = await getData(
       this.name.slice(this.name.indexOf("@") + 1)
     );
-    setgeneral(eResponse_general.data);
-
+    this.setState({ general: eResponse_general.data })
+    
     let eResponse_event = await getEvent(
       this.name.slice(0, this.name.indexOf("@"))
-    );
-    setevent(eResponse_event.data);
+      );
+    this.setState({ general: eResponse_event.data })
   }
 
   render() {
     return (
       <ThemeProvider theme={theme}>
         <CSSReset />
-        <Header Info={general}></Header>
-        <Body Info_G={general} Info_E={event}></Body>
+        <Header Info={this.state.general}></Header>
+        <Body Info_G={this.state.general} Info_E={this.state.event}></Body>
       </ThemeProvider>
     );
   }
 }
 
-export default Club_Page;
+export default withRouter(Club_Page);

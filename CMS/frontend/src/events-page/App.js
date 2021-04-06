@@ -19,12 +19,22 @@ import Header from "./components/Header";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { withRouter } from "react-router";
 
 class Events_Page extends React.Component {
-  componentDidMount() {
-    var id = useParams().id;
+  
+  state = {
+    eventInfo: [],
+  };
+  
+  getEventInfo = (id) =>  {
+    let res = axios
+      .get(`http://127.0.0.1:8000/api/clubs/${id}`)
+      .then((data) => this.setState({ eventInfo: data.data }));
+  }
 
-    const [eventInfo, setEventInfo] = useState([]);
+  componentDidMount() {
+    const id = this.props.match.params.id;
     // transfers sessionStorage from one tab to another
     var sessionStorage_transfer = function (event) {
       if (!event) {
@@ -57,26 +67,20 @@ class Events_Page extends React.Component {
       localStorage.setItem("getSessionStorage", "foobar");
       localStorage.removeItem("getSessionStorage", "foobar");
     }
-
-    getEventInfo(this.id);
+    this.getEventInfo(id);
   }
 
-  async getEventInfo(eventID) {
-    let res = await axios
-      .get(`http://127.0.0.1:8000/api/clubs/${id}`)
-      .then((data) => setEventInfo(data.data));
-  }
 
   render() {
     console.log("getting rendered");
     return (
       <ThemeProvider theme={theme}>
         <CSSReset />
-        <Header Info={eventInfo}></Header>
-        <Body eventid={eventInfo}></Body>
+        <Header Info={this.state.eventInfo}></Header>
+        <Body eventid={this.state.eventInfo}></Body>
       </ThemeProvider>
     );
   }
 }
 
-export default Events_Page;
+export default withRouter(Events_Page);

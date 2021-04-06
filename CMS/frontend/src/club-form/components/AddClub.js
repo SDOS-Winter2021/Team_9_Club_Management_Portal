@@ -28,15 +28,15 @@ export default function Body() {
   const [fblink, setfblink] = React.useState("");
   const [iglink, setiglink] = React.useState("");
   const [weblink, setweblink] = React.useState("");
+  const [logo, setlogo] = React.useState("");
 
   const clubOut = async (request) => {
     console.log("Sending Post request to add club");
     console.log(request);
-    let res = await axios.post("http://127.0.0.1:8000/api/clubinfo", request, {
+    let res = await axios.post("http://127.0.0.1:8000/api/clubinfo", request,{
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    });
+      'Content-Type': 'multipart/form-data'
+    }});
     console.log(res);
     return await res.status;
   };
@@ -54,9 +54,10 @@ export default function Body() {
       fblink: fblink,
       iglink: iglink,
       weblink: weblink,
+      logo: logo,
     };
     var club_info = new FormData();
-    event_info.append("request", data);
+    club_info.append("request", data);
     //data = JSON.stringify(data);
     let eResponse = await clubOut(club_info);
     console.log(eResponse);
@@ -171,7 +172,7 @@ export default function Body() {
             </FormControl>
             <FormControl id="weblink">
               <FormLabel>Logo</FormLabel>
-              <Input type="file" onChange={(e) => setweblink(e.target.value)} />
+              <Input type="file" onChange={(e) => setlogo(e.target.files[0])} />
             </FormControl>
             <Stack spacing={10}>
               <Button
