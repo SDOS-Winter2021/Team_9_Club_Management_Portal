@@ -122,80 +122,92 @@ export default function Body(event) {
         <Heading ml={5} marginTop={20}>
           Admin Information
         </Heading>
-        <SimpleGrid columns={1} p={5} gap={6} maxWidth="25%">
-          <Button
-            justifyContent="space-evenly"
-            p={4}
-            border="1px"
-            bgGradient="linear(to-r, purple.500,red.200)"
-            _hover={{ bgGradient: "linear(to-r, purple.700,red.400)" }}
-            leftIcon={<Icon as={IoPencil} color={"black"} w={5} h={5} />}
-          >
-            <Text>{"Edit Event"}</Text>
-          </Button>
-          <Button
-            justifyContent="space-evenly"
-            p={4}
-            border="1px"
-            bgGradient="linear(to-r, purple.500,red.200)"
-            _hover={{ bgGradient: "linear(to-r, purple.700,red.400)" }}
-            leftIcon={<Icon as={IoTrashOutline} color={"black"} w={5} h={5} />}
-          >
-            <Text>{"Delete Event"}</Text>
-          </Button>
-        </SimpleGrid>
-        <SimpleGrid
-          columns={{ base: 1, md: 2 }}
-          spacing={0}
-          justifyContent="center"
-        >
-          <Stack spacing={4}>
-            <Text
-              textTransform={"uppercase"}
-              color={"black"}
-              fontWeight={600}
-              fontSize={"lg"}
-              p={2}
-              alignSelf={"flex-start"}
-              rounded={"md"}
-            >
-              Event Reciept
-            </Text>
-            <Flex>
-              <Image
-                maxHeight="400px"
-                rounded={"md"}
-                alt={"feature image"}
-                src={
-                  "https://templates.invoicehome.com/receipt-template-us-band-blue-750px.png"
-                }
-              />
-            </Flex>
-          </Stack>
-          <Stack spacing={4}>
-            <Text
-              textTransform={"uppercase"}
-              color={"black"}
-              fontWeight={600}
-              fontSize={"lg"}
-              p={2}
-              alignSelf={"flex-start"}
-              rounded={"md"}
-            >
-              Reimbursement Reciept
-            </Text>
-            <Flex>
-              <Image
-                maxHeight="400px"
-                rounded={"md"}
-                alt={"feature image"}
-                src={
-                  "https://templates.invoicehome.com/receipt-template-us-band-blue-750px.png"
-                }
-              />
-            </Flex>
-          </Stack>
-        </SimpleGrid>
+        {(() => {
+          if (localStorage.getItem("email") == eventInfo["email"]) {
+            return (
+              <>
+                <SimpleGrid columns={1} p={5} gap={6} maxWidth="25%">
+                  <Button
+                    justifyContent="space-evenly"
+                    p={4}
+                    border="1px"
+                    bgGradient="linear(to-r, purple.500,red.200)"
+                    _hover={{ bgGradient: "linear(to-r, purple.700,red.400)" }}
+                    leftIcon={
+                      <Icon as={IoPencil} color={"black"} w={5} h={5} />
+                    }
+                  >
+                    <Text>{"Edit Event"}</Text>
+                  </Button>
+                  <Button
+                    justifyContent="space-evenly"
+                    p={4}
+                    border="1px"
+                    bgGradient="linear(to-r, purple.500,red.200)"
+                    _hover={{ bgGradient: "linear(to-r, purple.700,red.400)" }}
+                    leftIcon={
+                      <Icon as={IoTrashOutline} color={"black"} w={5} h={5} />
+                    }
+                  >
+                    <Text>{"Delete Event"}</Text>
+                  </Button>
+                </SimpleGrid>
+                <SimpleGrid
+                  columns={{ base: 1, md: 2 }}
+                  spacing={0}
+                  justifyContent="center"
+                >
+                  <Stack spacing={4}>
+                    <Text
+                      textTransform={"uppercase"}
+                      color={"black"}
+                      fontWeight={600}
+                      fontSize={"lg"}
+                      p={2}
+                      alignSelf={"flex-start"}
+                      rounded={"md"}
+                    >
+                      Event Reciept
+                    </Text>
+                    <Flex>
+                      <Image
+                        maxHeight="400px"
+                        rounded={"md"}
+                        alt={"feature image"}
+                        src={
+                          "https://templates.invoicehome.com/receipt-template-us-band-blue-750px.png"
+                        }
+                      />
+                    </Flex>
+                  </Stack>
+                  <Stack spacing={4}>
+                    <Text
+                      textTransform={"uppercase"}
+                      color={"black"}
+                      fontWeight={600}
+                      fontSize={"lg"}
+                      p={2}
+                      alignSelf={"flex-start"}
+                      rounded={"md"}
+                    >
+                      Reimbursement Reciept
+                    </Text>
+                    <Flex>
+                      <Image
+                        maxHeight="400px"
+                        rounded={"md"}
+                        alt={"feature image"}
+                        src={
+                          "https://templates.invoicehome.com/receipt-template-us-band-blue-750px.png"
+                        }
+                      />
+                    </Flex>
+                  </Stack>
+                </SimpleGrid>
+              </>
+            );
+          }
+        })()}
       </Container>
     </>
   );

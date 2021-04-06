@@ -12,6 +12,7 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  Textarea,
 } from "@chakra-ui/react";
 import axios from "axios";
 
@@ -33,7 +34,7 @@ export default function Body() {
     console.log(request);
     let res = await axios.post("http://127.0.0.1:8000/api/clubinfo", request, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
     });
     console.log(res);
@@ -55,10 +56,9 @@ export default function Body() {
       weblink: weblink,
     };
     var club_info = new FormData();
-    data = JSON.stringify(data);
-    console.log(data);
-    //event_info.append("request", data);
-    let eResponse = await clubOut(data);
+    event_info.append("request", data);
+    //data = JSON.stringify(data);
+    let eResponse = await clubOut(club_info);
     console.log(eResponse);
   };
 
@@ -94,7 +94,7 @@ export default function Body() {
             </FormControl>
             <FormControl id="description">
               <FormLabel>Description</FormLabel>
-              <Input
+              <Textarea
                 type="text"
                 value={description}
                 onChange={(e) => setdescription(e.target.value)}
@@ -152,7 +152,7 @@ export default function Body() {
             <FormControl id="fblink">
               <FormLabel>FB Link</FormLabel>
               <Input
-                type="text"
+                type="url"
                 value={fblink}
                 onChange={(e) => setfblink(e.target.value)}
               />
@@ -160,14 +160,18 @@ export default function Body() {
             <FormControl id="iglink">
               <FormLabel>Instagram Link</FormLabel>
               <Input
-                type="text"
+                type="url"
                 value={iglink}
                 onChange={(e) => setiglink(e.target.value)}
               />
             </FormControl>
             <FormControl id="weblink">
               <FormLabel>Website Link</FormLabel>
-              <Input type="text" onChange={(e) => setweblink(e.target.value)} />
+              <Input type="url" onChange={(e) => setweblink(e.target.value)} />
+            </FormControl>
+            <FormControl id="weblink">
+              <FormLabel>Logo</FormLabel>
+              <Input type="file" onChange={(e) => setweblink(e.target.value)} />
             </FormControl>
             <Stack spacing={10}>
               <Button

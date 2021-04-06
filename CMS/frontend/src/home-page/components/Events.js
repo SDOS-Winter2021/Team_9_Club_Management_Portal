@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import {
   ThemeProvider,
   CSSReset,
@@ -90,15 +89,7 @@ class Events extends React.Component {
                 {this.state.events[i]["club_name"]}
               </StatLabel>
               <StatNumber fontSize="3xl" fontWeight="medium" color={"black"}>
-                <Link
-                  to={{
-                    pathname: `/event/${this.state.events[i]["id"]}`,
-                    id: this.state.events[i]["id"],
-                  }}
-                >
-                  Go To Event
-                </Link>
-                {/* <Button
+                <Button
                   onClick={() =>
                     this.Redirect_Event(this.state.events[i]["id"])
                   }
@@ -106,7 +97,7 @@ class Events extends React.Component {
                   fontSize="xl"
                 >
                   {this.state.events[i]["name"]}
-                </Button> */}
+                </Button>
               </StatNumber>
               <Stack direction={"row"} align={"center"}>
                 <Flex

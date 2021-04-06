@@ -142,27 +142,35 @@ const Body = (Info_G, Info_E) => {
             />
           </Flex>
         </SimpleGrid>
-        <Button
-          spacing={10}
-          mt={50}
-          onClick={() => history.push("/form")}
-          bg={useColorModeValue("white", "white")}
-          rounded={"md"}
-          border="2px"
-          borderColor="#12d5e3"
-        >
-          <Text
-            textTransform={"uppercase"}
-            color={"#12d5e3"}
-            fontWeight={600}
-            fontSize={"sm"}
-            p={2}
-            alignSelf={"flex-start"}
-            align="center"
-          >
-            Propose Event
-          </Text>
-        </Button>
+        {(() => {
+          if (sessionStorage.getItem("email") == Info_G.Info_G["email"]) {
+            return (
+              <>
+                <Button
+                  spacing={10}
+                  mt={50}
+                  onClick={() => history.push("/form")}
+                  bg={useColorModeValue("white", "white")}
+                  rounded={"md"}
+                  border="2px"
+                  borderColor="#12d5e3"
+                >
+                  <Text
+                    textTransform={"uppercase"}
+                    color={"#12d5e3"}
+                    fontWeight={600}
+                    fontSize={"sm"}
+                    p={2}
+                    alignSelf={"flex-start"}
+                    align="center"
+                  >
+                    Propose Event
+                  </Text>
+                </Button>
+              </>
+            );
+          }
+        })()}
         <Text
           textTransform={"uppercase"}
           color={"red.400"}

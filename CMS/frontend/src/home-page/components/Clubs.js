@@ -113,28 +113,39 @@ class Clubs extends React.Component {
             </Button>
           ))}
         </SimpleGrid>
-        <SimpleGrid>
-          <Button
-            spacing={10}
-            mt={50}
-            onClick={() => history.push("/clubform")}
-            rounded={"md"}
-            border="2px"
-            borderColor="#12d5e3"
-          >
-            <Text
-              textTransform={"uppercase"}
-              color={"#12d5e3"}
-              fontWeight={600}
-              fontSize={"sm"}
-              p={2}
-              alignSelf={"flex-start"}
-              align="center"
-            >
-              Add New Club
-            </Text>
-          </Button>
-        </SimpleGrid>
+        {(() => {
+          if (sessionStorage.getItem("email") == "abc@gmail.com") {
+            return (
+              <>
+                <SimpleGrid>
+                  <Button
+                    spacing={10}
+                    mt={50}
+                    onClick={() => history.push("/clubform")}
+                    rounded={"md"}
+                    border="2px"
+                    bgGradient="linear(to-r, blue.400,purple.400)"
+                    _hover={{ bgGradient: "linear(to-r, blue.700,purple.600)" }}
+                    borderColor="black"
+                    minH={"50%"}
+                  >
+                    <Text
+                      textTransform={"uppercase"}
+                      color={"black"}
+                      fontWeight={600}
+                      fontSize={"lg"}
+                      p={2}
+                      alignSelf={"center"}
+                      align="center"
+                    >
+                      Add New Club
+                    </Text>
+                  </Button>
+                </SimpleGrid>
+              </>
+            );
+          }
+        })()}
       </>
     );
   }
