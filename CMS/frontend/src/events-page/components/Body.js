@@ -1,5 +1,6 @@
 import React, { Component, ReactNode } from "react";
-import { IoPencil, IoTrashOutline } from "react-icons/io5";
+import { IoPencil, IoTrashOutline, IoAlarmOutline } from "react-icons/io5";
+import { GoCheck, GoX } from "react-icons/go";
 import Head from "next/head";
 import {
   ThemeProvider,
@@ -52,7 +53,7 @@ export default function Body(event) {
               color={"black"}
               fontWeight={600}
               fontSize={"sm"}
-              bgGradient="linear(to-r,red.300 65%, orange.300 95%)"
+              bgGradient="linear(to-r, teal.400 , green.300 )"
               p={2}
               alignSelf={"flex-start"}
               rounded={"md"}
@@ -67,7 +68,7 @@ export default function Body(event) {
               color={"black"}
               fontWeight={600}
               fontSize={"sm"}
-              bgGradient="linear(to-r,red.300 65%, orange.300 95%)"
+              bgGradient="linear(to-r, teal.400 , green.300 )"
               p={2}
               alignSelf={"flex-start"}
               rounded={"md"}
@@ -82,7 +83,7 @@ export default function Body(event) {
               color={"black"}
               fontWeight={600}
               fontSize={"sm"}
-              bgGradient="linear(to-r,red.300 65%, orange.300 95%)"
+              bgGradient="linear(to-r, teal.400 , green.300)"
               p={2}
               alignSelf={"flex-start"}
               rounded={"md"}
@@ -92,23 +93,9 @@ export default function Body(event) {
             <Text color={"gray.500"} fontSize={"lg"}>
               {eventInfo["location"]}
             </Text>
-            <Text
-              textTransform={"uppercase"}
-              color={"black"}
-              fontWeight={600}
-              fontSize={"sm"}
-              bgGradient="linear(to-r,red.300 65%, orange.300 95%)"
-              p={2}
-              alignSelf={"flex-start"}
-              rounded={"md"}
-            >
-              Prize Money
-            </Text>
-            <Text color={"gray.500"} fontSize={"lg"}>
-              {"Add Here"}
-            </Text>
           </Stack>
           <Flex>
+          <Stack>
             <Image
               maxHeight="400px"
               rounded={"md"}
@@ -117,8 +104,49 @@ export default function Body(event) {
                 "https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg"
               }
             />
+        <Flex flexDirection="row" justifyContent="space-between">
+            <Button
+        marginTop={10}
+        justifyContent="space-evenly"
+        p={4}
+        width={"40%"}
+        border="1px"
+        bgGradient="linear(to-r, green.500,green.300)"
+        _hover={{ bgGradient: "linear(to-r, green.700,green.600)" }}
+        leftIcon={
+          <Icon as={GoCheck} color={"black"} w={5} h={5} />
+        }>
+          <Text>{"Approve"}</Text>
+        </Button>
+        <Button
+        marginTop={10}
+        justifyContent="space-evenly"
+        p={4}
+        border="1px"
+        width={"40%"}
+        bgGradient="linear(to-r, red.500,red.300)"
+        _hover={{ bgGradient: "linear(to-r, red.700,red.400)" }}
+        leftIcon={
+          <Icon as={GoX} color={"black"} w={5} h={5} />
+        }>
+          <Text>{"Reject"}</Text>
+        </Button>
+        </Flex>
+          </Stack>
           </Flex>
         </SimpleGrid>
+        <Button
+        marginTop={10}
+        justifyContent="space-evenly"
+        p={4}
+        border="1px"
+        bgGradient="linear(to-r, purple.500,red.200)"
+        _hover={{ bgGradient: "linear(to-r, purple.700,red.400)" }}
+        leftIcon={
+          <Icon as={IoAlarmOutline} color={"black"} w={5} h={5} />
+        }>
+          <Text>{"Notify Me"}</Text>
+        </Button>
         <Heading ml={5} marginTop={20}>
           Admin Information
         </Heading>
