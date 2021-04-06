@@ -10,7 +10,7 @@ import {
   useColorModeValue,
   createIcon,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Head from "next/head";
 import "./index.css";
 import history from "./../../history";
@@ -78,7 +78,7 @@ export default class Body extends Component {
                 Portal
               </Text>
             </Heading>
-            <Text color="gray.500">(Fill this up)</Text>
+            <NavLink to='login' color="gray.500">Google Login</NavLink>
             <Stack
               direction={"column"}
               spacing={3}
