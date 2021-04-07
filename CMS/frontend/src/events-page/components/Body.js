@@ -12,33 +12,51 @@ import {
   Text,
   Icon,
   Stack,
-  Avatar,
-  AvatarBadge,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-  FormLabel,
-  Input,
-  FormHelperText,
-  FormErrorMessage,
-  Grid,
-  Switch,
-  InputGroup,
-  InputRightElement,
   Flex,
-  Tag,
   Heading,
   Container,
   SimpleGrid,
-  useColorModeValue,
-  StackDivider,
   Button,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import history from "../../history";
 import { render } from "react-dom";
+
+function event_(event_id, is_approved) {
+  console.log(event_id,is_approved)
+  let res = axios
+      .put(`http://127.0.0.1:8000/api/event/edit`,
+      {'id':event_id, 'approved':is_approved}
+      );
+}
+
+function notify_(event_id, is_approved) {
+  console.log(event_id,is_approved)
+  let res = axios
+      .put(`http://127.0.0.1:8000/api/event/edit`,
+      {'id':event_id, 'approved':is_approved}
+      );
+}
+
+function delete_(event_id) {
+  console.log(event_id)
+  let res = axios
+      .put(`http://127.0.0.1:8000/api/event/delete`,
+      {'id':event_id}
+      );
+}
+
+function edit_(event_info) {
+  //console.log(event_info);
+  sessionStorage.setItem("event_data_name", event_info.name);
+  sessionStorage.setItem("event_data_desc", event_info.desc);
+  sessionStorage.setItem("event_data_dt", event_info.dt);
+  sessionStorage.setItem("event_data_loc", event_info.location);
+  sessionStorage.setItem("event_data", event_info);
+  history.push(`/form`);
+}
+
 
 export default function Body(event) {
   const eventInfo = event.eventid;
@@ -114,8 +132,9 @@ export default function Body(event) {
         bgGradient="linear(to-r, green.500,green.300)"
         _hover={{ bgGradient: "linear(to-r, green.700,green.600)" }}
         leftIcon={
-          <Icon as={GoCheck} color={"black"} w={5} h={5} />
-        }>
+          <Icon as={GoCheck} color={"black"} w={5} h={5} />}
+        onClick={()=>event_(eventInfo["id"],1)}
+        >
           <Text>{"Approve"}</Text>
         </Button>
         <Button
@@ -127,8 +146,9 @@ export default function Body(event) {
         bgGradient="linear(to-r, red.500,red.300)"
         _hover={{ bgGradient: "linear(to-r, red.700,red.400)" }}
         leftIcon={
-          <Icon as={GoX} color={"black"} w={5} h={5} />
-        }>
+          <Icon as={GoX} color={"black"} w={5} h={5} />}
+        onClick={()=>event_(eventInfo["id"],0)}
+        >
           <Text>{"Reject"}</Text>
         </Button>
         </Flex>
@@ -147,13 +167,13 @@ export default function Body(event) {
         }>
           <Text>{"Notify Me"}</Text>
         </Button>
-        <Heading ml={5} marginTop={20}>
-          Admin Information
-        </Heading>
         {(() => {
-          if (localStorage.getItem("email") == eventInfo["email"]) {
+          if (sessionStorage.getItem("email") != undefined) {
             return (
               <>
+                <Heading ml={5} marginTop={20}>
+                    Admin Information
+                </Heading>
                 <SimpleGrid columns={1} p={5} gap={6} maxWidth="25%">
                   <Button
                     justifyContent="space-evenly"
@@ -162,8 +182,8 @@ export default function Body(event) {
                     bgGradient="linear(to-r, purple.500,red.200)"
                     _hover={{ bgGradient: "linear(to-r, purple.700,red.400)" }}
                     leftIcon={
-                      <Icon as={IoPencil} color={"black"} w={5} h={5} />
-                    }
+                      <Icon as={IoPencil} color={"black"} w={5} h={5} />}
+                      onClick={()=>edit_(eventInfo)}
                   >
                     <Text>{"Edit Event"}</Text>
                   </Button>
@@ -174,8 +194,8 @@ export default function Body(event) {
                     bgGradient="linear(to-r, purple.500,red.200)"
                     _hover={{ bgGradient: "linear(to-r, purple.700,red.400)" }}
                     leftIcon={
-                      <Icon as={IoTrashOutline} color={"black"} w={5} h={5} />
-                    }
+                      <Icon as={IoTrashOutline} color={"black"} w={5} h={5} />}
+                      onClick={()=>delete_(eventInfo["id"])}
                   >
                     <Text>{"Delete Event"}</Text>
                   </Button>

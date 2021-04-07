@@ -22,7 +22,7 @@ import { useState, useEffect } from "react";
 import { withRouter } from "react-router";
 
 class Club_Page extends React.Component {
-s
+
   state = {
     general: [],
     event: [],
