@@ -194,8 +194,8 @@ def USERS_ID(request,pk):
 @api_view(['GET'])
 def USER_INFO(request):
 	if(request.method=='GET'):
-		print(request.user.is_authenticated)
-		print("User info requested")
-		print(request)
-		user = (request.user)
-		return JsonResponse({'name': user.get_username()})
+		if request.user.is_authenticated:
+			user = (request.user)
+			return JsonResponse({'name': user.get_username(),
+			'email': user.email,
+			'group': str(user.groups.all()[0])})
