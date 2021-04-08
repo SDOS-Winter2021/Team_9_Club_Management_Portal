@@ -67,7 +67,6 @@ const Body = (Info_G, Info_E) => {
                   rounded={"full"}
                   bg={"yellow.100"}
                 >
-                  {" "}
                   {
                     <Icon
                       as={IoMailOpenOutline}
@@ -77,7 +76,7 @@ const Body = (Info_G, Info_E) => {
                     />
                   }
                 </Flex>
-                <Text fontWeight={600}>{Info_G.Info_G.coordinator1_email}</Text>
+                <Text fontWeight={600}>{Info_G.Info_G.club_email}</Text>
               </Stack>
               <Stack direction={"row"} align={"center"}>
                 <Flex
@@ -88,7 +87,6 @@ const Body = (Info_G, Info_E) => {
                   rounded={"full"}
                   bg={"blue.100"}
                 >
-                  {" "}
                   {<Icon as={IoLaptopOutline} color={"blue.500"} w={5} h={5} />}
                 </Flex>
                 <Text fontWeight={600}>{Info_G.Info_G.website_link}</Text>
@@ -102,12 +100,13 @@ const Body = (Info_G, Info_E) => {
                   rounded={"full"}
                   bg={"green.100"}
                 >
-                  {" "}
                   {<Icon as={IoLogoFacebook} color={"green.500"} w={5} h={5} />}
                 </Flex>
-                <Link to="https://www.facebook.com">
-                  {Info_G.Info_G.fb_link}
-                </Link>
+                <Text fontWeight={600}>
+                  <Link to={Info_G.Info_G.fb_link}>
+                    {Info_G.Info_G.fb_link}
+                  </Link>
+                </Text>
               </Stack>
               <Stack direction={"row"} align={"center"}>
                 <Flex
@@ -118,7 +117,6 @@ const Body = (Info_G, Info_E) => {
                   rounded={"full"}
                   bg={"purple.100"}
                 >
-                  {" "}
                   {
                     <Icon
                       as={IoLogoInstagram}
@@ -128,7 +126,11 @@ const Body = (Info_G, Info_E) => {
                     />
                   }
                 </Flex>
-                <Text fontWeight={600}>{Info_G.Info_G.ig_link}</Text>
+                <Text fontWeight={600}>
+                  <Link to={Info_G.Info_G.ig_link}>
+                    {Info_G.Info_G.ig_link}
+                  </Link>
+                </Text>
               </Stack>
             </Stack>
           </Stack>
@@ -142,27 +144,59 @@ const Body = (Info_G, Info_E) => {
             />
           </Flex>
         </SimpleGrid>
-        <Button
-          spacing={10}
-          mt={50}
-          onClick={() => history.push("/form")}
-          bg={useColorModeValue("white", "white")}
-          rounded={"md"}
-          border="2px"
-          borderColor="#12d5e3"
-        >
-          <Text
-            textTransform={"uppercase"}
-            color={"#12d5e3"}
-            fontWeight={600}
-            fontSize={"sm"}
-            p={2}
-            alignSelf={"flex-start"}
-            align="center"
-          >
-            Propose Event
-          </Text>
-        </Button>
+        {(() => {
+          if (sessionStorage.getItem("email") ==Info_G.Info_G.club_email) {
+            return (
+                      <Button
+                        spacing={10}
+                        mt={50}
+                        onClick={() => history.push("/form")}
+                        bg={useColorModeValue("white", "white")}
+                        rounded={"md"}
+                        border="2px"
+                        borderColor="#12d5e3"
+                      >
+                        <Text
+                          textTransform={"uppercase"}
+                          color={"#12d5e3"}
+                          fontWeight={600}
+                          fontSize={"sm"}
+                          p={2}
+                          alignSelf={"flex-start"}
+                          align="center"
+                        >
+                          Propose Event
+                        </Text>
+                      </Button>
+          );
+        }
+        else {
+          return (
+                    <Button
+                      spacing={10}
+                      mt={50}
+                      onClick={() => history.push("/makeapi")}
+                      bg={useColorModeValue("white", "white")}
+                      rounded={"md"}
+                      border="2px"
+                      borderColor="#12d5e3"
+                    >
+                      <Text
+                        textTransform={"uppercase"}
+                        color={"#12d5e3"}
+                        fontWeight={600}
+                        fontSize={"sm"}
+                        p={2}
+                        alignSelf={"flex-start"}
+                        align="center"
+                      >
+                        Subscribe to Club Events
+                      </Text>
+                    </Button>
+        );
+
+        }
+      })()}
         <Text
           textTransform={"uppercase"}
           color={"red.400"}

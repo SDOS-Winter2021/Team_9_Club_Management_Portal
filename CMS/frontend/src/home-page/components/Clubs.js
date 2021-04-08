@@ -114,7 +114,7 @@ class Clubs extends React.Component {
           ))}
         </SimpleGrid>
         {(() => {
-          if (sessionStorage.getItem("email") == "abc@gmail.com") {
+          if (sessionStorage.getItem("group") == "Admin") {
             return (
               <>
                 <SimpleGrid>

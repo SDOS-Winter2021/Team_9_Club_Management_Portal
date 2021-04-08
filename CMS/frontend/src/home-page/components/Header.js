@@ -13,6 +13,7 @@ import axios from "axios";
 import { FcGoogle } from "react-icons/fc";
 import React from "react";
 import GoogleButton from "./GLogout";
+import history from "./../../history";
 
 class Header extends React.Component {
   constructor() {
@@ -47,13 +48,20 @@ class Header extends React.Component {
         <Box bgGradient="linear(teal.500 55%, green.400 95%)" px={4}>
           <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
             <Text fontSize="xl" fontWeight="medium">
-              Welcome, {sessionStorage.getItem("name")}
+              Welcome, {sessionStorage.getItem("name").toUpperCase()}
             </Text>
             <Button
               maxW={"xs"}
               variant={"outline"}
               leftIcon={<FcGoogle />}
               bg="white"
+              onClick={()=>{
+                sessionStorage.removeItem("email");
+                sessionStorage.removeItem("name");
+                sessionStorage.removeItem("group");
+                sessionStorage.removeItem("is_authenticated");
+                history.push("accounts/logout")
+              }}
             >
               <Text>Logout</Text>
             </Button>

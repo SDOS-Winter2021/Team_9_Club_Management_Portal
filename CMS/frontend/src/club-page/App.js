@@ -64,10 +64,13 @@ class Club_Page extends React.Component {
       localStorage.setItem("getSessionStorage", "foobar");
       localStorage.removeItem("getSessionStorage", "foobar");
     }
+
+    if (sessionStorage.is_authenticated != "true") {
+      history.push("/")
+    }
+
     console.log("Club page")
-    console.log(this.state.name);
     this.fetchData(this.props.match.params.name);
-    console.log(this.state.name);
   }
 
   async fetchData(name) {

@@ -14,7 +14,7 @@ import {
   useColorModeValue,
   Textarea,
 } from "@chakra-ui/react";
-
+import history from "../../history";
 import eventOut from "./eventOut";
 
 class Body extends React.Component {
@@ -22,9 +22,11 @@ class Body extends React.Component {
   state = {
     name: "",
     datetime: "",
+    datetime_end: "",
     location: "",
     description: "",
     poster: "",
+    club_email: "",
     holder_name: "",
     holder_datetime: "",
     holder_location: "",
@@ -42,17 +44,24 @@ class Body extends React.Component {
       sessionStorage.removeItem("event_data_dt")
       sessionStorage.removeItem("event_data_desc")
       sessionStorage.removeItem("event_data_loc")
-    }}
+    }
   
+    if (sessionStorage.getItem("group") == "Club_Coordinator"){
+      this.setState({club_email : sessionStorage.getItem("email")})
+    }
+    else{
+      history.push("/home")
+    }}
     handleSubmit(event){
       var data = {
         name: this.state.name,
         date_time: this.state.datetime,
+        date_time_end: this.state.datetime,
         location: this.state.location,
         description: this.state.description,
         poster: this.state.poster,
+        club_email: this.state.club_email,
         approved: "False",
-        club_name: "Peeyush's club",
       };
       var event_info = new FormData();
       //data = JSON.stringify(data); //dunno about this
@@ -96,12 +105,20 @@ class Body extends React.Component {
                   />
               </FormControl>
               <FormControl id="date">
-                <FormLabel>Date-Time</FormLabel>
+                <FormLabel>Start Date-Time</FormLabel>
                 <Input
                   type="datetime-local"
                   value={this.state.datetime}
                   onChange={(e) => this.setState({datetime: e.target.value})}
-                  placeholder={this.state.holder_datetime}
+                  required
+                  />
+              </FormControl>
+              <FormControl id="date">
+                <FormLabel>End Date-Time</FormLabel>
+                <Input
+                  type="datetime-local"
+                  value={this.state.datetime_end}
+                  onChange={(e) => this.setState({datetime_end: e.target.value})}
                   required
                   />
               </FormControl>

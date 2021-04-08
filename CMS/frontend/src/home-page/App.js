@@ -31,6 +31,7 @@ import axios from "axios";
 import Header from "./components/Header";
 import Events from "./components/Events";
 import Clubs from "./components/Clubs";
+import history from "./../history";
 
 class Home_Page extends React.Component {
   constructor() {
@@ -75,6 +76,9 @@ class Home_Page extends React.Component {
       localStorage.setItem("getSessionStorage", "foobar");
       localStorage.removeItem("getSessionStorage", "foobar");
     }
+    if (sessionStorage.is_authenticated != "true") {
+      history.push("/")
+    }
   }
 
   getUser = () => {
@@ -85,12 +89,11 @@ class Home_Page extends React.Component {
 
   setInfo = () => {
     console.log("Setting User Info");
-    console.log(this.state.user_info.email);
     console.log(this.state.user_info);
-    console.log(this.state.user_info.name);
     sessionStorage.setItem("email", this.state.user_info.email);
     sessionStorage.setItem("name", this.state.user_info.name);
-    sessionStorage.setItem("test", "test");
+    sessionStorage.setItem("group", this.state.user_info.group);
+    sessionStorage.setItem("is_authenticated", this.state.user_info.is_authenticated);
   };
 
   render() {

@@ -67,6 +67,10 @@ class Events_Page extends React.Component {
       localStorage.setItem("getSessionStorage", "foobar");
       localStorage.removeItem("getSessionStorage", "foobar");
     }
+
+    if (sessionStorage.is_authenticated != "true") {
+      history.push("/")
+    }
     this.getEventInfo(id);
   }
 

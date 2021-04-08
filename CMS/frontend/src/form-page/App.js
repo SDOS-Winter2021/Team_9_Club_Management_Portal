@@ -13,6 +13,7 @@ import {
   CSSReset,
   theme,
 } from "@chakra-ui/react";
+import history from "./../history";
 
 import Body from "./components/Body";
 
@@ -50,6 +51,10 @@ class Form_Page extends React.Component {
       localStorage.setItem("getSessionStorage", "foobar");
       localStorage.removeItem("getSessionStorage", "foobar");
     }
+    if (sessionStorage.is_authenticated != "true") {
+      history.push("/")
+    }
+
   }
 
   render() {

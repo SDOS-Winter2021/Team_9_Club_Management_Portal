@@ -168,7 +168,7 @@ export default function Body(event) {
           <Text>{"Notify Me"}</Text>
         </Button>
         {(() => {
-          if (sessionStorage.getItem("email") != undefined) {
+          if (sessionStorage.getItem("email") == eventInfo["club_email"]) {
             return (
               <>
                 <Heading ml={5} marginTop={20}>

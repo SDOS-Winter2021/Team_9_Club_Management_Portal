@@ -9,10 +9,12 @@ import {
   Icon,
   useColorModeValue,
   createIcon,
+  Center
 } from "@chakra-ui/react";
 import { Link, NavLink } from "react-router-dom";
 import Head from "next/head";
 import "./index.css";
+import { FcGoogle } from 'react-icons/fc';
 import history from "./../../history";
 
 export default class Body extends Component {
@@ -78,16 +80,17 @@ export default class Body extends Component {
                 Portal
               </Text>
             </Heading>
-            <NavLink to='login' color="gray.500">Google Login</NavLink>
-            <Stack
-              direction={"column"}
-              spacing={3}
-              align={"center"}
-              alignSelf={"center"}
-              position={"relative"}
-            >
-              <Link to="/home">Go to home</Link>
-            </Stack>
+            <Center>
+              <Button
+                w={'full'}
+                maxW={'md'}
+                variant={'outline'}
+                leftIcon={<FcGoogle />}
+                onClick={()=> history.push(`/login`)}
+              >
+                  <Text>Sign in with Google</Text>
+              </Button>
+            </Center>
           </Stack>
         </Container>
         {/* {(() => {
