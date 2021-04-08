@@ -4,7 +4,7 @@ from .models import *
 class CLUBSerializer(serializers.ModelSerializer):
 	class Meta:
 		model=CLUB
-		fields=('id','name','date_time','location','description','poster','payment_receipt_student','payment_receipt_reimburse','approved','attendance','club_name')
+		fields=('id','name','date_time','location','description','poster','approved','attendance','club_name','web_link')
 
 class UsersSerializer(serializers.ModelSerializer):
 	class Meta:

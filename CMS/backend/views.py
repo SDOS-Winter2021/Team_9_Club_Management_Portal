@@ -21,6 +21,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse
 import logging
+from django.contrib.auth.models import Group
 
 # Create your views here.
 
@@ -193,9 +194,18 @@ def USERS_ID(request,pk):
 
 @api_view(['GET'])
 def USER_INFO(request):
+	print("ADDING user: ",request.user ,"to a group")
 	if(request.method=='GET'):
 		if request.user.is_authenticated:
 			user = (request.user)
+			if len(request.user.groups.all())==0:
+				alluser=Users.objects.all()
+				alluser=alluser.filter(email__icontains=request.user.email)
+				if alluser:
+					gr=alluser.values('group')[0]['group']
+					request.user.groups.add(Group.objects.get(name=gr))
+				else:
+					request.user.groups.add(Group.objects.get(name='Student'))
 			return JsonResponse({'name': user.get_username(),
 			'email': user.email,
 			'group': str(user.groups.all()[0])})
