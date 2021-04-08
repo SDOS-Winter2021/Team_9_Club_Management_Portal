@@ -198,4 +198,9 @@ def USER_INFO(request):
 			user = (request.user)
 			return JsonResponse({'name': user.get_username(),
 			'email': user.email,
-			'group': str(user.groups.all()[0])})
+			'group': str(user.groups.all()[0]),
+			'is_authenticated': user.is_authenticated})
+		else:
+			return JsonResponse({
+			'is_authenticated': request.user.is_authenticated})
+			
