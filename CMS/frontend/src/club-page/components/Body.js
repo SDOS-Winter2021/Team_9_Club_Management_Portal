@@ -46,9 +46,9 @@ const Body = (Info_G, Info_E) => {
             >
               About Us
             </Text>
-            <Heading>FooBar</Heading>
+            <Heading>{Info_G.Info_G.name}</Heading>
             <Text color={"gray.500"} fontSize={"lg"}>
-            FooBar, IIIT-Delhi's programming club, was founded in September 2013. Since then, it has conducted many programming contests, CodeClasses and Placement Sessions. The aim of FooBar is to promote programming as a culture in the Institute. The club brings people together, so that they may hone their skills in programming. We aim to prepare ourselves better for programming competitions like ACM-ICPC, and help students be ready for their placements.
+              {Info_G.Info_G.description}
             </Text>
             <Stack
               spacing={4}
@@ -91,7 +91,7 @@ const Body = (Info_G, Info_E) => {
                   {" "}
                   {<Icon as={IoLaptopOutline} color={"blue.500"} w={5} h={5} />}
                 </Flex>
-                <Text fontWeight={600}>http://foobar.iiitd.edu.in</Text>
+                <Text fontWeight={600}>{Info_G.Info_G.website_link}</Text>
               </Stack>
               <Stack direction={"row"} align={"center"}>
                 <Flex
@@ -106,7 +106,7 @@ const Body = (Info_G, Info_E) => {
                   {<Icon as={IoLogoFacebook} color={"green.500"} w={5} h={5} />}
                 </Flex>
                 <Link to="https://www.facebook.com">
-                https://www.facebook.com/iiitdfoobar/
+                  {Info_G.Info_G.fb_link}
                 </Link>
               </Stack>
               <Stack direction={"row"} align={"center"}>
@@ -142,35 +142,27 @@ const Body = (Info_G, Info_E) => {
             />
           </Flex>
         </SimpleGrid>
-        {(() => {
-          if (sessionStorage.getItem("email") == Info_G.Info_G["email"]) {
-            return (
-              <>
-                <Button
-                  spacing={10}
-                  mt={50}
-                  onClick={() => history.push("/form")}
-                  bg={useColorModeValue("white", "white")}
-                  rounded={"md"}
-                  border="2px"
-                  borderColor="#12d5e3"
-                >
-                  <Text
-                    textTransform={"uppercase"}
-                    color={"#12d5e3"}
-                    fontWeight={600}
-                    fontSize={"sm"}
-                    p={2}
-                    alignSelf={"flex-start"}
-                    align="center"
-                  >
-                    Propose Event
-                  </Text>
-                </Button>
-              </>
-            );
-          }
-        })()}
+        <Button
+          spacing={10}
+          mt={50}
+          onClick={() => history.push("/form")}
+          bg={useColorModeValue("white", "white")}
+          rounded={"md"}
+          border="2px"
+          borderColor="#12d5e3"
+        >
+          <Text
+            textTransform={"uppercase"}
+            color={"#12d5e3"}
+            fontWeight={600}
+            fontSize={"sm"}
+            p={2}
+            alignSelf={"flex-start"}
+            align="center"
+          >
+            Propose Event
+          </Text>
+        </Button>
         <Text
           textTransform={"uppercase"}
           color={"red.400"}

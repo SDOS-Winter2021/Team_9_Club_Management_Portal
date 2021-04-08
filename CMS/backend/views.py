@@ -30,6 +30,7 @@ logger = logging.getLogger(__name__)
 def home(request):
     return render(request, 'backend/index.html')
 # The foolowing api can be used to ge those event which are upcmoing within 2 days and it returns atmost 10 results
+@login_required(login_url='/login')
 @api_view(['GET'])
 def CLUB_UPCOMING(request):
 	today=datetime.now().date()
@@ -118,6 +119,7 @@ def CLUB_EVENT_PENDING(request):
 		club_serializer=CLUBSerializer(clubs,many=True)
 		return JsonResponse(club_serializer.data,safe=False)
 
+@login_required(login_url='/login')
 @api_view(['GET','POST'])
 def CLUB_GENERAL_ADD(request):
 	if(request.method=='GET'):
@@ -195,6 +197,5 @@ def USER_INFO(request):
 		print(request.user.is_authenticated)
 		print("User info requested")
 		print(request)
-		print(request.user)
-		user = request.user
-		return JsonResponse(user)
+		user = (request.user)
+		return JsonResponse({'name': user.get_username()})

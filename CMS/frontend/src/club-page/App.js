@@ -66,20 +66,20 @@ class Club_Page extends React.Component {
     }
     console.log("Club page")
     console.log(this.state.name);
-    this.fetchData();
+    this.fetchData(this.props.match.params.name);
     console.log(this.state.name);
   }
 
-  async fetchData() {
+  async fetchData(name) {
     let eResponse_general = await getData(
-      this.name.slice(this.name.indexOf("@") + 1)
+      name.slice(name.indexOf("@") + 1)
     );
     this.setState({ general: eResponse_general.data })
     
     let eResponse_event = await getEvent(
-      this.name.slice(0, this.name.indexOf("@"))
+      name.slice(0, name.indexOf("@"))
       );
-    this.setState({ general: eResponse_event.data })
+    this.setState({ event: eResponse_event.data })
   }
 
   render() {
