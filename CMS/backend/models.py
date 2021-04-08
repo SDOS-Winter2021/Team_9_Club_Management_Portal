@@ -13,6 +13,9 @@ class CLUB(models.Model):
     club_name=models.CharField(max_length=100,blank=False)
     web_link=models.URLField(max_length=200,blank=True)
 
+    def __str__(self):
+        return self.name
+
 class Users(models.Model):
     email=models.CharField(max_length=100,blank=False)
     group=models.CharField(max_length=100,blank=False)
@@ -31,4 +34,7 @@ class CLUB_GENERAL(models.Model):
     fb_link=models.URLField(max_length=200,blank=True)
     ig_link=models.URLField(max_length=200,blank=True)
     website_link=models.URLField(max_length=200,blank=True)
+
+    def __str__(self):
+        return self.name
 
