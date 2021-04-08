@@ -49,7 +49,7 @@ const Header = (Info) => {
             justifyContent="flex-start"
           >
             <Text fontSize="3xl" fontWeight="bold">
-              {Info.Info.name}
+              Foobar
             </Text>
           </Flex>
         </Flex>

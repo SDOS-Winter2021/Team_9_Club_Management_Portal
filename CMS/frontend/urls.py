@@ -10,6 +10,6 @@ urlpatterns = [
     path('student/', views.index ),
     path('form/', views.index ),
     path('clubform/', views.index ),
-    path('club/', views.index ),
+    url(r'^(club)', views.index ),
     url(r'^event/(?P<pk>[0-9]+)$', views.index),
 ]

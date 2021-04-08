@@ -6,7 +6,8 @@ from django.contrib.auth.models import Group
 # Create your views here.
 def index(request, pk=None):
     if request.user.is_authenticated:
-        if (request.user.groups.filter(name='Club_Coordinator').exists() and ('club' in request.get_full_path())) or (request.user.groups.filter(name='Student').exists() and 'student' in request.get_full_path()) or (request.user.groups.filter(name='Admin').exists() and 'admin' in request.get_full_path()):
+        if (request.user.groups.filter(name='Club_Coordinator').exists() and ('club' in request.get_full_path())) or (request.user.groups.filter(name='Student').exists()) or (request.user.groups.filter(name='Admin').exists() and 'admin' in request.get_full_path()):
+            print( request.get_full_path()," is requested")
             return render(request, 'frontend/index.html')
         else:
             return HttpResponse('You are not authorized to view this page')

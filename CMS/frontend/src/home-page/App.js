@@ -79,9 +79,7 @@ class Home_Page extends React.Component {
 
   getUser = () => {
     console.log("Getting User");
-    axios
-      .get("http://127.0.0.1:8000/api/user/info")
-      .then((data) => this.setState({ user_info: data.data }));
+    axios.get("http://localhost:8000/api/user/info").then((data) => this.setState({ user_info: data.data }));
     this.setInfo();
   };
 

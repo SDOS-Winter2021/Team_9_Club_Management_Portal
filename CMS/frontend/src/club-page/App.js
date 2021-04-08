@@ -22,15 +22,16 @@ import { useState, useEffect } from "react";
 import { withRouter } from "react-router";
 
 class Club_Page extends React.Component {
-s
+
   state = {
     general: [],
     event: [],
-    name: "",
+    name: [],
   };
 
   componentDidMount() {
     this.setState({ name: this.props.match.params.name })
+    console.log(this.state.name)
     // transfers sessionStorage from one tab to another
     var sessionStorage_transfer = function (event) {
       if (!event) {
@@ -63,8 +64,10 @@ s
       localStorage.setItem("getSessionStorage", "foobar");
       localStorage.removeItem("getSessionStorage", "foobar");
     }
-
-    fetchData();
+    console.log("Club page")
+    console.log(this.state.name);
+    this.fetchData();
+    console.log(this.state.name);
   }
 
   async fetchData() {

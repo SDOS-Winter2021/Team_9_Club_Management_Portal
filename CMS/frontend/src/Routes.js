@@ -18,8 +18,8 @@ export default class Routes extends Component {
         <Switch>
           <Route path="/home" exact component={Home_Page} />
           <Route path="/" exact component={Landing_Page} />
-          <Route path="/student" exact component={Student_Page} />
-          <Route path="/club" exact component={Club_Page} />
+          <Route path="/student" exact component={Home_Page} />
+          <Route path="/club/:name" exact component={Club_Page} />
           <Route path="/event/:id" exact component={Events_Page} />
           <Route path="/form" exact component={Form_Page} />
           <Route path="/clubform" exact component={Club_Form_Page} />

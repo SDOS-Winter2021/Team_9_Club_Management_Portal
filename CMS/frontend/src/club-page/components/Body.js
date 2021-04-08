@@ -46,9 +46,9 @@ const Body = (Info_G, Info_E) => {
             >
               About Us
             </Text>
-            <Heading>{Info_G.Info_G.name}</Heading>
+            <Heading>FooBar</Heading>
             <Text color={"gray.500"} fontSize={"lg"}>
-              {Info_G.Info_G.description}
+            FooBar, IIIT-Delhi's programming club, was founded in September 2013. Since then, it has conducted many programming contests, CodeClasses and Placement Sessions. The aim of FooBar is to promote programming as a culture in the Institute. The club brings people together, so that they may hone their skills in programming. We aim to prepare ourselves better for programming competitions like ACM-ICPC, and help students be ready for their placements.
             </Text>
             <Stack
               spacing={4}
@@ -91,7 +91,7 @@ const Body = (Info_G, Info_E) => {
                   {" "}
                   {<Icon as={IoLaptopOutline} color={"blue.500"} w={5} h={5} />}
                 </Flex>
-                <Text fontWeight={600}>{Info_G.Info_G.website_link}</Text>
+                <Text fontWeight={600}>http://foobar.iiitd.edu.in</Text>
               </Stack>
               <Stack direction={"row"} align={"center"}>
                 <Flex
@@ -106,7 +106,7 @@ const Body = (Info_G, Info_E) => {
                   {<Icon as={IoLogoFacebook} color={"green.500"} w={5} h={5} />}
                 </Flex>
                 <Link to="https://www.facebook.com">
-                  {Info_G.Info_G.fb_link}
+                https://www.facebook.com/iiitdfoobar/
                 </Link>
               </Stack>
               <Stack direction={"row"} align={"center"}>

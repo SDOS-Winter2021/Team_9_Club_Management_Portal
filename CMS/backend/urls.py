@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^clubinfo$',views.CLUB_GENERAL_ADD),
     url(r'^clubinfo/(?P<pk>[0-9]+)$',views.CLUB_GENERAL_ID),
     url(r'^users$',views.ADD_USERS),
+    path('user/info',views.USER_INFO),
     url(r'^users/(?P<pk>[0-9]+)$',views.USERS_ID),
 ]

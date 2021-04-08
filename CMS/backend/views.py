@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.parsers import FileUploadParser
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, request
 from .models import *
 from .serializers import *
 from .utils import *
@@ -188,3 +188,13 @@ def USERS_ID(request,pk):
 	elif request.method=='DELETE':
 		users.delete()
 		return JsonResponse({'message': 'User was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+def USER_INFO(request):
+	if(request.method=='GET'):
+		print(request.user.is_authenticated)
+		print("User info requested")
+		print(request)
+		print(request.user)
+		user = request.user
+		return JsonResponse(user)
