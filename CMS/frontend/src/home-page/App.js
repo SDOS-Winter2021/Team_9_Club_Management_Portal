@@ -36,15 +36,14 @@ import history from "./../history";
 class Home_Page extends React.Component {
   constructor() {
     super();
+    this.state = {
+      user_info: [],
+    };
   }
 
-  state = {
-    user_info: {},
-  };
-
   componentDidMount() {
-    this.getUser();
     // transfers sessionStorage from one tab to another
+    this.getUser();
     var sessionStorage_transfer = function (event) {
       if (!event) {
         event = window.event;
@@ -76,20 +75,19 @@ class Home_Page extends React.Component {
       localStorage.setItem("getSessionStorage", "foobar");
       localStorage.removeItem("getSessionStorage", "foobar");
     }
-    if (sessionStorage.is_authenticated != "true") {
-      history.push("/")
-    }
   }
 
   getUser = () => {
     console.log("Getting User");
-    axios.get("http://localhost:8000/api/user/info").then((data) => this.setState({ user_info: data.data }));
-    this.setInfo();
+    axios.get("http://localhost:8000/api/user/info").then((data) => this.setState({ user_info: data.data }, () => {
+      console.log(this.state.user_info.is_authenticated);
+      if (!this.state.user_info.is_authenticated) {
+        history.push("/")
+      }  
+    }));
   };
 
   setInfo = () => {
-    console.log("Setting User Info");
-    console.log(this.state.user_info);
     sessionStorage.setItem("email", this.state.user_info.email);
     sessionStorage.setItem("name", this.state.user_info.name);
     sessionStorage.setItem("group", this.state.user_info.group);
