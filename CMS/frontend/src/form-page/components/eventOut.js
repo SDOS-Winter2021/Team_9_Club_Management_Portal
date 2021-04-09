@@ -1,4 +1,7 @@
 import axios from "axios";
+import Cookies from 'js-cookie'
+
+const csrftoken = Cookies.get('csrftoken') 
 
 /**
  *
@@ -12,6 +15,7 @@ const eventOut = async (request) => {
   let res = await axios.post("http://localhost:8000/api/clubs", request, {
     headers: {
       "Content-Type": "multipart/form-data",
+      'X-CSRFToken': csrftoken,
     },
   });
   console.log(res);

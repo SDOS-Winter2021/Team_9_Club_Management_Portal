@@ -52,22 +52,25 @@ class Body extends React.Component {
     else{
       history.push("/home")
     }}
+
     handleSubmit(event){
+      console.log(this.state.name);
+      console.log("IN SUBMIT");
       var data = {
         name: this.state.name,
         date_time: this.state.datetime,
         date_time_end: this.state.datetime,
         location: this.state.location,
         description: this.state.description,
-        poster: this.state.poster,
+        //poster: this.state.poster,
         club_email: this.state.club_email,
         approved: "False",
       };
       var event_info = new FormData();
-      //data = JSON.stringify(data); //dunno about this
+      data = JSON.stringify(data); //dunno about this
       event_info.append("request", data);
-  
-      console.log(this.name);
+      event_info.append("poster", this.state.poster);
+      //console.log(this.name);
       let eResponse = eventOut(event_info);
       console.log(eResponse);
     };
@@ -127,7 +130,10 @@ class Body extends React.Component {
                 <Input
                   type="text"
                   value={this.state.location}
-                  onChange={(e) => this.setState({location: e.target.value})}
+                  onChange={(e) => this.setState({location: e.target.value}, () => {
+                    // console.log(this.state.location);
+                    // console.log("IN LOCATION FIELD");
+                  })}
                   placeholder={this.state.holder_location}
                   required
                   />
@@ -156,7 +162,7 @@ class Body extends React.Component {
                   bg={"blue.400"}
                   color={"white"}
                   _hover={{ bg: "blue.500" }}
-                  onClick={this.handleSubmit}
+                  onClick={(e) => this.handleSubmit(e)}
                 >
                   Submit
                 </Button>

@@ -39,5 +39,8 @@
     "style-loader": "^2.0.0",
     "webpack": "^5.30.0",
     "webpack-cli": "^4.6.0"
+  },
+  "dependencies": {
+    "js-cookie": "^2.2.1"
   }
 }

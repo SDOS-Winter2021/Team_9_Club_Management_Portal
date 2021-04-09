@@ -131,16 +131,20 @@ def CLUB_EVENT_PENDING(request):
         return JsonResponse(club_serializer.data, safe=False)
 
 
-@login_required(login_url="/login")
+# @login_required(login_url="/login")
 @api_view(["GET", "POST"])
 def CLUB_GENERAL_ADD(request):
+    print("Got in CLUBGENERATLADD")
+    print(request.data, "request")
     if request.method == "GET":
         club_general = CLUB_GENERAL.objects.all()
         club_general_serializer = CLUB_GENERALSerializer(club_general, many=True)
         return JsonResponse(club_general_serializer.data, safe=False)
     elif request.method == "POST":
+        print("IN POST CLUB GENErAL")
         parser_classes = (MultipartJsonParser, JSONParser)
         clubdata = json.loads(request.data["request"])
+        print(request.data["request"], "CLUBDATA INSIDE")
         club_general = CLUB_GENERAL()
         print(clubdata, type(clubdata), "Request to Add club")
         if "logo" in request.data:

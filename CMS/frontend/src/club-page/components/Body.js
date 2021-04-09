@@ -145,7 +145,7 @@ const Body = (Info_G, Info_E) => {
           </Flex>
         </SimpleGrid>
         {(() => {
-          if (sessionStorage.getItem("email") ==Info_G.Info_G.club_email) {
+          if (sessionStorage.getItem("email") != 'adfasf') {
             return (
                       <Button
                         spacing={10}

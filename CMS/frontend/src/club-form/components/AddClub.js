@@ -15,6 +15,10 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import axios from "axios";
+import Cookies from 'js-cookie'
+
+const csrftoken = Cookies.get('csrftoken') 
+
 
 export default function Body() {
   const [name, setname] = React.useState("");
@@ -33,9 +37,10 @@ export default function Body() {
   const clubOut = async (request) => {
     console.log("Sending Post request to add club");
     console.log(request);
-    let res = await axios.post("http://127.0.0.1:8000/api/clubinfo", request,{
+    let res = await axios.post("http://localhost:8000/api/clubinfo", request,{
       headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      'X-CSRFToken': csrftoken,
     }});
     console.log(res);
     return await res.status;
@@ -54,11 +59,14 @@ export default function Body() {
       fblink: fblink,
       iglink: iglink,
       weblink: weblink,
-      logo: logo,
+     // logo: logo,
     };
+    //console.log(data);
+    data = JSON.stringify(data);
     var club_info = new FormData();
     club_info.append("request", data);
-    //data = JSON.stringify(data);
+    club_info.append("logo", logo);
+    //club_info = JSON.stringify(club_info);
     let eResponse = await clubOut(club_info);
     console.log(eResponse);
   };
@@ -179,7 +187,7 @@ export default function Body() {
                 bg={"blue.400"}
                 color={"white"}
                 _hover={{ bg: "blue.500" }}
-                onClick={handleSubmit}
+                onClick={(e) => handleSubmit(e)}
               >
                 Submit
               </Button>
