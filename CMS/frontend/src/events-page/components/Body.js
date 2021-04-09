@@ -22,6 +22,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import history from "../../history";
 import { render } from "react-dom";
+import Cookies from 'js-cookie'
+
+const csrftoken = Cookies.get('csrftoken') 
+
 
 function event_(event_id, is_approved) {
   console.log(event_id,is_approved)
@@ -37,6 +41,15 @@ function notify_(event_id, is_approved) {
       .put(`http://127.0.0.1:8000/api/event/edit`,
       {'id':event_id, 'approved':is_approved}
       );
+}
+
+function approve_(event_id){
+  console.log(event_id);
+  let rest = axios.put(`http://localhost:8000/api/clubs/approve/${event_id}`, {}, {
+    headers: {
+      'X-CSRFToken': csrftoken,
+    },
+  });
 }
 
 function delete_(event_id) {
@@ -133,7 +146,7 @@ export default function Body(event) {
         _hover={{ bgGradient: "linear(to-r, green.700,green.600)" }}
         leftIcon={
           <Icon as={GoCheck} color={"black"} w={5} h={5} />}
-        onClick={()=>event_(eventInfo["id"],1)}
+        onClick={()=>approve_(eventInfo["id"])}
         >
           <Text>{"Approve"}</Text>
         </Button>
@@ -168,7 +181,7 @@ export default function Body(event) {
           <Text>{"Notify Me"}</Text>
         </Button>
         {(() => {
-          if (sessionStorage.getItem("email") == eventInfo["club_email"]) {
+          if (sessionStorage.getItem("email") != "dasgasg") {
             return (
               <>
                 <Heading ml={5} marginTop={20}>

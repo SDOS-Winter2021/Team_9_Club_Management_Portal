@@ -32,6 +32,7 @@ export default function Body() {
   const [fblink, setfblink] = React.useState("");
   const [iglink, setiglink] = React.useState("");
   const [weblink, setweblink] = React.useState("");
+  const [clubemail, setclubemail] = React.useState("")
   const [logo, setlogo] = React.useState("");
 
   const clubOut = async (request) => {
@@ -48,17 +49,18 @@ export default function Body() {
 
   const handleSubmit = async (event) => {
     var data = {
-      name: name,
+      name:name,
       description: description,
-      coord1: coord1,
-      coord2: coord2,
-      coord3: coord3,
-      coord1email: coord1email,
-      coord2email: coord2email,
-      coord3email: coord3email,
-      fblink: fblink,
-      iglink: iglink,
-      weblink: weblink,
+      coordinator1: coord1,
+      coordinator2: coord2,
+      coordinator3: coord3,
+      coordinator1_email: coord1email,
+      coordinator2_email: coord2email,
+      coordinator3_email: coord3email,
+      fb_link: fblink,
+      ig_link: iglink,
+      website_link: weblink,
+      club_email: clubemail,
      // logo: logo,
     };
     //console.log(data);
@@ -156,6 +158,14 @@ export default function Body() {
                 type="text"
                 value={coord3email}
                 onChange={(e) => setcoord3email(e.target.value)}
+              />
+            </FormControl>
+            <FormControl id="clubemail">
+              <FormLabel>Email ID of Club</FormLabel>
+              <Input
+                type="text"
+                value={clubemail}
+                onChange={(e) => setclubemail(e.target.value)}
               />
             </FormControl>
             <FormControl id="fblink">

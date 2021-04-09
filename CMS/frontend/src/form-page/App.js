@@ -18,6 +18,7 @@ import history from "./../history";
 import Body from "./components/Body";
 
 class Form_Page extends React.Component {
+
   componentDidMount() {
     // transfers sessionStorage from one tab to another
     var sessionStorage_transfer = function (event) {
@@ -54,7 +55,6 @@ class Form_Page extends React.Component {
     if (sessionStorage.is_authenticated != "true") {
       history.push("/")
     }
-
   }
 
   render() {

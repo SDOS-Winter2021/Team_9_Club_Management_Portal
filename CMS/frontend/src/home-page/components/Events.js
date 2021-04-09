@@ -38,6 +38,7 @@ import axios from "axios";
 import { IoAlarmOutline } from "react-icons/io5";
 import { BsBuilding } from "react-icons/bs";
 import history from "../../history";
+import { Router } from "react-router";
 
 class Events extends React.Component {
   constructor() {
