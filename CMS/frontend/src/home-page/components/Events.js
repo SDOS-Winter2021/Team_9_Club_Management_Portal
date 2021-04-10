@@ -64,6 +64,11 @@ class Events extends React.Component {
     history.push(`/event/${name}`);
   };
 
+  formatDate = (dateString) => {
+    const options = { dateStyle: "short", timeStyle: "short"}
+    return new Date(dateString).toLocaleString(undefined , options)
+  }
+
   render() {
     return (
       <>
@@ -111,9 +116,10 @@ class Events extends React.Component {
                 >
                   <Icon as={IoAlarmOutline} color={"black"} w={5} h={5} />
                 </Flex>
-                <Text fontWeight={600}>
-                  {this.state.events[i]["date_time"]}
-                </Text>
+                  <Text fontWeight={600}>
+                    {this.formatDate(this.state.events[i]["date_time"])}
+                  </Text>
+
                 <Flex
                   w={8}
                   h={8}

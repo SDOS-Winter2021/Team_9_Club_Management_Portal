@@ -70,6 +70,10 @@ function edit_(event_info) {
   history.push(`/form`);
 }
 
+const formatDate = (dateString) => {
+  const options = { dateStyle: "medium", timeStyle: "short"}
+  return new Date(dateString).toLocaleString(undefined , options)
+}
 
 export default function Body(event) {
   const eventInfo = event.eventid;
@@ -107,7 +111,7 @@ export default function Body(event) {
               Date Time
             </Text>
             <Text color={"gray.500"} fontSize={"lg"}>
-              {eventInfo["date_time"]}
+              {formatDate(eventInfo["date_time"])}
             </Text>
             <Text
               textTransform={"uppercase"}

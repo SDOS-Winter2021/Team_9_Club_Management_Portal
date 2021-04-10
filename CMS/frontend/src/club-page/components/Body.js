@@ -26,6 +26,11 @@ import { FaDrum, FaRegMinusSquare } from "react-icons/fa";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Head from "next/head";
 
+const formatDate = (dateString) => {
+  const options = { dateStyle: "short", timeStyle: "short"}
+  return new Date(dateString).toLocaleString(undefined , options)
+}
+
 const Body = (Info_G, Info_E) => {
   return (
     <>
@@ -238,7 +243,7 @@ const Body = (Info_G, Info_E) => {
                     </Text>
                     <Box color={"gray.600"}>
                       {`${Info_G.Info_E[i].location}`} on{" "}
-                      {`${Info_G.Info_E[i].date_time}`}
+                      {`${formatDate(Info_G.Info_E[i].date_time)}`}
                     </Box>
                   </Stack>
                 </Stack>
@@ -287,7 +292,7 @@ const Body = (Info_G, Info_E) => {
                     </Text>
                     <Box color={"gray.600"}>
                       {`${Info_G.Info_E[i].location}`} on{" "}
-                      {`${Info_G.Info_E[i].date_time}`}
+                      {`${formatDate(Info_G.Info_E[i].date_time)}`}
                     </Box>
                   </Stack>
                 </Stack>
