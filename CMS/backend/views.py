@@ -99,12 +99,6 @@ def CLUB_DETAIL(request, pk):
         if "poster" in request.data:
             p = request.data["poster"]
             clubs.poster.save(p.name, p, save=True)
-        if "file" in request.data:
-            f = request.data["file"]
-            clubs.payment_receipt_student.save(f.name, f, save=True)
-        if "reimburse" in request.data:
-            r = request.data["reimburse"]
-            clubs.payment_receipt_reimburse(r.name, r, save=True)
         club_serializer = CLUBSerializer(clubs, data=club_data)
         if club_serializer.is_valid():
             club_serializer.save()
@@ -126,7 +120,7 @@ def CLUB_EVENT_PENDING(request):
         name = request.GET.get("name", None)
         if name is not None:
             clubs = clubs.filter(club_name__icontains=name)
-            clubs = clubs.filter(approved=False)
+            clubs = clubs.filter(approved=True)
         club_serializer = CLUBSerializer(clubs, many=True)
         return JsonResponse(club_serializer.data, safe=False)
 
@@ -226,6 +220,22 @@ def USERS_ID(request, pk):
         return JsonResponse(
             {"message": "User was deleted successfully!"},
             status=status.HTTP_204_NO_CONTENT,
+        )
+
+
+@api_view(["PUT"])
+def approve_event(request, pk):
+    try:
+        clubs = CLUB.objects.get(pk=pk)
+    except CLUB.DoesNotExist:
+        return JsonResponse(
+            {"message: The given club does not exist"}, status=status.HTTP_404_NOT_FOUND
+        )
+    if request.method == "PUT":
+        clubs.approved = True
+        clubs.save()
+        return JsonResponse(
+            {"message": "event approved"}, status=status.HTTP_201_CREATED
         )
 
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Router, Switch, Route } from "react-router-dom";
+import { Router, Switch, Route, BrowserRouter } from "react-router-dom";
 
 import Home_Page from "./home-page/App";
 import Landing_Page from "./landing-page/App";
@@ -15,7 +15,8 @@ export default class Routes extends Component {
   render() {
     return (
       <Router history={history}>
-        <Switch>
+      <div>
+      <Switch>
           <Route path="/home" exact component={Home_Page} />
           <Route path="/" exact component={Landing_Page} />
           <Route path="/student" exact component={Home_Page} />
@@ -24,6 +25,7 @@ export default class Routes extends Component {
           <Route path="/form" exact component={Form_Page} />
           <Route path="/clubform" exact component={Club_Form_Page} />
         </Switch>
+      </div>
       </Router>
     );
   }

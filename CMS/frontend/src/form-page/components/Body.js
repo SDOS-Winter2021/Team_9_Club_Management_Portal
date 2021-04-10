@@ -19,19 +19,24 @@ import eventOut from "./eventOut";
 
 class Body extends React.Component {
 
-  state = {
-    name: "",
-    datetime: "",
-    datetime_end: "",
-    location: "",
-    description: "",
-    poster: "",
-    club_email: "",
-    holder_name: "",
-    holder_datetime: "",
-    holder_location: "",
-    holder_description: "",
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      name: "",
+      datetime: "",
+      //datetime_end: "",
+      location: "",
+      description: "",
+      poster: "",
+      web_link: "",
+      holder_name: "",
+      holder_datetime: "",
+      holder_location: "",
+      holder_description: "",
+    };
+  }
+
+
 
   componentDidMount() {
     console.log(sessionStorage.getItem("event_data_name"))
@@ -54,18 +59,19 @@ class Body extends React.Component {
     }}
 
     handleSubmit(event){
-      console.log(this.state.name);
-      console.log("IN SUBMIT");
       var data = {
         name: this.state.name,
         date_time: this.state.datetime,
-        date_time_end: this.state.datetime,
+        //date_time_end: this.state.datetime,
         location: this.state.location,
         description: this.state.description,
+        web_link: this.state.web_link,
         //poster: this.state.poster,
-        club_email: this.state.club_email,
-        approved: "False",
+        //club_email: this.state.club_email,
+        approved: "True",
       };
+      console.log(this.state.club_name);
+      console.log("IN SUBMIT");
       var event_info = new FormData();
       data = JSON.stringify(data); //dunno about this
       event_info.append("request", data);
@@ -116,7 +122,7 @@ class Body extends React.Component {
                   required
                   />
               </FormControl>
-              <FormControl id="date">
+              {/* <FormControl id="date">
                 <FormLabel>End Date-Time</FormLabel>
                 <Input
                   type="datetime-local"
@@ -124,7 +130,7 @@ class Body extends React.Component {
                   onChange={(e) => this.setState({datetime_end: e.target.value})}
                   required
                   />
-              </FormControl>
+              </FormControl> */}
               <FormControl id="location">
                 <FormLabel>Location</FormLabel>
                 <Input
@@ -152,11 +158,10 @@ class Body extends React.Component {
                 <FormLabel>Poster/Image</FormLabel>
                 <Input
                   type="file"
-                  value={this.state.poster}
                   placeholder=""
                   onChange={(e) => this.setState({poster: e.target.files[0]})}
                 />
-              </FormControl>s
+              </FormControl>
               <Stack spacing={10}>
                 <Button
                   bg={"blue.400"}
