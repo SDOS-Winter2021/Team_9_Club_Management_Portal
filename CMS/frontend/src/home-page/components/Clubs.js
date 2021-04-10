@@ -57,6 +57,7 @@ class Clubs extends React.Component {
     console.log("Sending you to Club Page ------------->");
     console.log(name);
     console.log(id);
+    // window.location.href = `/club/${name}@${id}`;
     history.push(`/club/${name}@${id}`);
   };
 

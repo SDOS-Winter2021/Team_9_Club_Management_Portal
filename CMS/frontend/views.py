@@ -9,7 +9,7 @@ def index(request, pk=None):
     if request.user.is_authenticated:
         return render(request, "frontend/index.html")
     else:
-        return HttpResponseRedirect("/accounts/google/login/?process=login")
+        return render(request, "frontend/index.html")
 
 
 def login(request):
