@@ -94,7 +94,7 @@ class Events extends React.Component {
             <Stat
               px={{ base: 4, sm: 6 }}
               py="5"
-              bg={"gray.600"}
+              bg={"gray.500"}
               shadow="base"
               rounded="lg"
               key={this.state.un_events[i]["club_name"]}
@@ -125,7 +125,7 @@ class Events extends React.Component {
                   align={"center"}
                   justify={"center"}
                   rounded={"full"}
-                  bg={"gray.600"}
+                  bg={"gray.500"}
                 >
                   <Icon as={IoAlarmOutline} color={"white"} w={5} h={5} />
                 </Flex>
@@ -139,7 +139,7 @@ class Events extends React.Component {
                   align={"center"}
                   justify={"center"}
                   rounded={"full"}
-                  bg={"gray.600"}
+                  bg={"gray.500"}
                 >
                   <Icon as={BsBuilding} color={"white"} w={5} h={5} />
                 </Flex>

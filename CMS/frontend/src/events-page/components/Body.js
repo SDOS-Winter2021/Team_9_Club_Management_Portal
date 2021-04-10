@@ -139,36 +139,42 @@ export default function Body(event) {
                 "https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg"
               }
             />
-        <Flex flexDirection="row" justifyContent="space-between">
-            <Button
-        marginTop={10}
-        justifyContent="space-evenly"
-        p={4}
-        width={"40%"}
-        border="1px"
-        bgGradient="linear(to-r, green.500,green.300)"
-        _hover={{ bgGradient: "linear(to-r, green.700,green.600)" }}
-        leftIcon={
-          <Icon as={GoCheck} color={"black"} w={5} h={5} />}
-        onClick={()=>approve_(eventInfo["id"])}
-        >
-          <Text>{"Approve"}</Text>
-        </Button>
-        <Button
-        marginTop={10}
-        justifyContent="space-evenly"
-        p={4}
-        border="1px"
-        width={"40%"}
-        bgGradient="linear(to-r, red.500,red.300)"
-        _hover={{ bgGradient: "linear(to-r, red.700,red.400)" }}
-        leftIcon={
-          <Icon as={GoX} color={"black"} w={5} h={5} />}
-        onClick={()=>event_(eventInfo["id"],0)}
-        >
-          <Text>{"Reject"}</Text>
-        </Button>
-        </Flex>
+        {(() => {
+          if (sessionStorage.getItem("group") == "Admin" || sessionStorage.getItem("group") == "Club_Admin") {
+            return (
+            <Flex flexDirection="row" justifyContent="space-between">
+                <Button
+                  marginTop={10}
+                  justifyContent="space-evenly"
+                  p={4}
+                  width={"40%"}
+                  border="1px"
+                  bgGradient="linear(to-r, green.500,green.300)"
+                  _hover={{ bgGradient: "linear(to-r, green.700,green.600)" }}
+                  leftIcon={
+                    <Icon as={GoCheck} color={"black"} w={5} h={5} />}
+                  onClick={()=>approve_(eventInfo["id"])}
+                >
+                    <Text>{"Approve"}</Text>
+                </Button>
+                <Button
+                  marginTop={10}
+                  justifyContent="space-evenly"
+                  p={4}
+                  border="1px"
+                  width={"40%"}
+                  bgGradient="linear(to-r, red.500,red.300)"
+                  _hover={{ bgGradient: "linear(to-r, red.700,red.400)" }}
+                  leftIcon={
+                    <Icon as={GoX} color={"black"} w={5} h={5} />}
+                  onClick={()=>event_(eventInfo["id"],0)}
+                >
+                  <Text>{"Reject"}</Text>
+                </Button>
+            </Flex>
+            );
+          }
+        })()}
           </Stack>
           </Flex>
         </SimpleGrid>
@@ -216,58 +222,6 @@ export default function Body(event) {
                   >
                     <Text>{"Delete Event"}</Text>
                   </Button>
-                </SimpleGrid>
-                <SimpleGrid
-                  columns={{ base: 1, md: 2 }}
-                  spacing={0}
-                  justifyContent="center"
-                >
-                  <Stack spacing={4}>
-                    <Text
-                      textTransform={"uppercase"}
-                      color={"black"}
-                      fontWeight={600}
-                      fontSize={"lg"}
-                      p={2}
-                      alignSelf={"flex-start"}
-                      rounded={"md"}
-                    >
-                      Event Reciept
-                    </Text>
-                    <Flex>
-                      <Image
-                        maxHeight="400px"
-                        rounded={"md"}
-                        alt={"feature image"}
-                        src={
-                          "https://templates.invoicehome.com/receipt-template-us-band-blue-750px.png"
-                        }
-                      />
-                    </Flex>
-                  </Stack>
-                  <Stack spacing={4}>
-                    <Text
-                      textTransform={"uppercase"}
-                      color={"black"}
-                      fontWeight={600}
-                      fontSize={"lg"}
-                      p={2}
-                      alignSelf={"flex-start"}
-                      rounded={"md"}
-                    >
-                      Reimbursement Reciept
-                    </Text>
-                    <Flex>
-                      <Image
-                        maxHeight="400px"
-                        rounded={"md"}
-                        alt={"feature image"}
-                        src={
-                          "https://templates.invoicehome.com/receipt-template-us-band-blue-750px.png"
-                        }
-                      />
-                    </Flex>
-                  </Stack>
                 </SimpleGrid>
               </>
             );
