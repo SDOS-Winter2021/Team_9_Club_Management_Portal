@@ -66,7 +66,8 @@ class Club_Page extends React.Component {
     }
 
     if (sessionStorage.is_authenticated != "true") {
-      history.push("/")
+      history.push("/");
+      location.reload();
     }
 
     console.log("Club page")

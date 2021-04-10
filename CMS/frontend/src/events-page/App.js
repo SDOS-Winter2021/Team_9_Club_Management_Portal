@@ -69,7 +69,8 @@ class Events_Page extends React.Component {
     }
 
     if (sessionStorage.is_authenticated != "true") {
-      history.push("/")
+      history.push("/");
+      location.reload();
     }
     this.getEventInfo(id);
   }

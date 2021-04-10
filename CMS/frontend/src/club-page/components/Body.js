@@ -235,7 +235,10 @@ const Body = (Info_G, Info_E) => {
                     <Text fontWeight="extrabold" fontSize="lg">
                       <Button
                         onClick={() =>
-                          history.push(`/event/${Info_G.Info_E[i].id}`)
+                        {
+                            history.push(`/event/${Info_G.Info_E[i].id}`);
+                            location.reload();
+                        }
                         }
                       >
                         {Info_G.Info_E[i].name}
@@ -284,7 +287,10 @@ const Body = (Info_G, Info_E) => {
                     <Text fontWeight="extrabold" fontSize="lg">
                       <Button
                         onClick={() =>
-                          history.push(`/event/${Info_G.Info_E[i].id}`)
+                          {
+                            history.push(`/event/${Info_G.Info_E[i].id}`);
+                            location.reload();
+                        }
                         }
                       >
                         {Info_G.Info_E[i].name}

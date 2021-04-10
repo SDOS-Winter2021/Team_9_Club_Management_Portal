@@ -52,7 +52,8 @@ class Landing_Page extends React.Component {
       localStorage.removeItem("getSessionStorage", "foobar");
     }
     if (sessionStorage.is_authenticated == "true") {
-      history.push("/home")
+      history.push("/home");
+      location.reload();
   }
 }
 

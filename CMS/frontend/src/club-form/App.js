@@ -52,11 +52,13 @@ class Club_Form_Page extends React.Component {
     }
     
     if (sessionStorage.is_authenticated != "true") {
-      history.push("/")
+      history.push("/");
+      location.reload();
     }
 
     if (sessionStorage.getItem("group") != "Admin"){
-      history.push("/home")
+      history.push("/home");
+      location.reload();
     }
   }
 

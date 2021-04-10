@@ -86,7 +86,7 @@ export default class Body extends Component {
                 maxW={'md'}
                 variant={'outline'}
                 leftIcon={<FcGoogle />}
-                onClick={()=> history.push(`/login`)}
+                onClick={()=> {history.push(`/login`); location.reload();}}
               >
                   <Text>Sign in with Google</Text>
               </Button>

@@ -59,6 +59,7 @@ class Clubs extends React.Component {
     console.log(id);
     // window.location.href = `/club/${name}@${id}`;
     history.push(`/club/${name}@${id}`);
+    location.reload();
   };
 
   Redirect_Social = (Link) => {
@@ -122,7 +123,7 @@ class Clubs extends React.Component {
                   <Button
                     spacing={10}
                     mt={50}
-                    onClick={() => history.push("/clubform")}
+                    onClick={() => {history.push("/clubform"); location.reload();}}
                     rounded={"md"}
                     border="2px"
                     bgGradient="linear(to-r, blue.400,purple.400)"

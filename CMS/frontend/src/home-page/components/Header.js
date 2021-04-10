@@ -61,6 +61,7 @@ class Header extends React.Component {
                 sessionStorage.removeItem("group");
                 sessionStorage.removeItem("is_authenticated");
                 history.push("/accounts/logout")
+                location.reload();
               }}
             >
               <Text>Logout</Text>

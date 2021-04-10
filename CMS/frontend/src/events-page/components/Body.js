@@ -68,6 +68,7 @@ function edit_(event_info) {
   sessionStorage.setItem("event_data_loc", event_info.location);
   sessionStorage.setItem("event_data", event_info);
   history.push(`/form`);
+  location.reload();
 }
 
 const formatDate = (dateString) => {

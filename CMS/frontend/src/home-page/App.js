@@ -40,7 +40,6 @@ class Home_Page extends React.Component {
       user_info: [],
     };
   }
-
   componentDidMount() {
     // transfers sessionStorage from one tab to another
     this.getUser();
@@ -82,7 +81,8 @@ class Home_Page extends React.Component {
     axios.get("http://localhost:8000/api/user/info").then((data) => this.setState({ user_info: data.data }, () => {
       console.log(this.state.user_info.is_authenticated);
       if (!this.state.user_info.is_authenticated) {
-        history.push("/")
+        history.push("/");
+        location.reload();
       }  
     }));
   };

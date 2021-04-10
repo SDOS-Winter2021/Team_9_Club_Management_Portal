@@ -14,7 +14,7 @@ import history from "./history";
 export default class Routes extends Component {
   render() {
     return (
-      <Router history={history}>
+      <BrowserRouter history={history}>
       <div>
       <Switch>
           <Route path="/home" exact component={Home_Page} />
@@ -26,7 +26,7 @@ export default class Routes extends Component {
           <Route path="/clubform" exact component={Club_Form_Page} />
         </Switch>
       </div>
-      </Router>
+      </BrowserRouter>
     );
   }
 }

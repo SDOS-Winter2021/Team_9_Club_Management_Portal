@@ -53,7 +53,8 @@ class Form_Page extends React.Component {
       localStorage.removeItem("getSessionStorage", "foobar");
     }
     if (sessionStorage.is_authenticated != "true") {
-      history.push("/")
+      history.push("/");
+      location.reload();
     }
   }
 

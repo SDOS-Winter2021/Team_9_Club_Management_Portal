@@ -71,6 +71,7 @@ class Events extends React.Component {
   Redirect_Event = (name) => {
     console.log("Sending you to Event Page ------------->");
     history.push(`/event/${name}`);
+    location.reload();
   };
 
   formatDate = (dateString) => {

@@ -31,6 +31,7 @@ const Header = (Info) => {
           justifySelf="flex-end"
           onClick={() => {
             history.push(`/home`);
+            location.reload();
           }}
         />
         <Flex
