@@ -27,15 +27,16 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Head from "next/head";
 
 const formatDate = (dateString) => {
-  const options = { dateStyle: "short", timeStyle: "short"}
-  return new Date(dateString).toLocaleString(undefined , options)
-}
+  const options = { dateStyle: "short", timeStyle: "short" };
+  return new Date(dateString).toLocaleString(undefined, options);
+};
 
 const Body = (Info_G, Info_E) => {
   return (
     <>
-      {console.log(Info_G.Info_G)}
+      {console.log(Info_G.Info_G.name)}
       {console.log(Info_G.Info_E)}
+      {console.log("I AM HERE")}
       <Container maxW={"5xl"} py={12}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
           <Stack spacing={4}>
@@ -150,58 +151,61 @@ const Body = (Info_G, Info_E) => {
           </Flex>
         </SimpleGrid>
         {(() => {
-          if (sessionStorage.getItem("email") != 'adfasf') {
+          if (sessionStorage.getItem("email") != "adfasf") {
             return (
-                      <Button
-                        spacing={10}
-                        mt={50}
-                        onClick={() => history.push("/form")}
-                        bg={useColorModeValue("white", "white")}
-                        rounded={"md"}
-                        border="2px"
-                        borderColor="#12d5e3"
-                      >
-                        <Text
-                          textTransform={"uppercase"}
-                          color={"#12d5e3"}
-                          fontWeight={600}
-                          fontSize={"sm"}
-                          p={2}
-                          alignSelf={"flex-start"}
-                          align="center"
-                        >
-                          Propose Event
-                        </Text>
-                      </Button>
-          );
-        }
-        else {
-          return (
-                    <Button
-                      spacing={10}
-                      mt={50}
-                      onClick={() => history.push("/makeapi")}
-                      bg={useColorModeValue("white", "white")}
-                      rounded={"md"}
-                      border="2px"
-                      borderColor="#12d5e3"
-                    >
-                      <Text
-                        textTransform={"uppercase"}
-                        color={"#12d5e3"}
-                        fontWeight={600}
-                        fontSize={"sm"}
-                        p={2}
-                        alignSelf={"flex-start"}
-                        align="center"
-                      >
-                        Subscribe to Club Events
-                      </Text>
-                    </Button>
-        );
-
-        }
-      })()}
+              <Button
+                spacing={10}
+                mt={50}
+                onClick={() =>
+                  history.push({
+                    pathname: "/form",
+                    search: `?type=0&idf=${Info_G.Info_G.name}`,
+                  })
+                }
+                bg={useColorModeValue("white", "white")}
+                rounded={"md"}
+                border="2px"
+                borderColor="#12d5e3"
+              >
+                <Text
+                  textTransform={"uppercase"}
+                  color={"#12d5e3"}
+                  fontWeight={600}
+                  fontSize={"sm"}
+                  p={2}
+                  alignSelf={"flex-start"}
+                  align="center"
+                >
+                  Propose Event
+                </Text>
+              </Button>
+            );
+          } else {
+            return (
+              <Button
+                spacing={10}
+                mt={50}
+                onClick={() => history.push("/makeapi")}
+                bg={useColorModeValue("white", "white")}
+                rounded={"md"}
+                border="2px"
+                borderColor="#12d5e3"
+              >
+                <Text
+                  textTransform={"uppercase"}
+                  color={"#12d5e3"}
+                  fontWeight={600}
+                  fontSize={"sm"}
+                  p={2}
+                  alignSelf={"flex-start"}
+                  align="center"
+                >
+                  Subscribe to Club Events
+                </Text>
+              </Button>
+            );
+          }
+        })()}
         <Text
           textTransform={"uppercase"}
           color={"red.400"}
@@ -234,12 +238,10 @@ const Body = (Info_G, Info_E) => {
                   <Stack spacing="1">
                     <Text fontWeight="extrabold" fontSize="lg">
                       <Button
-                        onClick={() =>
-                        {
-                            history.push(`/event/${Info_G.Info_E[i].id}`);
-                            location.reload();
-                        }
-                        }
+                        onClick={() => {
+                          history.push(`/event/${Info_G.Info_E[i].id}`);
+                          location.reload();
+                        }}
                       >
                         {Info_G.Info_E[i].name}
                       </Button>
@@ -286,12 +288,10 @@ const Body = (Info_G, Info_E) => {
                   <Stack spacing="1">
                     <Text fontWeight="extrabold" fontSize="lg">
                       <Button
-                        onClick={() =>
-                          {
-                            history.push(`/event/${Info_G.Info_E[i].id}`);
-                            location.reload();
-                        }
-                        }
+                        onClick={() => {
+                          history.push(`/event/${Info_G.Info_E[i].id}`);
+                          location.reload();
+                        }}
                       >
                         {Info_G.Info_E[i].name}
                       </Button>

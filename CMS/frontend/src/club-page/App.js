@@ -22,7 +22,6 @@ import { useState, useEffect } from "react";
 import { withRouter } from "react-router";
 
 class Club_Page extends React.Component {
-
   state = {
     general: [],
     event: [],
@@ -30,8 +29,8 @@ class Club_Page extends React.Component {
   };
 
   componentDidMount() {
-    this.setState({ name: this.props.match.params.name })
-    console.log(this.state.name)
+    this.setState({ name: this.props.match.params.name });
+    console.log(this.state.name);
     // transfers sessionStorage from one tab to another
     var sessionStorage_transfer = function (event) {
       if (!event) {
@@ -70,20 +69,16 @@ class Club_Page extends React.Component {
       location.reload();
     }
 
-    console.log("Club page")
+    console.log("Club page");
     this.fetchData(this.props.match.params.name);
   }
 
   async fetchData(name) {
-    let eResponse_general = await getData(
-      name.slice(name.indexOf("@") + 1)
-    );
-    this.setState({ general: eResponse_general.data })
-    
-    let eResponse_event = await getEvent(
-      name.slice(0, name.indexOf("@"))
-      );
-    this.setState({ event: eResponse_event.data })
+    let eResponse_general = await getData(name.slice(name.indexOf("@") + 1));
+    this.setState({ general: eResponse_general.data });
+
+    let eResponse_event = await getEvent(name.slice(0, name.indexOf("@")));
+    this.setState({ event: eResponse_event.data });
   }
 
   render() {

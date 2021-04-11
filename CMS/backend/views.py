@@ -66,12 +66,9 @@ def CLUB_LIST(request):
         # print(club_data)
         print(request.data, type(request.data), type(request.data["request"]))
         # club_serializer=CLUBSerializer(data=request.data)
-        if "poster" in request.data:
+        if "poster" in request.data and request.data["poster"]:
             p = request.data["poster"]
             clubs.poster.save(p.name, p, save=True)
-        if "file" in request.data:
-            f = request.data["file"]
-            clubs.payment_receipt_student.save(f.name, f, save=True)
         print(club_data, type(club_data))
         club_serializer = CLUBSerializer(clubs, data=club_data)
         # print("THIS IS DATA",club_data,club_serializer.is_valid())
@@ -96,15 +93,19 @@ def CLUB_DETAIL(request, pk):
     elif request.method == "PUT":
         parser_classes = (MultipartJsonParser, JSONParser)
         club_data = json.loads(request.data["request"])
-        if "poster" in request.data:
+        print(request.data, type(request.data), type(request.data["request"]))
+        if "poster" in request.data and request.data["poster"]:
+            clubs.poster.delete(save=True)
             p = request.data["poster"]
             clubs.poster.save(p.name, p, save=True)
         club_serializer = CLUBSerializer(clubs, data=club_data)
         if club_serializer.is_valid():
             club_serializer.save()
             return JsonResponse(club_serializer.data)
+        print(club_serializer.errors)
         return JsonResponse(club_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == "DELETE":
+        clubs.poster.delete(save=True)
         clubs.delete()
         return JsonResponse(
             {"message": "EVENT was deleted successfully!"},
@@ -141,7 +142,7 @@ def CLUB_GENERAL_ADD(request):
         print(request.data["request"], "CLUBDATA INSIDE")
         club_general = CLUB_GENERAL()
         print(clubdata, type(clubdata), "Request to Add club")
-        if "logo" in request.data:
+        if "logo" in request.data and request.data["logo"]:
             p = request.data["logo"]
             club_general.logo.save(p.name, p, save=True)
         club_general_serializer = CLUB_GENERALSerializer(club_general, data=clubdata)

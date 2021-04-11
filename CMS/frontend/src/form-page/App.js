@@ -14,10 +14,19 @@ import {
   theme,
 } from "@chakra-ui/react";
 import history from "./../history";
+import * as QueryString from "query-string";
 
 import Body from "./components/Body";
 
 class Form_Page extends React.Component {
+  constructor(props) {
+    super(props);
+    const params = QueryString.parse(this.props.location.search);
+    this.form_type = {
+      idf: params.idf,
+      type: params.type,
+    };
+  }
 
   componentDidMount() {
     // transfers sessionStorage from one tab to another
@@ -62,7 +71,7 @@ class Form_Page extends React.Component {
     return (
       <ThemeProvider theme={theme}>
         <CSSReset />
-        <Body></Body>
+        <Body info={this.form_type}></Body>
       </ThemeProvider>
     );
   }
