@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,11 +24,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'r5()+jeg3^vbez)2d)1=ijn1lb=kmd+3y7!i3*b)2j&(z3w4ao'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', 'cms-iiitd.herokuapp']
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'frontend',
     'backend',
     'rest_framework',
@@ -47,6 +49,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -60,7 +63,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'CMS.urls'
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = [
-     'http://localhost:8000','http://localhost:8080'
+     'http://localhost:8000','http://localhost:8080', 'https://cms-iiitd.herokuapp'
 ]
 
 TEMPLATES = [
@@ -144,6 +147,8 @@ AUTHENTICATION_BACKENDS = [
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # For login
 SITE_ID = 2
@@ -151,3 +156,7 @@ LOGIN_REDIRECT_URL = '/login/'
 SOCIALACCOUNT_EMAIL_REQUIRED  = True
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_AUTO_SIGNUP = True
+
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
