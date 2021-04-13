@@ -28,7 +28,7 @@ const csrftoken = Cookies.get("csrftoken");
 
 function event_(event_id, is_approved) {
   console.log(event_id, is_approved);
-  let res = axios.put(`http://127.0.0.1:8000/api/event/edit`, {
+  let res = axios.put(`https://iiitd-cms.herokuapp.com/api/event/edit`, {
     id: event_id,
     approved: is_approved,
   });
