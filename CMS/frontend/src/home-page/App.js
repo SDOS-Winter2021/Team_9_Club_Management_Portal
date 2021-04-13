@@ -78,12 +78,7 @@ class Home_Page extends React.Component {
 
   getUser = () => {
     console.log("Getting User");
-    axios.get("https://iiitd-cms.herokuapp.com/api/user/info").then((data) => this.setState({ user_info: data.data }, () => {
-      console.log(this.state.user_info.is_authenticated);
-      if (!this.state.user_info.is_authenticated) {
-        history.push("/");
-        location.reload();
-      }  
+    axios.get("https://iiitd-cms.herokuapp.com/api/user/info").then((data) => this.setState({ user_info: data.data 
     }));
   };
 
@@ -92,6 +87,11 @@ class Home_Page extends React.Component {
     sessionStorage.setItem("name", this.state.user_info.name);
     sessionStorage.setItem("group", this.state.user_info.group);
     sessionStorage.setItem("is_authenticated", this.state.user_info.is_authenticated);
+    console.log(this.state.user_info.is_authenticated);
+      if (this.state.user_info.is_authenticated == false) {
+        history.push("/");
+        location.reload();
+      }
   };
 
   render() {

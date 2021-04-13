@@ -109,7 +109,7 @@ const Body = (Info_G, Info_E) => {
                   {<Icon as={IoLogoFacebook} color={"green.500"} w={5} h={5} />}
                 </Flex>
                 <Text fontWeight={600}>
-                  <Link to={Info_G.Info_G.fb_link}>
+                  <Link to={Info_G.Info_G.fb_link} onClick={(e)=> window.open(Info_G.Info_G.fb_link, "_blank")}>
                     {Info_G.Info_G.fb_link}
                   </Link>
                 </Text>
@@ -133,7 +133,7 @@ const Body = (Info_G, Info_E) => {
                   }
                 </Flex>
                 <Text fontWeight={600}>
-                  <Link to={Info_G.Info_G.ig_link}>
+                  <Link to={Info_G.Info_G.ig_link} onClick={(e)=> window.open(Info_G.Info_G.ig_link, "_blank")}>
                     {Info_G.Info_G.ig_link}
                   </Link>
                 </Text>
@@ -151,16 +151,18 @@ const Body = (Info_G, Info_E) => {
           </Flex>
         </SimpleGrid>
         {(() => {
-          if (sessionStorage.getItem("email") != "adfasf") {
+          if (sessionStorage.getItem("email") == Info_G.Info_G.club_email) {
             return (
               <Button
                 spacing={10}
                 mt={50}
                 onClick={() =>
-                  history.push({
+                 { history.push({
                     pathname: "/form",
                     search: `?type=0&idf=${Info_G.Info_G.name}`,
-                  })
+                  });
+                  location.reload();
+                }
                 }
                 bg={useColorModeValue("white", "white")}
                 rounded={"md"}
