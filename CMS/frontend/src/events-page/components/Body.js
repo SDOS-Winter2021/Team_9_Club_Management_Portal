@@ -36,7 +36,7 @@ function event_(event_id, is_approved) {
 
 function notify_(event_id, is_approved) {
   console.log(event_id, is_approved);
-  let res = axios.put(`http://127.0.0.1:8000/api/event/edit`, {
+  let res = axios.put(`https://iiitd-cms.herokuapp.com/api/event/edit`, {
     id: event_id,
     approved: is_approved,
   });
@@ -45,7 +45,7 @@ function notify_(event_id, is_approved) {
 function approve_(event_id) {
   console.log(event_id);
   let rest = axios.put(
-    `http://localhost:8000/api/clubs/approve/${event_id}`,
+    `https://iiitd-cms.herokuapp.com/api/clubs/approve/${event_id}`,
     {},
     {
       headers: {
@@ -57,7 +57,7 @@ function approve_(event_id) {
 
 function delete_(event_id) {
   console.log(event_id);
-  let res = axios.delete(`http://localhost:8000/api/clubs/${event_id}`, {
+  let res = axios.delete(`https://iiitd-cms.herokuapp.com/api/clubs/${event_id}`, {
     headers: {
       "X-CSRFToken": csrftoken,
     },

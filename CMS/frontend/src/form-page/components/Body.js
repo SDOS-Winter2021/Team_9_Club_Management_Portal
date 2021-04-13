@@ -93,7 +93,7 @@ class Body extends React.Component {
     console.log("allo sending info");
     console.log(this.props.info.idf);
     let res = await axios.put(
-      `http://localhost:8000/api/clubs/${this.props.info.idf}`,
+      `https://iiitd-cms.herokuapp.com/api/clubs/${this.props.info.idf}`,
       request,
       {
         headers: {

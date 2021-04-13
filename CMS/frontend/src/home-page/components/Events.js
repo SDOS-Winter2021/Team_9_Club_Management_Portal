@@ -57,14 +57,14 @@ class Events extends React.Component {
   get_ApprovedEvents = () => {
     console.log("Getting Events");
     axios
-      .get("http://localhost:8000/api/clubs/unapproved")
+      .get("https://iiitd-cms.herokuapp.com/api/clubs/unapproved")
       .then((data) => this.setState({ events: data.data }));
   };
   
   get_UnapprovedEvents = () => {
     console.log("Getting Events");
     axios
-      .get("http://localhost:8000/api/clubs/unapproved")
+      .get("https://iiitd-cms.herokuapp.com/api/clubs/unapproved")
       .then((data) => this.setState({ un_events: data.data }));
   };
 

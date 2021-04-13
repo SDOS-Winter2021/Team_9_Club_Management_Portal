@@ -24,9 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'r5()+jeg3^vbez)2d)1=ijn1lb=kmd+3y7!i3*b)2j&(z3w4ao'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'cms-iiitd.herokuapp']
+ALLOWED_HOSTS = ['localhost', 'cms-iiitd.herokuapp', 'iiitd-cms.herokuapp']
 
 INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
@@ -63,7 +63,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'CMS.urls'
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = [
-     'http://localhost:8000','http://localhost:8080', 'https://cms-iiitd.herokuapp'
+     'http://localhost:8000','http://localhost:8080', 'https://cms-iiitd.herokuapp', 'https://iiitd-cms.herokuapp'
 ]
 
 TEMPLATES = [

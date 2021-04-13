@@ -12,7 +12,7 @@ const eventPost = async (request) => {
   for (var key of request.entries()) {
     console.log(key[0] + ", " + key[1]);
   }
-  let res = await axios.post("http://localhost:8000/api/clubs", request, {
+  let res = await axios.post("https://iiitd-cms.herokuapp.com/api/clubs", request, {
     headers: {
       "Content-Type": "multipart/form-data",
       "X-CSRFToken": csrftoken,

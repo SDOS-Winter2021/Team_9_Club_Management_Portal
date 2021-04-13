@@ -38,7 +38,7 @@ export default function Body() {
   const clubOut = async (request) => {
     console.log("Sending Post request to add club");
     console.log(request);
-    let res = await axios.post("http://localhost:8000/api/clubinfo", request,{
+    let res = await axios.post("https://iiitd-cms.herokuapp.com/api/clubinfo", request,{
       headers: {
       'Content-Type': 'multipart/form-data',
       'X-CSRFToken': csrftoken,
