@@ -57,11 +57,14 @@ function approve_(event_id) {
 
 function delete_(event_id) {
   console.log(event_id);
-  let res = axios.delete(`https://iiitd-cms.herokuapp.com/api/clubs/${event_id}`, {
-    headers: {
-      "X-CSRFToken": csrftoken,
-    },
-  });
+  let res = axios.delete(
+    `https://iiitd-cms.herokuapp.com/api/clubs/${event_id}`,
+    {
+      headers: {
+        "X-CSRFToken": csrftoken,
+      },
+    }
+  );
   history.push({
     pathname: "/home",
   });
@@ -209,7 +212,10 @@ export default function Body(event) {
           <Text>{"Notify Me"}</Text>
         </Button>
         {(() => {
-          if (sessionStorage.getItem("group") == "Club_Coodinator") {
+          if (
+            sessionStorage.getItem("group") == "Club_Coodinator" &&
+            sessionStorage.getItem("user_club_name") == event_info.club_name
+          ) {
             return (
               <>
                 <Heading ml={5} marginTop={20}>

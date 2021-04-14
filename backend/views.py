@@ -121,9 +121,22 @@ def CLUB_EVENT_PENDING(request):
         name = request.GET.get("name", None)
         if name is not None:
             clubs = clubs.filter(club_name__icontains=name)
+            clubs = clubs.filter(approved=False)
+        club_serializer = CLUBSerializer(clubs, many=True)
+        return JsonResponse(club_serializer.data, safe=False)
+
+# The follwoing api can be used to get all the events which are approved.
+@api_view(["GET"])
+def CLUB_EVENT_APPROVED(request):
+    if request.method == "GET":
+        clubs = CLUB.objects.all()
+        name = request.GET.get("name", None)
+        if name is not None:
+            clubs = clubs.filter(club_name__icontains=name)
             clubs = clubs.filter(approved=True)
         club_serializer = CLUBSerializer(clubs, many=True)
         return JsonResponse(club_serializer.data, safe=False)
+
 
 
 # @login_required(login_url="/login")
@@ -246,17 +259,20 @@ def USER_INFO(request):
     if request.method == "GET":
         if request.user.is_authenticated:
             user = request.user
+            okuser = ""
             if len(request.user.groups.all()) == 0:
                 alluser = Users.objects.all()
                 alluser = alluser.filter(email__icontains=request.user.email)
                 if alluser:
+                    okuser = alluser.club_name
                     gr = alluser.values("group")[0]["group"]
                     request.user.groups.add(Group.objects.get(name=gr))
                 else:
-                    request.user.groups.add(Group.objects.get(name="Student"))
+                    request.user.groups.add(Group.objects.get(name="Student"))    
             return JsonResponse(
                 {
                     "name": user.get_username(),
+                    "user_club_name": okuser,
                     "email": user.email,
                     "group": str(user.groups.all()[0]),
                     "is_authenticated": user.is_authenticated,

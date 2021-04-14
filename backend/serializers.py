@@ -4,12 +4,12 @@ from .models import *
 class CLUBSerializer(serializers.ModelSerializer):
 	class Meta:
 		model=CLUB
-		fields=('id','name','date_time','location','description','poster','approved','attendance','club_name','web_link')
+		fields=('id','name','date_time','location','description','poster','approved','attendance','club_name','web_link','rejected')
 
 class UsersSerializer(serializers.ModelSerializer):
 	class Meta:
 		model=Users
-		fields=('id','email','group')
+		fields=('id','email','group','club_name')
 
 class CLUB_GENERALSerializer(serializers.ModelSerializer):
 	class Meta:

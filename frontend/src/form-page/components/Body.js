@@ -44,7 +44,7 @@ class Body extends React.Component {
 
   componentDidMount() {
     console.log(sessionStorage.getItem("event_data_desc"));
-    if (this.form_type === 0) {
+    if (this.form_type == 0) {
       this.setState({
         club_name: this.props.info.idf,
       });
@@ -235,8 +235,16 @@ class Body extends React.Component {
                   _hover={{ bg: "blue.500" }}
                   onClick={
                     this.form_type == 0
-                      ? (e) => {this.handleSubmitpost(e); history.push("/home"); location.reload();}
-                      : (e) => {this.handleSubmitput(e); history.push("/home"); location.reload();}
+                      ? (e) => {
+                          this.handleSubmitpost(e);
+                          history.push("/home");
+                          location.reload();
+                        }
+                      : (e) => {
+                          this.handleSubmitput(e);
+                          history.push("/home");
+                          location.reload();
+                        }
                   }
                 >
                   Submit

@@ -57,10 +57,10 @@ class Events extends React.Component {
   get_ApprovedEvents = () => {
     console.log("Getting Events");
     axios
-      .get("https://iiitd-cms.herokuapp.com/api/clubs/unapproved")
+      .get("https://iiitd-cms.herokuapp.com/api/clubs/approved")
       .then((data) => this.setState({ events: data.data }));
   };
-  
+
   get_UnapprovedEvents = () => {
     console.log("Getting Events");
     axios
@@ -75,9 +75,9 @@ class Events extends React.Component {
   };
 
   formatDate = (dateString) => {
-    const options = { dateStyle: "short", timeStyle: "short"}
-    return new Date(dateString).toLocaleString(undefined , options)
-  }
+    const options = { dateStyle: "short", timeStyle: "short" };
+    return new Date(dateString).toLocaleString(undefined, options);
+  };
 
   render() {
     return (
@@ -87,71 +87,85 @@ class Events extends React.Component {
           gap={6}
           templateColumns="repeat(auto-fit, minmax(350px, 1fr))"
         >
-        {(() => {
-          if (sessionStorage.getItem("group") == "Admin" || sessionStorage.getItem("group") == "Club_Admin") {
-            return (
-              <>
-              {this.state.un_events.map((user, i) => (
-            <Stat
-              px={{ base: 4, sm: 6 }}
-              py="5"
-              bg={"gray.500"}
-              shadow="base"
-              rounded="lg"
-              key={this.state.un_events[i]["club_name"]}
-            >
-              <StatLabel
-                fontWeight="medium"
-                isTruncated
-                color={"white"}
-                fontSize="lg"
-              >
-                {this.state.un_events[i]["club_name"]}
-              </StatLabel>
-              <StatNumber fontSize="3xl" fontWeight="medium" color={"black"}>
-                <Button
-                  onClick={() =>
-                    this.Redirect_Event(this.state.un_events[i]["id"])
-                  }
-                  bg="white"
-                  fontSize="xl"
-                >
-                  {this.state.un_events[i]["name"]}
-                </Button>
-              </StatNumber>
-              <Stack direction={"row"} align={"center"}>
-                <Flex
-                  w={8}
-                  h={8}
-                  align={"center"}
-                  justify={"center"}
-                  rounded={"full"}
-                  bg={"gray.500"}
-                >
-                  <Icon as={IoAlarmOutline} color={"white"} w={5} h={5} />
-                </Flex>
-                  <Text fontWeight={600} color="white">
-                    {this.formatDate(this.state.events[i]["date_time"])}
-                  </Text>
+          {(() => {
+            if (
+              sessionStorage.getItem("group") == "Admin" ||
+              sessionStorage.getItem("group") == "Club_Admin"
+            ) {
+              return (
+                <>
+                  {this.state.un_events.map((user, i) => (
+                    <Stat
+                      px={{ base: 4, sm: 6 }}
+                      py="5"
+                      bg={"gray.500"}
+                      shadow="base"
+                      rounded="lg"
+                      key={this.state.un_events[i]["club_name"]}
+                    >
+                      <StatLabel
+                        fontWeight="medium"
+                        isTruncated
+                        color={"white"}
+                        fontSize="lg"
+                      >
+                        {this.state.un_events[i]["club_name"]}
+                      </StatLabel>
+                      <StatNumber
+                        fontSize="3xl"
+                        fontWeight="medium"
+                        color={"black"}
+                      >
+                        <Button
+                          onClick={() =>
+                            this.Redirect_Event(this.state.un_events[i]["id"])
+                          }
+                          bg="white"
+                          fontSize="xl"
+                        >
+                          {this.state.un_events[i]["name"]}
+                        </Button>
+                      </StatNumber>
+                      <Stack direction={"row"} align={"center"}>
+                        <Flex
+                          w={8}
+                          h={8}
+                          align={"center"}
+                          justify={"center"}
+                          rounded={"full"}
+                          bg={"gray.500"}
+                        >
+                          <Icon
+                            as={IoAlarmOutline}
+                            color={"white"}
+                            w={5}
+                            h={5}
+                          />
+                        </Flex>
+                        <Text fontWeight={600} color="white">
+                          {this.formatDate(this.state.events[i]["date_time"])}
+                        </Text>
 
-                <Flex
-                  w={8}
-                  h={8}
-                  align={"center"}
-                  justify={"center"}
-                  rounded={"full"}
-                  bg={"gray.500"}
-                >
-                  <Icon as={BsBuilding} color={"white"} w={5} h={5} />
-                </Flex>
-                <Text fontWeight={600} color="white">{this.state.un_events[i]["location"]}</Text>
-              </Stack>
-            </Stat>
-          ))}
-              </>
-         );
-        }
-      })()}
+                        <Flex
+                          w={8}
+                          h={8}
+                          align={"center"}
+                          justify={"center"}
+                          rounded={"full"}
+                          bg={"gray.500"}
+                        >
+                          <Icon as={BsBuilding} color={"white"} w={5} h={5} />
+                        </Flex>
+                        <Text fontWeight={600} color="white">
+                          {this.state.un_events[i]["location"]}
+                        </Text>
+                      </Stack>
+                    </Stat>
+                  ))}
+                </>
+              );
+            }
+          })()}
           {this.state.events.map((user, i) => (
             <Stat
               px={{ base: 4, sm: 6 }}
@@ -191,9 +205,9 @@ class Events extends React.Component {
                 >
                   <Icon as={IoAlarmOutline} color={"black"} w={5} h={5} />
                 </Flex>
-                  <Text fontWeight={600}>
-                    {this.formatDate(this.state.events[i]["date_time"])}
-                  </Text>
+                <Text fontWeight={600}>
+                  {this.formatDate(this.state.events[i]["date_time"])}
+                </Text>
 
                 <Flex
                   w={8}
