@@ -123,7 +123,10 @@ class Clubs extends React.Component {
                   <Button
                     spacing={10}
                     mt={50}
-                    onClick={() => {history.push("/clubform"); location.reload();}}
+                    onClick={() => {
+                      history.push("/clubform");
+                      location.reload();
+                    }}
                     rounded={"md"}
                     border="2px"
                     bgGradient="linear(to-r, blue.400,purple.400)"

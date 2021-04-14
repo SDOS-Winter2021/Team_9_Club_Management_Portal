@@ -97,6 +97,13 @@ export default function Body(event) {
   console.log(eventInfo);
   return (
     <>
+      {console.log(sessionStorage.getItem("user_club_name") + "BLAH BLAH")}
+      {console.log(eventInfo["club_name"])}
+      {console.log(
+        sessionStorage.getItem("user_club_name") == eventInfo["club_name"]
+      )}
+      {console.log(sessionStorage.getItem("group"))}
+      {console.log(eventInfo["poster"] + "POSTER")}
       <Container maxW={"5xl"} py={12}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
           <Stack spacing={4}>
@@ -213,8 +220,8 @@ export default function Body(event) {
         </Button>
         {(() => {
           if (
-            sessionStorage.getItem("group") == "Club_Coodinator" &&
-            sessionStorage.getItem("user_club_name") == event_info.club_name
+            sessionStorage.getItem("group") == "Club_Coordinator" &&
+            sessionStorage.getItem("user_club_name") == eventInfo["club_name"]
           ) {
             return (
               <>

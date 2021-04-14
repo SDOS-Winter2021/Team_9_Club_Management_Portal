@@ -264,11 +264,18 @@ def USER_INFO(request):
                 alluser = Users.objects.all()
                 alluser = alluser.filter(email__icontains=request.user.email)
                 if alluser:
-                    okuser = alluser.club_name
+                    okuser = alluser.values("club_name")[0]["club_name"]
+                    print(okuser, "OKUSER")
                     gr = alluser.values("group")[0]["group"]
                     request.user.groups.add(Group.objects.get(name=gr))
                 else:
-                    request.user.groups.add(Group.objects.get(name="Student"))    
+                    request.user.groups.add(Group.objects.get(name="Student")) 
+            else:
+                alluser = Users.objects.all()
+                alluser = alluser.filter(email__icontains=request.user.email)
+                if alluser:
+                    okuser = alluser.values("club_name")[0]["club_name"]
+
             return JsonResponse(
                 {
                     "name": user.get_username(),

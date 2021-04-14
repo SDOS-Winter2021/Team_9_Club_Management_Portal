@@ -36,6 +36,10 @@ const Body = (Info_G, Info_E) => {
     <>
       {console.log(Info_G.Info_G.name)}
       {console.log(Info_G.Info_E)}
+      {console.log(sessionStorage.getItem("user_club_name"))}
+      {console.log(
+        sessionStorage.getItem("user_club_name") == Info_G.Info_G.name
+      )}
       {console.log("I AM HERE")}
       <Container maxW={"5xl"} py={12}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>

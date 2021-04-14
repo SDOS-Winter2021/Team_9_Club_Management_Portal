@@ -15,10 +15,9 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import axios from "axios";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 
-const csrftoken = Cookies.get('csrftoken') 
-
+const csrftoken = Cookies.get("csrftoken");
 
 export default function Body() {
   const [name, setname] = React.useState("");
@@ -32,24 +31,29 @@ export default function Body() {
   const [fblink, setfblink] = React.useState("");
   const [iglink, setiglink] = React.useState("");
   const [weblink, setweblink] = React.useState("");
-  const [clubemail, setclubemail] = React.useState("")
+  const [clubemail, setclubemail] = React.useState("");
   const [logo, setlogo] = React.useState("");
 
   const clubOut = async (request) => {
     console.log("Sending Post request to add club");
     console.log(request);
-    let res = await axios.post("https://iiitd-cms.herokuapp.com/api/clubinfo", request,{
-      headers: {
-      'Content-Type': 'multipart/form-data',
-      'X-CSRFToken': csrftoken,
-    }});
+    let res = await axios.post(
+      "https://iiitd-cms.herokuapp.com/api/clubinfo",
+      request,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "X-CSRFToken": csrftoken,
+        },
+      }
+    );
     console.log(res);
     return await res.status;
   };
 
   const handleSubmit = async (event) => {
     var data = {
-      name:name,
+      name: name,
       description: description,
       coordinator1: coord1,
       coordinator2: coord2,
@@ -61,7 +65,7 @@ export default function Body() {
       ig_link: iglink,
       website_link: weblink,
       club_email: clubemail,
-     // logo: logo,
+      // logo: logo,
     };
     //console.log(data);
     data = JSON.stringify(data);

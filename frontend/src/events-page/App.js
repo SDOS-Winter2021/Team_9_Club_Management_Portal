@@ -22,16 +22,15 @@ import axios from "axios";
 import { withRouter } from "react-router";
 
 class Events_Page extends React.Component {
-  
   state = {
     eventInfo: [],
   };
-  
-  getEventInfo = (id) =>  {
+
+  getEventInfo = (id) => {
     let res = axios
       .get(`https://iiitd-cms.herokuapp.com/api/clubs/${id}`)
       .then((data) => this.setState({ eventInfo: data.data }));
-  }
+  };
 
   componentDidMount() {
     const id = this.props.match.params.id;
@@ -74,7 +73,6 @@ class Events_Page extends React.Component {
     }
     this.getEventInfo(id);
   }
-
 
   render() {
     console.log("getting rendered");

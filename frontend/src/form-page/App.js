@@ -22,6 +22,7 @@ class Form_Page extends React.Component {
   constructor(props) {
     super(props);
     const params = QueryString.parse(this.props.location.search);
+    console.log(params.idf);
     this.form_type = {
       idf: params.idf,
       type: params.type,

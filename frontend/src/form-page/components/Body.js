@@ -24,8 +24,9 @@ const csrftoken = Cookies.get("csrftoken");
 class Body extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props.info.idf);
+    console.log(this.props.info.idf + "IDF");
     this.form_type = this.props.info.type;
+    console.log(this.form_type == 0);
     this.state = {
       club_name: "",
       name: "",
@@ -40,15 +41,11 @@ class Body extends React.Component {
       holder_location: "",
       holder_description: "",
     };
+    console.log(this.state);
   }
 
   componentDidMount() {
     console.log(sessionStorage.getItem("event_data_desc"));
-    if (this.form_type == 0) {
-      this.setState({
-        club_name: this.props.info.idf,
-      });
-    }
     if (
       sessionStorage.getItem("event_data_name") ==
       sessionStorage.getItem("event_data_name")
@@ -108,7 +105,7 @@ class Body extends React.Component {
 
   handleSubmitput(event) {
     var data = {
-      club_name: this.state.club_name,
+      club_name: sessionStorage.getItem("event_data_club_name"),
       name: this.state.name,
       date_time: this.state.datetime,
       //date_time_end: this.state.datetime,
@@ -132,7 +129,7 @@ class Body extends React.Component {
 
   handleSubmitpost(event) {
     var data = {
-      club_name: this.state.club_name,
+      club_name: this.props.info.idf,
       name: this.state.name,
       date_time: this.state.datetime,
       //date_time_end: this.state.datetime,

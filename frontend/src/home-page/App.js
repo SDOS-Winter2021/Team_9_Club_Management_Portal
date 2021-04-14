@@ -95,7 +95,7 @@ class Home_Page extends React.Component {
       "is_authenticated",
       this.state.user_info.is_authenticated
     );
-    console.log(this.state.user_info.is_authenticated);
+
     if (this.state.user_info.is_authenticated == false) {
       history.push("/");
       location.reload();
@@ -105,6 +105,9 @@ class Home_Page extends React.Component {
   render() {
     return (
       <>
+        {console.log(this.state.user_info)}
+        {console.log(this.state.user_info.user_club_name + " USER CLUB NAME")}
+        {console.log(this.state.user_info.is_authenticated)}
         {this.setInfo()}
         <ThemeProvider theme={theme}>
           <CSSReset />
