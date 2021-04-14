@@ -1,6 +1,5 @@
-CMS/.gitignore
-CMS/staticfiles
-CMS/club
+/staticfiles
+/club
 
 /node_modules
 
