@@ -151,7 +151,7 @@ const Body = (Info_G, Info_E) => {
           </Flex>
         </SimpleGrid>
         {(() => {
-          if (sessionStorage.getItem("email") == Info_G.Info_G.club_email) {
+          if (sessionStorage.getItem("group") == "Club_Coordinator") {
             return (
               <Button
                 spacing={10}

@@ -209,7 +209,7 @@ export default function Body(event) {
           <Text>{"Notify Me"}</Text>
         </Button>
         {(() => {
-          if (sessionStorage.getItem("email") != "dasgasg") {
+          if (sessionStorage.getItem("group") == "Club_Coodinator") {
             return (
               <>
                 <Heading ml={5} marginTop={20}>
