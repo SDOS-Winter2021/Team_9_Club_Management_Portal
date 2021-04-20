@@ -34,13 +34,7 @@ const formatDate = (dateString) => {
 const Body = (Info_G, Info_E) => {
   return (
     <>
-      {console.log(Info_G.Info_G.name)}
-      {console.log(Info_G.Info_E)}
-      {console.log(sessionStorage.getItem("user_club_name"))}
-      {console.log(
-        sessionStorage.getItem("user_club_name") == Info_G.Info_G.name
-      )}
-      {console.log("I AM HERE")}
+    {console.log(`logo path ${Info_G.Info_G.logo}`)}
       <Container maxW={"5xl"} py={12}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
           <Stack spacing={4}>
@@ -158,9 +152,7 @@ const Body = (Info_G, Info_E) => {
             <Image
               rounded={"md"}
               alt={"feature image"}
-              src={
-                "https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg"
-              }
+              src={require(`../../../../media/${Info_G.Info_G.logo}`).default}
             />
           </Flex>
         </SimpleGrid>

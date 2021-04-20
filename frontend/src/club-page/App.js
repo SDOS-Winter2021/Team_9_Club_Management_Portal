@@ -23,7 +23,7 @@ import { withRouter } from "react-router";
 
 class Club_Page extends React.Component {
   state = {
-    general: [],
+    general: {'logo': "club/logo/placeholder.png"},
     event: [],
     name: [],
   };

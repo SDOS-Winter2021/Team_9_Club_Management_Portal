@@ -23,7 +23,7 @@ import { withRouter } from "react-router";
 
 class Events_Page extends React.Component {
   state = {
-    eventInfo: [],
+    eventInfo: {'poster': "club/logo/placeholder.png"},
   };
 
   getEventInfo = (id) => {

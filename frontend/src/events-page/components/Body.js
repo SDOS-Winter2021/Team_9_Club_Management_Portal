@@ -103,7 +103,7 @@ export default function Body(event) {
         sessionStorage.getItem("user_club_name") == eventInfo["club_name"]
       )}
       {console.log(sessionStorage.getItem("group"))}
-      {console.log(eventInfo["poster"] + "POSTER")}
+      {console.log(eventInfo["poster"] + " POSTER")}
       <Container maxW={"5xl"} py={12}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
           <Stack spacing={4}>
@@ -159,9 +159,7 @@ export default function Body(event) {
                 maxHeight="400px"
                 rounded={"md"}
                 alt={"feature image"}
-                src={
-                  "https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg"
-                }
+                src={require(`../../../../media/${eventInfo["poster"]}`).default}
               />
               {(() => {
                 if (
