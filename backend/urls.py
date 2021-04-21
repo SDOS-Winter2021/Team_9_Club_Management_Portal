@@ -23,4 +23,5 @@ urlpatterns = [
     url(r"^clubs/approve/(?P<pk>[0-9]+)$", views.approve_event),
     path("user/info", views.USER_INFO),
     url(r"^users/(?P<pk>[0-9]+)$", views.USERS_ID),
+    url(r"^clubs/sorted",views.DATE_EVENT),
 ]

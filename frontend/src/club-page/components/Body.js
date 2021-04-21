@@ -34,7 +34,7 @@ const formatDate = (dateString) => {
 const Body = (Info_G, Info_E) => {
   return (
     <>
-    {console.log(`logo path ${Info_G.Info_G.logo}`)}
+      {console.log(`logo path ${Info_G.Info_G.logo}`)}
       <Container maxW={"5xl"} py={12}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
           <Stack spacing={4}>
@@ -242,23 +242,23 @@ const Body = (Info_G, Info_E) => {
               spacingX="10"
               spacingY="14"
             >
-              {Object.keys(Info_G.Info_E).map((user, i) => (
+              {Object.keys(Info_G.Info_FE).map((user, i) => (
                 <Stack spacing="6" direction={{ base: "column", md: "row" }}>
                   <Box fontSize="2xl">{<FaRegMinusSquare />}</Box>
                   <Stack spacing="1">
                     <Text fontWeight="extrabold" fontSize="lg">
                       <Button
                         onClick={() => {
-                          history.push(`/event/${Info_G.Info_E[i].id}`);
+                          history.push(`/event/${Info_G.Info_FE[i].id}`);
                           location.reload();
                         }}
                       >
-                        {Info_G.Info_E[i].name}
+                        {Info_G.Info_FE[i].name}
                       </Button>
                     </Text>
                     <Box color={"gray.600"}>
-                      {`${Info_G.Info_E[i].location}`} on{" "}
-                      {`${formatDate(Info_G.Info_E[i].date_time)}`}
+                      {`${Info_G.Info_FE[i].location}`} on{" "}
+                      {`${formatDate(Info_G.Info_FE[i].date_time)}`}
                     </Box>
                   </Stack>
                 </Stack>
@@ -279,7 +279,7 @@ const Body = (Info_G, Info_E) => {
           paddingRight={2}
           align="center"
         >
-          Previous Events (Not Implemented As of Yet)
+          Previous Events
         </Text>
         <Box as="section" py="24">
           <Box
@@ -292,23 +292,23 @@ const Body = (Info_G, Info_E) => {
               spacingX="10"
               spacingY="14"
             >
-              {Object.keys(Info_G.Info_E).map((user, i) => (
+              {Object.keys(Info_G.Info_PE).map((user, i) => (
                 <Stack spacing="6" direction={{ base: "column", md: "row" }}>
                   <Box fontSize="2xl">{<FaRegMinusSquare />}</Box>
                   <Stack spacing="1">
                     <Text fontWeight="extrabold" fontSize="lg">
                       <Button
                         onClick={() => {
-                          history.push(`/event/${Info_G.Info_E[i].id}`);
+                          history.push(`/event/${Info_G.Info_PE[i].id}`);
                           location.reload();
                         }}
                       >
-                        {Info_G.Info_E[i].name}
+                        {Info_G.Info_PE[i].name}
                       </Button>
                     </Text>
                     <Box color={"gray.600"}>
-                      {`${Info_G.Info_E[i].location}`} on{" "}
-                      {`${formatDate(Info_G.Info_E[i].date_time)}`}
+                      {`${Info_G.Info_PE[i].location}`} on{" "}
+                      {`${formatDate(Info_G.Info_PE[i].date_time)}`}
                     </Box>
                   </Stack>
                 </Stack>

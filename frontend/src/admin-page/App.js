@@ -13,26 +13,17 @@ import {
   CSSReset,
   theme,
 } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
-import Body from "./components/Body";
-import Header from "./components/Header";
-import getData from "./components/getData";
-import getPastEvent from "./components/getEvent";
-import getFutureEvent from "./components/getEvent";
-import { useState, useEffect } from "react";
-import { withRouter } from "react-router";
+import history from "../history";
+import * as QueryString from "query-string";
 
-class Club_Page extends React.Component {
-  state = {
-    general: { logo: "club/logo/placeholder.png" },
-    pastEvent: [],
-    futureEvent: [],
-    name: [],
-  };
+import Body from "./components/Body";
+
+class Admin_Page extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
   componentDidMount() {
-    this.setState({ name: this.props.match.params.name });
-    console.log(this.state.name);
     // transfers sessionStorage from one tab to another
     var sessionStorage_transfer = function (event) {
       if (!event) {
@@ -65,44 +56,20 @@ class Club_Page extends React.Component {
       localStorage.setItem("getSessionStorage", "foobar");
       localStorage.removeItem("getSessionStorage", "foobar");
     }
-
     if (sessionStorage.is_authenticated != "true") {
       history.push("/");
       location.reload();
     }
-
-    console.log("Club page");
-    this.fetchData(this.props.match.params.name);
-  }
-
-  async fetchData(name) {
-    let eResponse_general = await getData(name.slice(name.indexOf("@") + 1));
-    this.setState({ general: eResponse_general.data });
-
-    let eResponse_event_prev = await getPastEvent(
-      name.slice(0, name.indexOf("@"))
-    );
-    this.setState({ pastEvent: eResponse_event_prev.data });
-
-    let eResponse_event_future = await getFutureEvent(
-      name.slice(0, name.indexOf("@"))
-    );
-    this.setState({ futureEvent: eResponse_event_future.data });
   }
 
   render() {
     return (
       <ThemeProvider theme={theme}>
         <CSSReset />
-        <Header Info={this.state.general}></Header>
-        <Body
-          Info_G={this.state.general}
-          Info_EE={this.state.pastEvent}
-          INFO_FE={this.state.futureEvent}
-        ></Body>
+        <Body></Body>
       </ThemeProvider>
     );
   }
 }
 
-export default withRouter(Club_Page);
+export default Form_Page;
