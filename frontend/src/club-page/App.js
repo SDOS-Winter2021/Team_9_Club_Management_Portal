@@ -17,8 +17,10 @@ import { useParams } from "react-router-dom";
 import Body from "./components/Body";
 import Header from "./components/Header";
 import getData from "./components/getData";
-import getPastEvent from "./components/getEvent";
-import getFutureEvent from "./components/getEvent";
+
+import getEvent from "./components/getEvent";
+import getPastEvent from "./components/getpastEvent";
+import getFutureEvent from "./components/getfutureEvent";
 import { useState, useEffect } from "react";
 import { withRouter } from "react-router";
 
@@ -27,10 +29,12 @@ class Club_Page extends React.Component {
     general: { logo: "club/logo/placeholder.png" },
     pastEvent: [],
     futureEvent: [],
+    event: [],
     name: [],
   };
 
   componentDidMount() {
+    console.log("Club page 1");
     this.setState({ name: this.props.match.params.name });
     console.log(this.state.name);
     // transfers sessionStorage from one tab to another
@@ -79,26 +83,27 @@ class Club_Page extends React.Component {
     let eResponse_general = await getData(name.slice(name.indexOf("@") + 1));
     this.setState({ general: eResponse_general.data });
 
-    let eResponse_event_prev = await getPastEvent(
-      name.slice(0, name.indexOf("@"))
-    );
+    let eResponse_event = await getEvent(name.slice(0, name.indexOf("@")));
+    this.setState({ event: eResponse_event.data });
+
+    let eResponse_event_prev = await getPastEvent(name.slice(0, name.indexOf("@")));
     this.setState({ pastEvent: eResponse_event_prev.data });
 
-    let eResponse_event_future = await getFutureEvent(
-      name.slice(0, name.indexOf("@"))
-    );
+    let eResponse_event_future = await getFutureEvent(name.slice(0, name.indexOf("@")));
     this.setState({ futureEvent: eResponse_event_future.data });
   }
 
   render() {
     return (
       <ThemeProvider theme={theme}>
+        {console.log("Image path")}
+        {console.log(this.state.general.logo ? this.state.general.logo : "placeholder")}
         <CSSReset />
         <Header Info={this.state.general}></Header>
         <Body
           Info_G={this.state.general}
-          Info_EE={this.state.pastEvent}
-          INFO_FE={this.state.futureEvent}
+          Info_PE={this.state.pastEvent}
+          Info_FE={this.state.futureEvent}
         ></Body>
       </ThemeProvider>
     );

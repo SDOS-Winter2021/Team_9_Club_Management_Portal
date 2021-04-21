@@ -40,6 +40,7 @@ def CLUB_UPCOMING(request):
     future = datetime.now().date() + timedelta(days=3)
     if request.method == "GET":
         clubs = CLUB.objects.all()
+        clubs = clubs.filter(approved=True)
         clubs = clubs.filter(date_time__gte=today, date_time__lt=future).order_by(
             "date_time"
         )[:10]
@@ -306,5 +307,3 @@ def DATE_EVENT(request):
 			clubs=clubs.filter(date_time__gte=today).order_by("date_time")
 		club_serializer=CLUBSerializer(clubs,many=True)
 		return JsonResponse(club_serializer.data,safe=False)
-
-        

@@ -57,7 +57,7 @@ class Events extends React.Component {
   get_ApprovedEvents = () => {
     console.log("Getting Events");
     axios
-      .get("https://iiitd-cms.herokuapp.com/api/clubs/approved")
+      .get("https://iiitd-cms.herokuapp.com/api/clubs/upcoming")
       .then((data) => this.setState({ events: data.data }));
   };
 
