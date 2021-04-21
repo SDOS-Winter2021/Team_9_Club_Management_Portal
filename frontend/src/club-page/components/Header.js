@@ -18,7 +18,6 @@ import history from "./../../history";
 const Header = (Info) => {
   return (
     <>
-      {console.log(Info)}
       <Flex
         flexDirection="row"
         mt={0}

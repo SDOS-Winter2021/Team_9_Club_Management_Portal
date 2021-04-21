@@ -27,7 +27,6 @@ import Cookies from "js-cookie";
 const csrftoken = Cookies.get("csrftoken");
 
 function event_(event_id, is_approved) {
-  console.log(event_id, is_approved);
   let res = axios.put(`https://iiitd-cms.herokuapp.com/api/event/edit`, {
     id: event_id,
     approved: is_approved,
@@ -35,7 +34,6 @@ function event_(event_id, is_approved) {
 }
 
 function notify_(event_id, is_approved) {
-  console.log(event_id, is_approved);
   let res = axios.put(`https://iiitd-cms.herokuapp.com/api/event/edit`, {
     id: event_id,
     approved: is_approved,
@@ -43,7 +41,6 @@ function notify_(event_id, is_approved) {
 }
 
 function approve_(event_id) {
-  console.log(event_id);
   let rest = axios.put(
     `https://iiitd-cms.herokuapp.com/api/clubs/approve/${event_id}`,
     {},
@@ -56,7 +53,6 @@ function approve_(event_id) {
 }
 
 function delete_(event_id) {
-  console.log(event_id);
   let res = axios.delete(
     `https://iiitd-cms.herokuapp.com/api/clubs/${event_id}`,
     {
@@ -72,8 +68,6 @@ function delete_(event_id) {
 }
 
 function edit_(event_info) {
-  console.log(event_info);
-  console.log(event_info.description);
   sessionStorage.setItem("event_data_name", event_info.name);
   sessionStorage.setItem("event_data_desc", event_info.description);
   sessionStorage.setItem("event_data_dt", event_info.date_time);
@@ -94,16 +88,8 @@ const formatDate = (dateString) => {
 
 export default function Body(event) {
   const eventInfo = event.eventid;
-  console.log(eventInfo);
   return (
     <>
-      {console.log(sessionStorage.getItem("user_club_name") + "BLAH BLAH")}
-      {console.log(eventInfo["club_name"])}
-      {console.log(
-        sessionStorage.getItem("user_club_name") == eventInfo["club_name"]
-      )}
-      {console.log(sessionStorage.getItem("group"))}
-      {console.log(eventInfo["poster"] + " POSTER")}
       <Container maxW={"5xl"} py={12}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
           <Stack spacing={4}>
@@ -159,7 +145,7 @@ export default function Body(event) {
                 maxHeight="400px"
                 rounded={"md"}
                 alt={"feature image"}
-                src={require(`../../../../media/${eventInfo["poster"]}`).default}
+                src={require(`../../../../club/posters/${eventInfo["poster"].split("/")[2]}`).default}
               />
               {(() => {
                 if (
@@ -226,7 +212,7 @@ export default function Body(event) {
                 <Heading ml={5} marginTop={20}>
                   Admin Information
                 </Heading>
-                <SimpleGrid columns={1} p={5} gap={6} maxWidth="25%">
+                <SimpleGrid columns={1} p={5} gap={6} maxWidth="45%">
                   <Button
                     justifyContent="space-evenly"
                     p={4}

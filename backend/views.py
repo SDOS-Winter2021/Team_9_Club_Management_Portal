@@ -40,6 +40,7 @@ def CLUB_UPCOMING(request):
     future = datetime.now().date() + timedelta(days=3)
     if request.method == "GET":
         clubs = CLUB.objects.all()
+        clubs = clubs.filter(approved=True)
         clubs = clubs.filter(date_time__gte=today, date_time__lt=future).order_by(
             "date_time"
         )[:10]
@@ -287,3 +288,23 @@ def USER_INFO(request):
             )
         else:
             return JsonResponse({"is_authenticated": request.user.is_authenticated})
+
+
+@api_view(["GET"])
+@login_required
+def DATE_EVENT(request):
+	if request.method=="GET":
+		clubs=CLUB.objects.all()
+		today=datetime.now().date()
+		name=request.GET.get("name",None)
+		time=request.GET.get("time",None)
+		if name is not None and time=="past":
+			clubs=clubs.filter(club_name__icontains=name)
+			clubs=clubs.filter(approved=True)
+			clubs=clubs.filter(date_time__lt=today).order_by("date_time")
+		elif name is not None and time=="future":
+			clubs=clubs.filter(club_name__icontains=name)
+			clubs=clubs.filter(approved=True)
+			clubs=clubs.filter(date_time__gte=today).order_by("date_time")
+		club_serializer=CLUBSerializer(clubs,many=True)
+		return JsonResponse(club_serializer.data,safe=False)
