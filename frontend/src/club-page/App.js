@@ -17,6 +17,7 @@ import { useParams } from "react-router-dom";
 import Body from "./components/Body";
 import Header from "./components/Header";
 import getData from "./components/getData";
+
 import getEvent from "./components/getEvent";
 import getPastEvent from "./components/getpastEvent";
 import getFutureEvent from "./components/getfutureEvent";

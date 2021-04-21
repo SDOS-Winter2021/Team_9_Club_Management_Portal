@@ -34,8 +34,6 @@ const formatDate = (dateString) => {
 const Body = (Info_G, Info_E) => {
   return (
     <>
-      {console.log(`logo path ${Info_G.Info_G.logo}`)}
-      {console.log(Info_G)}
       <Container maxW={"5xl"} py={12}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
           <Stack spacing={4}>

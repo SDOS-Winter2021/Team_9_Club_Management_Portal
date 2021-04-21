@@ -289,7 +289,6 @@ def USER_INFO(request):
         else:
             return JsonResponse({"is_authenticated": request.user.is_authenticated})
 
-
 @api_view(["GET"])
 @login_required
 def DATE_EVENT(request):
