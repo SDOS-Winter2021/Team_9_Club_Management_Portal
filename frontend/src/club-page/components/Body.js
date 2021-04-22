@@ -26,11 +26,14 @@ import { FaDrum, FaRegMinusSquare } from "react-icons/fa";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Head from "next/head";
 
+const formatDate = (dateString) => {
+  const options = { dateStyle: "short", timeStyle: "short" };
+  return new Date(dateString).toLocaleString(undefined, options);
+};
+
 const Body = (Info_G, Info_E) => {
   return (
     <>
-      {console.log(Info_G.Info_G)}
-      {console.log(Info_G.Info_E)}
       <Container maxW={"5xl"} py={12}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
           <Stack spacing={4}>
@@ -67,7 +70,6 @@ const Body = (Info_G, Info_E) => {
                   rounded={"full"}
                   bg={"yellow.100"}
                 >
-                  {" "}
                   {
                     <Icon
                       as={IoMailOpenOutline}
@@ -77,7 +79,7 @@ const Body = (Info_G, Info_E) => {
                     />
                   }
                 </Flex>
-                <Text fontWeight={600}>{Info_G.Info_G.coordinator1_email}</Text>
+                <Text fontWeight={600}>{Info_G.Info_G.club_email}</Text>
               </Stack>
               <Stack direction={"row"} align={"center"}>
                 <Flex
@@ -88,7 +90,6 @@ const Body = (Info_G, Info_E) => {
                   rounded={"full"}
                   bg={"blue.100"}
                 >
-                  {" "}
                   {<Icon as={IoLaptopOutline} color={"blue.500"} w={5} h={5} />}
                 </Flex>
                 <Text fontWeight={600}>{Info_G.Info_G.website_link}</Text>
@@ -102,12 +103,18 @@ const Body = (Info_G, Info_E) => {
                   rounded={"full"}
                   bg={"green.100"}
                 >
-                  {" "}
                   {<Icon as={IoLogoFacebook} color={"green.500"} w={5} h={5} />}
                 </Flex>
-                <Link to="https://www.facebook.com">
-                  {Info_G.Info_G.fb_link}
-                </Link>
+                <Text fontWeight={600}>
+                  <Link
+                    to={Info_G.Info_G.fb_link}
+                    onClick={(e) =>
+                      window.open(Info_G.Info_G.fb_link, "_blank")
+                    }
+                  >
+                    {Info_G.Info_G.fb_link}
+                  </Link>
+                </Text>
               </Stack>
               <Stack direction={"row"} align={"center"}>
                 <Flex
@@ -118,7 +125,6 @@ const Body = (Info_G, Info_E) => {
                   rounded={"full"}
                   bg={"purple.100"}
                 >
-                  {" "}
                   {
                     <Icon
                       as={IoLogoInstagram}
@@ -128,7 +134,16 @@ const Body = (Info_G, Info_E) => {
                     />
                   }
                 </Flex>
-                <Text fontWeight={600}>{Info_G.Info_G.ig_link}</Text>
+                <Text fontWeight={600}>
+                  <Link
+                    to={Info_G.Info_G.ig_link}
+                    onClick={(e) =>
+                      window.open(Info_G.Info_G.ig_link, "_blank")
+                    }
+                  >
+                    {Info_G.Info_G.ig_link}
+                  </Link>
+                </Text>
               </Stack>
             </Stack>
           </Stack>
@@ -136,20 +151,26 @@ const Body = (Info_G, Info_E) => {
             <Image
               rounded={"md"}
               alt={"feature image"}
-              src={
-                "https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg"
-              }
+              src={(`../../../../club/logo/${Info_G.Info_G.logo.split("/")[2]}`) ? require(`../../../../club/logo/${Info_G.Info_G.logo.split("/")[2]}`).default : require("../../../../club/logo/placeholder.png").default}
             />
           </Flex>
         </SimpleGrid>
         {(() => {
-        if (sessionStorage.getItem("email") == Info_G.Info_G["email"]) {
-          return (
-            <>
+          if (
+            sessionStorage.getItem("group") == "Club_Coordinator" &&
+            sessionStorage.getItem("user_club_name") == Info_G.Info_G.name
+          ) {
+            return (
               <Button
                 spacing={10}
                 mt={50}
-                onClick={() => history.push("/form")}
+                onClick={() => {
+                  history.push({
+                    pathname: "/form",
+                    search: `?type=0&idf=${Info_G.Info_G.name}`,
+                  });
+                  location.reload();
+                }}
                 bg={useColorModeValue("white", "white")}
                 rounded={"md"}
                 border="2px"
@@ -167,8 +188,32 @@ const Body = (Info_G, Info_E) => {
                   Propose Event
                 </Text>
               </Button>
-           </>
-         )}
+            );
+          } else {
+            return (
+              <Button
+                spacing={10}
+                mt={50}
+                onClick={() => history.push("/makeapi")}
+                bg={useColorModeValue("white", "white")}
+                rounded={"md"}
+                border="2px"
+                borderColor="#12d5e3"
+              >
+                <Text
+                  textTransform={"uppercase"}
+                  color={"#12d5e3"}
+                  fontWeight={600}
+                  fontSize={"sm"}
+                  p={2}
+                  alignSelf={"flex-start"}
+                  align="center"
+                >
+                  Subscribe to Club Events
+                </Text>
+              </Button>
+            );
+          }
         })()}
         <Text
           textTransform={"uppercase"}
@@ -196,22 +241,23 @@ const Body = (Info_G, Info_E) => {
               spacingX="10"
               spacingY="14"
             >
-              {Object.keys(Info_G.Info_E).map((user, i) => (
+              {Object.keys(Info_G.Info_FE).map((user, i) => (
                 <Stack spacing="6" direction={{ base: "column", md: "row" }}>
                   <Box fontSize="2xl">{<FaRegMinusSquare />}</Box>
                   <Stack spacing="1">
                     <Text fontWeight="extrabold" fontSize="lg">
                       <Button
-                        onClick={() =>
-                          history.push(`/event/${Info_G.Info_E[i].id}`)
-                        }
+                        onClick={() => {
+                          history.push(`/event/${Info_G.Info_FE[i].id}`);
+                          location.reload();
+                        }}
                       >
-                        {Info_G.Info_E[i].name}
+                        {Info_G.Info_FE[i].name}
                       </Button>
                     </Text>
                     <Box color={"gray.600"}>
-                      {`${Info_G.Info_E[i].location}`} on{" "}
-                      {`${Info_G.Info_E[i].date_time}`}
+                      {`${Info_G.Info_FE[i].location}`} on{" "}
+                      {`${formatDate(Info_G.Info_FE[i].date_time)}`}
                     </Box>
                   </Stack>
                 </Stack>
@@ -232,7 +278,7 @@ const Body = (Info_G, Info_E) => {
           paddingRight={2}
           align="center"
         >
-          Previous Events (Not Implemented As of Yet)
+          Previous Events
         </Text>
         <Box as="section" py="24">
           <Box
@@ -245,22 +291,23 @@ const Body = (Info_G, Info_E) => {
               spacingX="10"
               spacingY="14"
             >
-              {Object.keys(Info_G.Info_E).map((user, i) => (
+              {Object.keys(Info_G.Info_PE).map((user, i) => (
                 <Stack spacing="6" direction={{ base: "column", md: "row" }}>
                   <Box fontSize="2xl">{<FaRegMinusSquare />}</Box>
                   <Stack spacing="1">
                     <Text fontWeight="extrabold" fontSize="lg">
                       <Button
-                        onClick={() =>
-                          history.push(`/event/${Info_G.Info_E[i].id}`)
-                        }
+                        onClick={() => {
+                          history.push(`/event/${Info_G.Info_PE[i].id}`);
+                          location.reload();
+                        }}
                       >
-                        {Info_G.Info_E[i].name}
+                        {Info_G.Info_PE[i].name}
                       </Button>
                     </Text>
                     <Box color={"gray.600"}>
-                      {`${Info_G.Info_E[i].location}`} on{" "}
-                      {`${Info_G.Info_E[i].date_time}`}
+                      {`${Info_G.Info_PE[i].location}`} on{" "}
+                      {`${formatDate(Info_G.Info_PE[i].date_time)}`}
                     </Box>
                   </Stack>
                 </Stack>

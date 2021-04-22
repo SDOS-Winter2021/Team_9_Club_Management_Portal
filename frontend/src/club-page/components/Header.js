@@ -1,22 +1,22 @@
-import React, { Component }  from 'react';
-import {Flex, 
-    Box,
-    Heading,
-    Container,
-    Text,
-    Button,
-    Stack,
-    Icon,
-    useColorModeValue,
-    createIcon,
-} from '@chakra-ui/react';
+import React, { Component } from "react";
 import {
-  IoHomeOutline
-} from 'react-icons/io5';
-import Head from 'next/head';
-import history from './../../history';
+  Flex,
+  Box,
+  Heading,
+  Container,
+  Text,
+  Button,
+  Stack,
+  Icon,
+  useColorModeValue,
+  createIcon,
+} from "@chakra-ui/react";
+import { IoHomeOutline } from "react-icons/io5";
+import Head from "next/head";
+import history from "./../../history";
 
 const Header = (Info) => {
+<<<<<<< HEAD
     return (
         <>
         {console.log(Info)}
@@ -24,15 +24,48 @@ const Header = (Info) => {
         <Icon as={IoHomeOutline}  w={5} h={5} justifySelf="flex-end" onClick={()=>{history.push(`/home`)}}/>
         <Flex display="flex" flexDirection="column" alignItems="center" justifyContent="center" textAlign="center" mt={0} >
         <Flex display="flex" flexDirection="row" alignItems="flex-start" justifyContent="flex-start"
+=======
+  return (
+    <>
+      <Flex
+        flexDirection="row"
+        mt={0}
+        bgGradient="linear(teal.500 55%, green.400 95%)"
+        justifyContent="center"
+      >
+        <Icon
+          as={IoHomeOutline}
+          w={30}
+          h={20}
+          justifySelf="flex-end"
+          onClick={() => {
+            history.push(`/home`);
+            location.reload();
+          }}
+        />
+        <Flex
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          textAlign="center"
+          mt={0}
+>>>>>>> 8a152829470695371638718971ba7e8563c87ac5
         >
-          <Text fontSize="3xl" fontWeight="bold" >
-           {Info.Info.name}
-          </Text>
+          <Flex
+            display="flex"
+            flexDirection="row"
+            alignItems="flex-start"
+            justifyContent="flex-start"
+          >
+            <Text fontSize="3xl" fontWeight="bold">
+              {Info.Info.name}
+            </Text>
+          </Flex>
         </Flex>
       </Flex>
-      </Flex>
-      </>
-    )
-}
+    </>
+  );
+};
 
-export default Header
+export default Header;

@@ -1,0 +1,6 @@
+/staticfiles
+
+/node_modules
+
+__init__.py
+__pycache__

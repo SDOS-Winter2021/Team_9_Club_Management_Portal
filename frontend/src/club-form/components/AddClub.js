@@ -15,6 +15,12 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import axios from "axios";
+<<<<<<< HEAD
+=======
+import Cookies from "js-cookie";
+
+const csrftoken = Cookies.get("csrftoken");
+>>>>>>> 8a152829470695371638718971ba7e8563c87ac5
 
 export default function Body() {
   const [name, setname] = React.useState("");
@@ -28,14 +34,32 @@ export default function Body() {
   const [fblink, setfblink] = React.useState("");
   const [iglink, setiglink] = React.useState("");
   const [weblink, setweblink] = React.useState("");
+<<<<<<< HEAD
+=======
+  const [clubemail, setclubemail] = React.useState("");
+  const [logo, setlogo] = React.useState("");
+>>>>>>> 8a152829470695371638718971ba7e8563c87ac5
 
   const clubOut = async (request) => {
     console.log("Sending Post request to add club");
     console.log(request);
+<<<<<<< HEAD
     let res = await axios.post("http://127.0.0.1:8000/api/clubinfo", request,{
       headers: {
       'Content-Type':  'application/x-www-form-urlencoded'
     }});
+=======
+    let res = await axios.post(
+      "https://iiitd-cms.herokuapp.com/api/clubinfo",
+      request,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "X-CSRFToken": csrftoken,
+        },
+      }
+    );
+>>>>>>> 8a152829470695371638718971ba7e8563c87ac5
     console.log(res);
     return await res.status;
   };
@@ -44,6 +68,7 @@ export default function Body() {
     var data = {
       name: name,
       description: description,
+<<<<<<< HEAD
       coord1: coord1,
       coord2: coord2,
       coord3: coord3,
@@ -57,6 +82,26 @@ export default function Body() {
     var club_info = new FormData();
     event_info.append("request", data);
     //data = JSON.stringify(data);
+=======
+      coordinator1: coord1,
+      coordinator2: coord2,
+      coordinator3: coord3,
+      coordinator1_email: coord1email,
+      coordinator2_email: coord2email,
+      coordinator3_email: coord3email,
+      fb_link: fblink,
+      ig_link: iglink,
+      website_link: weblink,
+      club_email: clubemail,
+      // logo: logo,
+    };
+    //console.log(data);
+    data = JSON.stringify(data);
+    var club_info = new FormData();
+    club_info.append("request", data);
+    club_info.append("logo", logo);
+    //club_info = JSON.stringify(club_info);
+>>>>>>> 8a152829470695371638718971ba7e8563c87ac5
     let eResponse = await clubOut(club_info);
     console.log(eResponse);
   };
@@ -148,6 +193,17 @@ export default function Body() {
                 onChange={(e) => setcoord3email(e.target.value)}
               />
             </FormControl>
+<<<<<<< HEAD
+=======
+            <FormControl id="clubemail">
+              <FormLabel>Email ID of Club</FormLabel>
+              <Input
+                type="text"
+                value={clubemail}
+                onChange={(e) => setclubemail(e.target.value)}
+              />
+            </FormControl>
+>>>>>>> 8a152829470695371638718971ba7e8563c87ac5
             <FormControl id="fblink">
               <FormLabel>FB Link</FormLabel>
               <Input
@@ -170,14 +226,22 @@ export default function Body() {
             </FormControl>
             <FormControl id="weblink">
               <FormLabel>Logo</FormLabel>
+<<<<<<< HEAD
               <Input type="file" onChange={(e) => setweblink(e.target.value)} />
+=======
+              <Input type="file" onChange={(e) => setlogo(e.target.files[0])} />
+>>>>>>> 8a152829470695371638718971ba7e8563c87ac5
             </FormControl>
             <Stack spacing={10}>
               <Button
                 bg={"blue.400"}
                 color={"white"}
                 _hover={{ bg: "blue.500" }}
+<<<<<<< HEAD
                 onClick={handleSubmit}
+=======
+                onClick={(e) => handleSubmit(e)}
+>>>>>>> 8a152829470695371638718971ba7e8563c87ac5
               >
                 Submit
               </Button>

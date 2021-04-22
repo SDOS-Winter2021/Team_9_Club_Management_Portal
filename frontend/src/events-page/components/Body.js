@@ -1,5 +1,6 @@
 import React, { Component, ReactNode } from "react";
-import { IoPencil, IoTrashOutline } from "react-icons/io5";
+import { IoPencil, IoTrashOutline, IoAlarmOutline } from "react-icons/io5";
+import { GoCheck, GoX } from "react-icons/go";
 import Head from "next/head";
 import {
   ThemeProvider,
@@ -11,37 +12,82 @@ import {
   Text,
   Icon,
   Stack,
-  Avatar,
-  AvatarBadge,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-  FormLabel,
-  Input,
-  FormHelperText,
-  FormErrorMessage,
-  Grid,
-  Switch,
-  InputGroup,
-  InputRightElement,
   Flex,
-  Tag,
   Heading,
   Container,
   SimpleGrid,
-  useColorModeValue,
-  StackDivider,
   Button,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import history from "../../history";
 import { render } from "react-dom";
+import Cookies from "js-cookie";
+
+const csrftoken = Cookies.get("csrftoken");
+
+function event_(event_id, is_approved) {
+  let res = axios.put(`https://iiitd-cms.herokuapp.com/api/event/edit`, {
+    id: event_id,
+    approved: is_approved,
+  });
+}
+
+function notify_(event_id, is_approved) {
+  let res = axios.put(`https://iiitd-cms.herokuapp.com/api/event/edit`, {
+    id: event_id,
+    approved: is_approved,
+  });
+}
+
+function approve_(event_id) {
+  let rest = axios.put(
+    `https://iiitd-cms.herokuapp.com/api/clubs/approve/${event_id}`,
+    {},
+    {
+      headers: {
+        "X-CSRFToken": csrftoken,
+      },
+    }
+  );
+}
+
+function delete_(event_id) {
+  let res = axios.delete(
+    `https://iiitd-cms.herokuapp.com/api/clubs/${event_id}`,
+    {
+      headers: {
+        "X-CSRFToken": csrftoken,
+      },
+    }
+  );
+  history.push({
+    pathname: "/home",
+  });
+  location.reload();
+}
+
+function edit_(event_info) {
+  sessionStorage.setItem("event_data_name", event_info.name);
+  sessionStorage.setItem("event_data_desc", event_info.description);
+  sessionStorage.setItem("event_data_dt", event_info.date_time);
+  sessionStorage.setItem("event_data_loc", event_info.location);
+  sessionStorage.setItem("event_data_club_name", event_info.club_name);
+  sessionStorage.setItem("event_data", event_info);
+  history.push({
+    pathname: "/form",
+    search: `?type=1&idf=${event_info["id"]}`,
+  });
+  location.reload();
+}
+
+const formatDate = (dateString) => {
+  const options = { dateStyle: "medium", timeStyle: "short" };
+  return new Date(dateString).toLocaleString(undefined, options);
+};
 
 export default function Body(event) {
   const eventInfo = event.eventid;
-  console.log(eventInfo);
   return (
     <>
       <Container maxW={"5xl"} py={12}>
@@ -52,7 +98,7 @@ export default function Body(event) {
               color={"black"}
               fontWeight={600}
               fontSize={"sm"}
-              bgGradient="linear(to-r,red.300 65%, orange.300 95%)"
+              bgGradient="linear(to-r, teal.400 , green.300 )"
               p={2}
               alignSelf={"flex-start"}
               rounded={"md"}
@@ -67,7 +113,7 @@ export default function Body(event) {
               color={"black"}
               fontWeight={600}
               fontSize={"sm"}
-              bgGradient="linear(to-r,red.300 65%, orange.300 95%)"
+              bgGradient="linear(to-r, teal.400 , green.300 )"
               p={2}
               alignSelf={"flex-start"}
               rounded={"md"}
@@ -75,14 +121,14 @@ export default function Body(event) {
               Date Time
             </Text>
             <Text color={"gray.500"} fontSize={"lg"}>
-              {eventInfo["date_time"]}
+              {formatDate(eventInfo["date_time"])}
             </Text>
             <Text
               textTransform={"uppercase"}
               color={"black"}
               fontWeight={600}
               fontSize={"sm"}
-              bgGradient="linear(to-r,red.300 65%, orange.300 95%)"
+              bgGradient="linear(to-r, teal.400 , green.300)"
               p={2}
               alignSelf={"flex-start"}
               rounded={"md"}
@@ -92,117 +138,112 @@ export default function Body(event) {
             <Text color={"gray.500"} fontSize={"lg"}>
               {eventInfo["location"]}
             </Text>
-            <Text
-              textTransform={"uppercase"}
-              color={"black"}
-              fontWeight={600}
-              fontSize={"sm"}
-              bgGradient="linear(to-r,red.300 65%, orange.300 95%)"
-              p={2}
-              alignSelf={"flex-start"}
-              rounded={"md"}
-            >
-              Prize Money
-            </Text>
-            <Text color={"gray.500"} fontSize={"lg"}>
-              {"Add Here"}
-            </Text>
           </Stack>
           <Flex>
-            <Image
-              maxHeight="400px"
-              rounded={"md"}
-              alt={"feature image"}
-              src={
-                "https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg"
-              }
-            />
+            <Stack>
+              <Image
+                maxHeight="400px"
+                rounded={"md"}
+                alt={"feature image"}
+                src={require(`../../../../club/posters/${eventInfo["poster"].split("/")[2]}`).default}
+              />
+              {(() => {
+                if (
+                  sessionStorage.getItem("group") == "Admin" ||
+                  sessionStorage.getItem("group") == "Club_Admin"
+                ) {
+                  return (
+                    <Flex flexDirection="row" justifyContent="space-between">
+                      <Button
+                        marginTop={10}
+                        justifyContent="space-evenly"
+                        p={4}
+                        width={"40%"}
+                        border="1px"
+                        bgGradient="linear(to-r, green.500,green.300)"
+                        _hover={{
+                          bgGradient: "linear(to-r, green.700,green.600)",
+                        }}
+                        leftIcon={
+                          <Icon as={GoCheck} color={"black"} w={5} h={5} />
+                        }
+                        onClick={() => approve_(eventInfo["id"])}
+                      >
+                        <Text>{"Approve"}</Text>
+                      </Button>
+                      <Button
+                        marginTop={10}
+                        justifyContent="space-evenly"
+                        p={4}
+                        border="1px"
+                        width={"40%"}
+                        bgGradient="linear(to-r, red.500,red.300)"
+                        _hover={{ bgGradient: "linear(to-r, red.700,red.400)" }}
+                        leftIcon={<Icon as={GoX} color={"black"} w={5} h={5} />}
+                        onClick={() => event_(eventInfo["id"], 0)}
+                      >
+                        <Text>{"Reject"}</Text>
+                      </Button>
+                    </Flex>
+                  );
+                }
+              })()}
+            </Stack>
           </Flex>
         </SimpleGrid>
-        <Heading ml={5} marginTop={20}>
-          Admin Information
-        </Heading>
+        <Button
+          marginTop={10}
+          justifyContent="space-evenly"
+          p={4}
+          border="1px"
+          bgGradient="linear(to-r, purple.500,red.200)"
+          _hover={{ bgGradient: "linear(to-r, purple.700,red.400)" }}
+          leftIcon={<Icon as={IoAlarmOutline} color={"black"} w={5} h={5} />}
+        >
+          <Text>{"Notify Me"}</Text>
+        </Button>
         {(() => {
-        if (localStorage.getItem("email") == eventInfo["email"]) {
-          return (
-            <>
-            <SimpleGrid columns={1} p={5} gap={6} maxWidth="25%">
-              <Button
-                justifyContent="space-evenly"
-                p={4}
-                border="1px"
-                bgGradient="linear(to-r, purple.500,red.200)"
-                _hover={{ bgGradient: "linear(to-r, purple.700,red.400)" }}
-                leftIcon={<Icon as={IoPencil} color={"black"} w={5} h={5} />}
-              >
-                <Text>{"Edit Event"}</Text>
-              </Button>
-              <Button
-                justifyContent="space-evenly"
-                p={4}
-                border="1px"
-                bgGradient="linear(to-r, purple.500,red.200)"
-                _hover={{ bgGradient: "linear(to-r, purple.700,red.400)" }}
-                leftIcon={<Icon as={IoTrashOutline} color={"black"} w={5} h={5} />}
-              >
-                <Text>{"Delete Event"}</Text>
-              </Button>
-            </SimpleGrid>
-            <SimpleGrid
-              columns={{ base: 1, md: 2 }}
-              spacing={0}
-              justifyContent="center"
-            >
-              <Stack spacing={4}>
-                <Text
-                  textTransform={"uppercase"}
-                  color={"black"}
-                  fontWeight={600}
-                  fontSize={"lg"}
-                  p={2}
-                  alignSelf={"flex-start"}
-                  rounded={"md"}
-                >
-                  Event Reciept
-                </Text>
-                <Flex>
-                  <Image
-                    maxHeight="400px"
-                    rounded={"md"}
-                    alt={"feature image"}
-                    src={
-                      "https://templates.invoicehome.com/receipt-template-us-band-blue-750px.png"
+          if (
+            sessionStorage.getItem("group") == "Club_Coordinator" &&
+            sessionStorage.getItem("user_club_name") == eventInfo["club_name"]
+          ) {
+            return (
+              <>
+                <Heading ml={5} marginTop={20}>
+                  Admin Information
+                </Heading>
+                <SimpleGrid columns={1} p={5} gap={6} maxWidth="45%">
+                  <Button
+                    justifyContent="space-evenly"
+                    p={4}
+                    border="1px"
+                    bgGradient="linear(to-r, purple.500,red.200)"
+                    _hover={{ bgGradient: "linear(to-r, purple.700,red.400)" }}
+                    leftIcon={
+                      <Icon as={IoPencil} color={"black"} w={5} h={5} />
                     }
-                  />
-                </Flex>
-              </Stack>
-              <Stack spacing={4}>
-                <Text
-                  textTransform={"uppercase"}
-                  color={"black"}
-                  fontWeight={600}
-                  fontSize={"lg"}
-                  p={2}
-                  alignSelf={"flex-start"}
-                  rounded={"md"}
-                >
-                  Reimbursement Reciept
-                </Text>
-                <Flex>
-                  <Image
-                    maxHeight="400px"
-                    rounded={"md"}
-                    alt={"feature image"}
-                    src={
-                      "https://templates.invoicehome.com/receipt-template-us-band-blue-750px.png"
+                    onClick={() => edit_(eventInfo)}
+                  >
+                    <Text>{"Edit Event"}</Text>
+                  </Button>
+                  <Button
+                    justifyContent="space-evenly"
+                    p={4}
+                    border="1px"
+                    bgGradient="linear(to-r, purple.500,red.200)"
+                    _hover={{ bgGradient: "linear(to-r, purple.700,red.400)" }}
+                    leftIcon={
+                      <Icon as={IoTrashOutline} color={"black"} w={5} h={5} />
                     }
-                  />
-                </Flex>
-              </Stack>
-            </SimpleGrid>
-            </>
-       )}
-      })()}
+                    onClick={() => delete_(eventInfo["id"])}
+                  >
+                    <Text>{"Delete Event"}</Text>
+                  </Button>
+                </SimpleGrid>
+              </>
+            );
+          }
+        })()}
       </Container>
     </>
   );
