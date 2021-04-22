@@ -143,7 +143,7 @@ class Events extends React.Component {
                           />
                         </Flex>
                         <Text fontWeight={600} color="white">
-                          {this.formatDate(this.state.events[i]["date_time"])}
+                          {this.formatDate(this.state.un_events[i]["date_time"])}
                         </Text>
 
                         <Flex
