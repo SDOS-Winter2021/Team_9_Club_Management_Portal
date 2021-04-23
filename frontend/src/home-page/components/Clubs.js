@@ -49,7 +49,7 @@ class Clubs extends React.Component {
   getClubs = () => {
     console.log("Getting Clubs");
     axios
-      .get("https://iiitd-cms.herokuapp.com/api/clubinfo")
+      .get("http://localhost:8000/api/clubinfo")
       .then((data) => this.setState({ clubs: data.data }));
   };
 
@@ -57,13 +57,9 @@ class Clubs extends React.Component {
     console.log("Sending you to Club Page ------------->");
     console.log(name);
     console.log(id);
-<<<<<<< HEAD
-    history.push(`/club/${name}@${id}`);
-=======
     // window.location.href = `/club/${name}@${id}`;
     history.push(`/club/${name}@${id}`);
     location.reload();
->>>>>>> 8a152829470695371638718971ba7e8563c87ac5
   };
 
   Redirect_Social = (Link) => {
@@ -120,39 +116,6 @@ class Clubs extends React.Component {
           ))}
         </SimpleGrid>
         {(() => {
-<<<<<<< HEAD
-        if (sessionStorage.getItem("email") == "abc@gmail.com") {
-          return (
-            <>
-            <SimpleGrid>
-              <Button
-                spacing={10}
-                mt={50}
-                onClick={() => history.push("/clubform")}
-                rounded={"md"}
-                border="2px"
-                bgGradient="linear(to-r, blue.400,purple.400)"
-                _hover={{ bgGradient: "linear(to-r, blue.700,purple.600)" }}
-                borderColor="black"
-                minH={"50%"}
-              >
-                <Text
-                  textTransform={"uppercase"}
-                  color={"black"}
-                  fontWeight={600}
-                  fontSize={"lg"}
-                  p={2}
-                  alignSelf={"center"}
-                  align="center"
-                >
-                  Add New Club
-                </Text>
-              </Button>
-            </SimpleGrid>
-        </>
-         )}
-      })()}
-=======
           if (sessionStorage.getItem("group") == "Admin") {
             return (
               <>
@@ -188,7 +151,6 @@ class Clubs extends React.Component {
             );
           }
         })()}
->>>>>>> 8a152829470695371638718971ba7e8563c87ac5
       </>
     );
   }

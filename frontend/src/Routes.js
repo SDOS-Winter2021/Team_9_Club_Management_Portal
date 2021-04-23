@@ -14,18 +14,6 @@ import history from "./history";
 export default class Routes extends Component {
   render() {
     return (
-<<<<<<< HEAD
-      <Router history={history}>
-        <Switch>
-          <Route path="/home" exact component={Home_Page} />
-          <Route path="/" exact component={Landing_Page} />
-          <Route path="/club/:name" exact component={Club_Page} />
-          <Route path="/event/:id" exact component={Events_Page} />
-          <Route path="/form" exact component={Form_Page} />
-          <Route path="/clubform" exact component={Club_Form_Page} />
-        </Switch>
-      </Router>
-=======
       <BrowserRouter history={history}>
         <div>
           <Switch>
@@ -39,7 +27,6 @@ export default class Routes extends Component {
           </Switch>
         </div>
       </BrowserRouter>
->>>>>>> 8a152829470695371638718971ba7e8563c87ac5
     );
   }
 }

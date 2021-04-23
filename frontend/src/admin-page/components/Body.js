@@ -39,7 +39,7 @@ export default function Body() {
   getUser = () => {
     console.log("Getting Club Info");
     axios
-      .get("https://iiitd-cms.herokuapp.com/api/user/info")
+      .get("http://localhost:8000/api/user/info")
       .then((data) => setallClubs({ allClubs: data.data }));
   };
 

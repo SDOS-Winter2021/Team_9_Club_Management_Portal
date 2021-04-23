@@ -14,7 +14,7 @@ const googleLogin = async (accessToken) => {
   };
   console.log(request);
   let res = await axios.put(
-    "https://iiitd-cms.herokuapp.com/api/user/logout",
+    "http://localhost:8000/api/user/logout",
     JSON.stringify(request)
   );
   console.log(res);

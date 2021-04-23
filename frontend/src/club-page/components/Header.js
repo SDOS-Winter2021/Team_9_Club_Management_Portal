@@ -16,15 +16,6 @@ import Head from "next/head";
 import history from "./../../history";
 
 const Header = (Info) => {
-<<<<<<< HEAD
-    return (
-        <>
-        {console.log(Info)}
-        <Flex flexDirection="row" mt={0} bgGradient="linear(teal.500 55%, green.400 95%)" justifyContent="center">
-        <Icon as={IoHomeOutline}  w={5} h={5} justifySelf="flex-end" onClick={()=>{history.push(`/home`)}}/>
-        <Flex display="flex" flexDirection="column" alignItems="center" justifyContent="center" textAlign="center" mt={0} >
-        <Flex display="flex" flexDirection="row" alignItems="flex-start" justifyContent="flex-start"
-=======
   return (
     <>
       <Flex
@@ -50,7 +41,6 @@ const Header = (Info) => {
           justifyContent="center"
           textAlign="center"
           mt={0}
->>>>>>> 8a152829470695371638718971ba7e8563c87ac5
         >
           <Flex
             display="flex"
