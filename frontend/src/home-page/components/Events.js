@@ -40,6 +40,7 @@ import { BsBuilding } from "react-icons/bs";
 import history from "../../history";
 import { Router } from "react-router";
 
+
 class Events extends React.Component {
   constructor() {
     super();
@@ -57,14 +58,14 @@ class Events extends React.Component {
   get_ApprovedEvents = () => {
     console.log("Getting Events");
     axios
-      .get("https://iiitd-cms.herokuapp.com/api/clubs/upcoming")
+      .get("http://localhost:8000/api/clubs/upcoming")
       .then((data) => this.setState({ events: data.data }));
   };
 
   get_UnapprovedEvents = () => {
     console.log("Getting Events");
     axios
-      .get("https://iiitd-cms.herokuapp.com/api/clubs/unapproved")
+      .get("http://localhost:8000/api/clubs/unapproved")
       .then((data) => this.setState({ un_events: data.data }));
   };
 
@@ -78,14 +79,16 @@ class Events extends React.Component {
     const options = { dateStyle: "short", timeStyle: "short" };
     return new Date(dateString).toLocaleString(undefined, options);
   };
-
+  
+  
   render() {
     return (
       <>
-        <Grid
+        <SimpleGrid
           p={10}
-          gap={6}
-          templateColumns="repeat(auto-fit, minmax(350px, 1fr))"
+          gap={4}
+          templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+          justifyContent="center"
         >
           {(() => {
             if (
@@ -98,21 +101,18 @@ class Events extends React.Component {
                     <Stat
                       px={{ base: 4, sm: 6 }}
                       py="5"
-                      bg={"gray.500"}
+                      bg={"white"}
                       shadow="base"
                       rounded="lg"
                       key={this.state.un_events[i]["club_name"]}
+                      border="2px"
+                      borderColor={"red.500"}
+                      borderWidth="5px"
+                      borderRadius="md"
                     >
-                      <StatLabel
-                        fontWeight="medium"
-                        isTruncated
-                        color={"white"}
-                        fontSize="lg"
-                      >
-                        {this.state.un_events[i]["club_name"]}
-                      </StatLabel>
+                      <Text backgroundColor="white" alignSelf='flex-start' fontSize="lg" fontWeight="medium" as="u">{this.state.un_events[i]["club_name"]}</Text>
                       <StatNumber
-                        fontSize="3xl"
+                        fontSize="2xl"
                         fontWeight="medium"
                         color={"black"}
                       >
@@ -120,7 +120,6 @@ class Events extends React.Component {
                           onClick={() =>
                             this.Redirect_Event(this.state.un_events[i]["id"])
                           }
-                          bg="white"
                           fontSize="xl"
                         >
                           {this.state.un_events[i]["name"]}
@@ -133,16 +132,16 @@ class Events extends React.Component {
                           align={"center"}
                           justify={"center"}
                           rounded={"full"}
-                          bg={"gray.500"}
+                          bg={"white"}
                         >
                           <Icon
                             as={IoAlarmOutline}
-                            color={"white"}
+                            color={"black"}
                             w={5}
                             h={5}
                           />
                         </Flex>
-                        <Text fontWeight={600} color="white">
+                        <Text fontWeight={400} color="black">
                           {this.formatDate(this.state.un_events[i]["date_time"])}
                         </Text>
 
@@ -152,11 +151,11 @@ class Events extends React.Component {
                           align={"center"}
                           justify={"center"}
                           rounded={"full"}
-                          bg={"gray.500"}
+                          bg={"white"}
                         >
-                          <Icon as={BsBuilding} color={"white"} w={5} h={5} />
+                          <Icon as={BsBuilding} color={"black"} w={5} h={5} />
                         </Flex>
-                        <Text fontWeight={600} color="white">
+                        <Text fontWeight={400} color="black">
                           {this.state.un_events[i]["location"]}
                         </Text>
                       </Stack>
@@ -170,42 +169,39 @@ class Events extends React.Component {
             <Stat
               px={{ base: 4, sm: 6 }}
               py="5"
-              bg={"gray.300"}
-              shadow="base"
-              rounded="lg"
+              bg={"white"}
+              shadow="lg"
+              rounded="sm"
               key={this.state.events[i]["club_name"]}
+              border="2px"
+              borderColor={"teal.400"}
+              borderWidth="5px"
+              borderRadius="md"
             >
-              <StatLabel
-                fontWeight="medium"
-                isTruncated
-                color={"black"}
-                fontSize="lg"
-              >
-                {this.state.events[i]["club_name"]}
-              </StatLabel>
-              <StatNumber fontSize="3xl" fontWeight="medium" color={"black"}>
+              <Text backgroundColor="white" alignSelf='flex-start' fontSize="lg" fontWeight="medium" as="u">{this.state.events[i]["club_name"]}</Text>
+
+              <StatNumber fontSize="2xl" fontWeight="medium" color={"black"}>
                 <Button
                   onClick={() =>
                     this.Redirect_Event(this.state.events[i]["id"])
                   }
-                  bg="white"
-                  fontSize="xl"
+                  fontSize="xxl"
                 >
                   {this.state.events[i]["name"]}
                 </Button>
               </StatNumber>
-              <Stack direction={"row"} align={"center"}>
+              <Stack direction={"row"} align={"center"} mt={2}>
                 <Flex
                   w={8}
                   h={8}
                   align={"center"}
                   justify={"center"}
                   rounded={"full"}
-                  bg={"gray.300"}
+                  bg={"white"}
                 >
                   <Icon as={IoAlarmOutline} color={"black"} w={5} h={5} />
                 </Flex>
-                <Text fontWeight={600}>
+                <Text fontWeight={400}>
                   {this.formatDate(this.state.events[i]["date_time"])}
                 </Text>
 
@@ -215,18 +211,30 @@ class Events extends React.Component {
                   align={"center"}
                   justify={"center"}
                   rounded={"full"}
-                  bg={"gray.300"}
+                  bg={"white"}
                 >
                   <Icon as={BsBuilding} color={"black"} w={5} h={5} />
                 </Flex>
-                <Text fontWeight={600}>{this.state.events[i]["location"]}</Text>
+                <Text fontWeight={400}>{this.state.events[i]["location"]}</Text>
               </Stack>
             </Stat>
           ))}
-        </Grid>
+        </SimpleGrid>
       </>
     );
   }
 }
 
 export default Events;
+
+/*
+<StatLabel
+                fontWeight="medium"
+                isTruncated
+                color={"black"}
+                fontSize="lg"
+
+              >
+                {this.state.events[i]["club_name"]}
+              </StatLabel>
+              */

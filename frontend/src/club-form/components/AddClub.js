@@ -38,7 +38,7 @@ export default function Body() {
     console.log("Sending Post request to add club");
     console.log(request);
     let res = await axios.post(
-      "https://iiitd-cms.herokuapp.com/api/clubinfo",
+      "http://localhost:8000/api/clubinfo",
       request,
       {
         headers: {
