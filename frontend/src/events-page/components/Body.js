@@ -90,6 +90,7 @@ export default function Body(event) {
   const eventInfo = event.eventid;
   return (
     <>
+    {console.log(eventInfo)}
       <Container maxW={"5xl"} py={12}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
           <Stack spacing={4}>
@@ -149,8 +150,9 @@ export default function Body(event) {
               />
               {(() => {
                 if (
-                  sessionStorage.getItem("group") == "Admin" ||
-                  sessionStorage.getItem("group") == "Club_Admin"
+                  (sessionStorage.getItem("group") == "Admin" ||
+                  sessionStorage.getItem("group") == "Club_Admin")
+                  && eventInfo["approved"] == false
                 ) {
                   return (
                     <Flex flexDirection="row" justifyContent="space-between">
