@@ -108,6 +108,7 @@ class Home_Page extends React.Component {
         {console.log(this.state.user_info)}
         {console.log(this.state.user_info.user_club_name + " USER CLUB NAME information")}
         {console.log(this.state.user_info.is_authenticated)}
+        {this.setInfo()}
         <ThemeProvider theme={theme}>
           <CSSReset />
           <Header></Header>
