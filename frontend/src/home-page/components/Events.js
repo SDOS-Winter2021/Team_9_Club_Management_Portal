@@ -111,6 +111,7 @@ class Events extends React.Component {
                       borderRadius="md"
                     >
                       {console.log(this.state.un_events[i])}
+                      <Text backgroundColor="white" alignSelf='flex-start' fontSize="md" fontWeight="medium" color="red.500">{this.state.un_events[i]["club_name"]}</Text>
                       <StatNumber
                         fontSize="2xl"
                         fontWeight="medium"
@@ -125,7 +126,6 @@ class Events extends React.Component {
                           {this.state.un_events[i]["name"]}
                         </Button>
                       </StatNumber>
-                      <Text backgroundColor="white" alignSelf='flex-start' fontSize="md" fontWeight="medium">{this.state.un_events[i]["club_name"]}</Text>
                       <Stack direction={"row"} align={"center"}>
                         <Flex
                           w={8}
@@ -180,6 +180,7 @@ class Events extends React.Component {
               borderRadius="md"
             >
               {console.log(this.state.events[i])}
+              <Text backgroundColor="white" alignSelf='flex-start' fontSize="md" fontWeight="medium" color="teal">{this.state.events[i]["club_name"]}</Text>
               <StatNumber fontSize="2xl" fontWeight="medium" color={"black"}>
                 <Button
                   onClick={() =>
@@ -190,7 +191,6 @@ class Events extends React.Component {
                   {this.state.events[i]["name"]}
                 </Button>
               </StatNumber>
-              <Text backgroundColor="white" alignSelf='flex-start' fontSize="md" fontWeight="medium" color="teal">{this.state.events[i]["club_name"]}</Text>
 
               <Stack direction={"row"} align={"center"} mt={2}>
                 <Flex
