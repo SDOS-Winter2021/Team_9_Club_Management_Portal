@@ -23,6 +23,7 @@ import axios from "axios";
 import history from "../../history";
 import { render } from "react-dom";
 import Cookies from "js-cookie";
+import { SRLWrapper } from "simple-react-lightbox";
 
 const csrftoken = Cookies.get("csrftoken");
 
@@ -88,6 +89,7 @@ const formatDate = (dateString) => {
 
 export default function Body(event) {
   const eventInfo = event.eventid;
+  const [visible, setVisible] = useState(false);
   return (
     <>
     {console.log(eventInfo)}
@@ -142,12 +144,15 @@ export default function Body(event) {
           </Stack>
           <Flex>
             <Stack>
+            <SRLWrapper>
               <Image
                 maxHeight="400px"
                 rounded={"md"}
-                alt={"feature image"}
+                alt={"Event Poster"}
                 src={require(`../../../../club/posters/${eventInfo["poster"].split("/")[2]}`).default}
-              />
+                onClick={() => setVisible(true)}
+                />
+              </SRLWrapper>
               {(() => {
                 if (
                   (sessionStorage.getItem("group") == "Admin" ||

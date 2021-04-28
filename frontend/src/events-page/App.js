@@ -20,6 +20,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { withRouter } from "react-router";
+import SimpleReactLightbox from 'simple-react-lightbox'
 
 class Events_Page extends React.Component {
   state = {
@@ -77,11 +78,13 @@ class Events_Page extends React.Component {
   render() {
     console.log("getting rendered");
     return (
+      <SimpleReactLightbox>
       <ThemeProvider theme={theme}>
         <CSSReset />
         <Header Info={this.state.eventInfo}></Header>
         <Body eventid={this.state.eventInfo}></Body>
       </ThemeProvider>
+      </SimpleReactLightbox>
     );
   }
 }
