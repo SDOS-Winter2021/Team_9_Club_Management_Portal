@@ -17,13 +17,29 @@ import {
   Container,
   SimpleGrid,
   Button,
+  Collapse,
+  Link,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  useColorModeValue,
+  useBreakpointValue,
+  useDisclosure,
+  IconButton,
+  FormControl,
+  FormLabel,
+  Input,
 } from "@chakra-ui/react";
+import {
+  IoHomeOutline
+} from "react-icons/io5";
+
 import { useState, useEffect } from "react";
 import axios from "axios";
-import history from "../../history";
 import { render } from "react-dom";
 import Cookies from "js-cookie";
 import { SRLWrapper } from "simple-react-lightbox";
+import history from "./../../history";
 
 const csrftoken = Cookies.get("csrftoken");
 
@@ -90,10 +106,46 @@ const formatDate = (dateString) => {
 export default function Body(event) {
   const eventInfo = event.eventid;
   const [visible, setVisible] = useState(false);
+  const [attendance, setAttendance] = useState(0);
+  const [response, setResponse] = useState(0);
+  const { isOpen, onToggle } = useDisclosure();
+ 
+  const handleSubmit = async (event) => {
+    var data = {
+      attendance: attendance,
+      //response: response,
+      // logo: logo,
+    };
+    //console.log(data);
+    data = JSON.stringify(data);
+    var club_info = new FormData();
+    club_info.append("request", data);
+    //club_info = JSON.stringify(club_info);
+    let eResponse = await clubOut(club_info);
+    console.log(eResponse);
+  };
+
+  const clubOut = async (request) => {
+    console.log("Sending Post request to add club");
+    console.log(request);
+    let res = await axios.post(
+      "http://localhost:8000/api/eventinfoss",
+      request,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "X-CSRFToken": csrftoken,
+        },
+      }
+    );
+    console.log(res);
+    return await res.status;
+  };
+
   return (
     <>
     {console.log(eventInfo)}
-      <Container maxW={"5xl"} py={12}>
+    <Container maxW={"5xl"} py={12}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
           <Stack spacing={4}>
             <Text
@@ -204,14 +256,14 @@ export default function Body(event) {
           p={4}
           border="1px"
           bgGradient="linear(to-r, purple.500,red.200)"
-          _hover={{ bgGradient: "linear(to-r, purple.700,red.400)" }}
+          _hover={{ bgGradient: "linear(to-r, purple.500,red.400)" }}
           leftIcon={<Icon as={IoAlarmOutline} color={"black"} w={5} h={5} />}
         >
           <Text>{"Notify Me"}</Text>
         </Button>
         {(() => {
           if (
-            sessionStorage.getItem("group") == "Club_Coordinator" &&
+            sessionStorage.getItem("group") == "Admin" ||
             sessionStorage.getItem("user_club_name") == eventInfo["club_name"]
           ) {
             return (
@@ -219,7 +271,7 @@ export default function Body(event) {
                 <Heading ml={5} marginTop={20}>
                   Admin Information
                 </Heading>
-                <SimpleGrid columns={1} p={5} gap={6} maxWidth="45%">
+                <SimpleGrid columns={1} p={5} gap={6} maxWidth="50%">
                   <Button
                     justifyContent="space-evenly"
                     p={4}
@@ -247,6 +299,30 @@ export default function Body(event) {
                     <Text>{"Delete Event"}</Text>
                   </Button>
                 </SimpleGrid>
+                <Heading ml={5} marginTop={20}>
+                  Post Event Statistics
+                </Heading>
+                <Stack spacing={4}>
+                  <FormControl id="Attendance">
+                    <FormLabel>Attendance</FormLabel>
+                    <Input
+                      type="text"
+                      value={attendance}
+                      onChange={(e) => setAttendance(e.target.value)}
+                      required
+                    />
+                  </FormControl>
+                  <Stack spacing={10}>
+                    <Button
+                      bg={"blue.400"}
+                      color={"white"}
+                      _hover={{ bg: "blue.500" }}
+                      onClick={(e) => handleSubmit(e)}
+                    >
+                      Submit
+                    </Button>
+                  </Stack>
+                </Stack>
               </>
             );
           }
@@ -255,3 +331,8 @@ export default function Body(event) {
     </>
   );
 }
+
+/*
+sessionStorage.getItem("group") == "Club_Coordinator" &&
+            sessionStorage.getItem("user_club_name") == eventInfo["club_name"]
+            */

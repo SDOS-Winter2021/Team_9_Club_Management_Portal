@@ -23,6 +23,7 @@ import {
   IoLaptopOutline,
 } from "react-icons/io5";
 import { FaDrum, FaRegMinusSquare } from "react-icons/fa";
+import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Head from "next/head";
 
@@ -32,6 +33,8 @@ const formatDate = (dateString) => {
 };
 
 const Body = (Info_G, Info_E) => {
+  const [stats, setstats] = useState([]);
+  const [ename, setEname] = useState([]);
   return (
     <>
       <Container maxW={"5xl"} py={12}>
@@ -310,11 +313,30 @@ const Body = (Info_G, Info_E) => {
                       {`${formatDate(Info_G.Info_PE[i].date_time)}`}
                     </Box>
                   </Stack>
+                  {ename.push(Info_G.Info_PE[i].name)}
+                  {stats.push(10)}
                 </Stack>
               ))}
             </SimpleGrid>
           </Box>
         </Box>
+        <Text
+          textTransform={"uppercase"}
+          color={"red.400"}
+          fontWeight={600}
+          fontSize={"sm"}
+          bg={useColorModeValue("red.50", "red.900")}
+          p={2}
+          alignSelf={"flex-start"}
+          rounded={"md"}
+          mt={50}
+          paddingRight={2}
+          align="center"
+        >
+          Event Statistics
+        </Text>
+        {console.log(ename)}
+        {console.log(stats)}
       </Container>
     </>
   );
