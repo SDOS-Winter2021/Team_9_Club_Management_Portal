@@ -29,6 +29,7 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Textarea,
 } from "@chakra-ui/react";
 import {
   IoHomeOutline
@@ -40,11 +41,24 @@ import { render } from "react-dom";
 import Cookies from "js-cookie";
 import { SRLWrapper } from "simple-react-lightbox";
 import history from "./../../history";
+import emailjs from 'emailjs-com';
 
 const csrftoken = Cookies.get("csrftoken");
 
-function event_(event_id, is_approved) {
-  let res = axios.put(`http://localhost:8000/api/event/edit`, {
+function event_(event_id, is_approved, remarks, event_name) {
+  //data = JSON.stringify({'event_name':event_name, 'remarks':remarks, status:'rejected'}); //dunno about this
+  var templateParams = {
+    'event_name': event_name,
+    'remarks': remarks,
+    'status': 'rejected',
+};
+  emailjs.send('service_9u4bet3', 'template_2sml7ci', templateParams, 'user_R1cJopLy4W0fZMs6laGqY')
+      .then((result) => {
+          window.location.reload()  //This is if you still want the page to reload (since e.preventDefault() cancelled that behavior) 
+      }, (error) => {
+          console.log(error.text);
+      });
+  let res = axios.put(`http://localhost:8000/api/event/editss`, {
     id: event_id,
     approved: is_approved,
   });
@@ -55,11 +69,23 @@ function notify_(event_id, is_approved) {
     id: event_id,
     approved: is_approved,
   });
+  
 }
 
-function approve_(event_id) {
+function approve_(event_id, remarks, event_name) {
+  var templateParams = {
+    'event_name': event_name,
+    'remarks': remarks,
+    'status': 'approved',
+};
+  emailjs.send('service_9u4bet3', 'template_2sml7ci', templateParams, 'user_R1cJopLy4W0fZMs6laGqY')
+      .then((result) => {
+          window.location.reload()  //This is if you still want the page to reload (since e.preventDefault() cancelled that behavior) 
+      }, (error) => {
+          console.log(error.text);
+      });
   let rest = axios.put(
-    `http://localhost:8000/api/clubs/approve/${event_id}`,
+    `http://localhost:8000/api/clubs/approvess/${event_id}`,
     {},
     {
       headers: {
@@ -107,6 +133,7 @@ export default function Body(event) {
   const eventInfo = event.eventid;
   const [visible, setVisible] = useState(false);
   const [attendance, setAttendance] = useState(0);
+  const [reason, setReason] = useState("");
   const [response, setResponse] = useState(0);
   const { isOpen, onToggle } = useDisclosure();
  
@@ -212,6 +239,18 @@ export default function Body(event) {
                   && eventInfo["approved"] == false
                 ) {
                   return (
+                    <>
+                    <Stack spacing={4}>
+                      <FormControl id="Remarks">
+                        <FormLabel>Remarks</FormLabel>
+                        <Textarea
+                          type="text"
+                          value={reason}
+                          onChange={(e) => setReason(e.target.value)}
+                          required
+                        />
+                      </FormControl>
+                    </Stack>
                     <Flex flexDirection="row" justifyContent="space-between">
                       <Button
                         marginTop={10}
@@ -226,7 +265,7 @@ export default function Body(event) {
                         leftIcon={
                           <Icon as={GoCheck} color={"black"} w={5} h={5} />
                         }
-                        onClick={() => approve_(eventInfo["id"])}
+                        onClick={() => approve_(eventInfo["id"], reason, eventInfo["name"])}
                       >
                         <Text>{"Approve"}</Text>
                       </Button>
@@ -239,11 +278,12 @@ export default function Body(event) {
                         bgGradient="linear(to-r, red.500,red.300)"
                         _hover={{ bgGradient: "linear(to-r, red.700,red.400)" }}
                         leftIcon={<Icon as={GoX} color={"black"} w={5} h={5} />}
-                        onClick={() => event_(eventInfo["id"], 0)}
+                        onClick={() => event_(eventInfo["id"], 0, reason, eventInfo["name"])}
                       >
                         <Text>{"Reject"}</Text>
                       </Button>
                     </Flex>
+                    </>
                   );
                 }
               })()}
@@ -299,10 +339,10 @@ export default function Body(event) {
                     <Text>{"Delete Event"}</Text>
                   </Button>
                 </SimpleGrid>
-                <Heading ml={5} marginTop={20}>
+                <Heading ml={5} marginTop={20} mb={5}>
                   Post Event Statistics
                 </Heading>
-                <Stack spacing={4}>
+                <Stack spacing={4} >
                   <FormControl id="Attendance">
                     <FormLabel>Attendance</FormLabel>
                     <Input
@@ -318,7 +358,7 @@ export default function Body(event) {
                       color={"white"}
                       _hover={{ bg: "blue.500" }}
                       onClick={(e) => handleSubmit(e)}
-                    >
+                      >
                       Submit
                     </Button>
                   </Stack>
