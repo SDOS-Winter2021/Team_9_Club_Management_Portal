@@ -152,6 +152,7 @@ class Events extends React.Component {
                           {this.formatDate(
                             this.state.un_events[i]["date_time"]
                           )}
+
                         </Text>
 
                         <Flex
