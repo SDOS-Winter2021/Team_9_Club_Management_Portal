@@ -156,6 +156,16 @@ LOGIN_REDIRECT_URL = '/login/'
 SOCIALACCOUNT_EMAIL_REQUIRED  = True
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+            'https://www.googleapis.com/auth/calendar',
+            'https://www.googleapis.com/auth/calendar.events',
+        ]
+    }
+}
 
 
 # Activate Django-Heroku.

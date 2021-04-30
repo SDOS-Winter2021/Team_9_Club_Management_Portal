@@ -6,6 +6,7 @@ from django.db import models
 class CLUB(models.Model):
     name = models.CharField(max_length=100, blank=False)
     date_time = models.DateTimeField(blank=False)
+    end_date_time = models.DateTimeField(blank=True)
     location = models.CharField(max_length=200, blank=False)
     description = models.TextField(blank=False)
     poster = models.ImageField(upload_to="club/posters", blank=True)
@@ -14,6 +15,7 @@ class CLUB(models.Model):
     club_name = models.CharField(max_length=100, blank=False)
     web_link = models.URLField(max_length=200, blank=True)
     rejected=models.BooleanField(default=False, blank=True)
+    club_email = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return self.name

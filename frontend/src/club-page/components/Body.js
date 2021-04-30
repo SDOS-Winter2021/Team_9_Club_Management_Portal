@@ -154,7 +154,13 @@ const Body = (Info_G, Info_E) => {
             <Image
               rounded={"md"}
               alt={"feature image"}
-              src={(`../../../../club/logo/${Info_G.Info_G.logo.split("/")[2]}`) ? require(`../../../../club/logo/${Info_G.Info_G.logo.split("/")[2]}`).default : require("../../../../club/logo/placeholder.png").default}
+              src={
+                `../../../../club/logo/${Info_G.Info_G.logo.split("/")[2]}`
+                  ? require(`../../../../club/logo/${
+                      Info_G.Info_G.logo.split("/")[2]
+                    }`).default
+                  : require("../../../../club/logo/placeholder.png").default
+              }
             />
           </Flex>
         </SimpleGrid>

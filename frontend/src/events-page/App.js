@@ -20,16 +20,16 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { withRouter } from "react-router";
-import SimpleReactLightbox from 'simple-react-lightbox'
+import SimpleReactLightbox from "simple-react-lightbox";
 
 class Events_Page extends React.Component {
   state = {
-    eventInfo: {'poster': "club/logo/placeholder2.png"},
+    eventInfo: { poster: "club/logo/placeholder2.png" },
   };
 
   getEventInfo = (id) => {
     let res = axios
-      .get(`http://localhost:8000/api/clubs/${id}`)
+      .get(`https://iiitd-cms.herokuapp.com/api/clubs/${id}`)
       .then((data) => this.setState({ eventInfo: data.data }));
   };
 
@@ -79,11 +79,11 @@ class Events_Page extends React.Component {
     console.log("getting rendered");
     return (
       <SimpleReactLightbox>
-      <ThemeProvider theme={theme}>
-        <CSSReset />
-        <Header Info={this.state.eventInfo}></Header>
-        <Body eventid={this.state.eventInfo}></Body>
-      </ThemeProvider>
+        <ThemeProvider theme={theme}>
+          <CSSReset />
+          <Header Info={this.state.eventInfo}></Header>
+          <Body eventid={this.state.eventInfo}></Body>
+        </ThemeProvider>
       </SimpleReactLightbox>
     );
   }

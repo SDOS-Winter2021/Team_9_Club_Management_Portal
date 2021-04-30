@@ -31,9 +31,7 @@ import {
   Input,
   Textarea,
 } from "@chakra-ui/react";
-import {
-  IoHomeOutline
-} from "react-icons/io5";
+import { IoHomeOutline } from "react-icons/io5";
 
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -41,51 +39,91 @@ import { render } from "react-dom";
 import Cookies from "js-cookie";
 import { SRLWrapper } from "simple-react-lightbox";
 import history from "./../../history";
-import emailjs from 'emailjs-com';
+import emailjs from "emailjs-com";
 
 const csrftoken = Cookies.get("csrftoken");
 
-function event_(event_id, is_approved, remarks, event_name) {
+function event_(event_id, is_approved, remarks, event_name, coord_email) {
   //data = JSON.stringify({'event_name':event_name, 'remarks':remarks, status:'rejected'}); //dunno about this
   var templateParams = {
-    'event_name': event_name,
-    'remarks': remarks,
-    'status': 'rejected',
-};
-  emailjs.send('service_9u4bet3', 'template_2sml7ci', templateParams, 'user_R1cJopLy4W0fZMs6laGqY')
-      .then((result) => {
-          window.location.reload()  //This is if you still want the page to reload (since e.preventDefault() cancelled that behavior) 
-      }, (error) => {
-          console.log(error.text);
-      });
-  let res = axios.put(`http://localhost:8000/api/event/editss`, {
-    id: event_id,
-    approved: is_approved,
-  });
+    email_to_send: coord_email,
+    event_name: event_name,
+    remarks: remarks,
+    status: "rejected",
+  };
+  console.log(templateParams);
+  console.log("TEMPLATEPARAMS");
+  emailjs
+    .send(
+      "service_9u4bet3",
+      "template_2sml7ci",
+      templateParams,
+      "user_R1cJopLy4W0fZMs6laGqY"
+    )
+    .then(
+      (result) => {
+        delete_(event_id); //This is if you still want the page to reload (since e.preventDefault() cancelled that behavior)
+      },
+      (error) => {
+        console.log(error.text);
+      }
+    );
 }
 
-function notify_(event_id, is_approved) {
-  let res = axios.put(`http://localhost:8000/api/event/edit`, {
-    id: event_id,
-    approved: is_approved,
-  });
-  
+function notify_(eventInfo) {
+  var data = {
+    name: eventInfo["name"],
+    date_time: eventInfo["date_time"],
+    end_date_time: eventInfo["end_date_time"],
+    location: eventInfo["location"],
+    description: eventInfo["description"],
+  };
+  console.log(data);
+  var event_info = new FormData();
+  data = JSON.stringify(data); //dunno about this
+  event_info.append("request", data);
+
+  var res = axios.post(
+    "https://iiitd-cms.herokuapp.com/api/notify",
+    event_info,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "X-CSRFToken": csrftoken,
+      },
+    }
+  );
+  alert("Event added to your calendar");
+  console.log(res);
+  return res.status;
 }
 
-function approve_(event_id, remarks, event_name) {
+function approve_(event_id, remarks, event_name, coord_email) {
   var templateParams = {
-    'event_name': event_name,
-    'remarks': remarks,
-    'status': 'approved',
-};
-  emailjs.send('service_9u4bet3', 'template_2sml7ci', templateParams, 'user_R1cJopLy4W0fZMs6laGqY')
-      .then((result) => {
-          window.location.reload()  //This is if you still want the page to reload (since e.preventDefault() cancelled that behavior) 
-      }, (error) => {
-          console.log(error.text);
-      });
+    email_to_send: coord_email,
+    event_name: event_name,
+    remarks: remarks,
+    status: "approved",
+  };
+  emailjs
+    .send(
+      "service_9u4bet3",
+      "template_2sml7ci",
+      templateParams,
+      "user_R1cJopLy4W0fZMs6laGqY"
+    )
+    .then(
+      (result) => {
+        history.push(`/home`);
+        location.reload();
+        //window.location.reload(); //This is if you still want the page to reload (since e.preventDefault() cancelled that behavior)
+      },
+      (error) => {
+        console.log(error.text);
+      }
+    );
   let rest = axios.put(
-    `http://localhost:8000/api/clubs/approvess/${event_id}`,
+    `https://iiitd-cms.herokuapp.com/api/clubs/approve/${event_id}`,
     {},
     {
       headers: {
@@ -97,7 +135,7 @@ function approve_(event_id, remarks, event_name) {
 
 function delete_(event_id) {
   let res = axios.delete(
-    `http://localhost:8000/api/clubs/${event_id}`,
+    `https://iiitd-cms.herokuapp.com/api/clubs/${event_id}`,
     {
       headers: {
         "X-CSRFToken": csrftoken,
@@ -136,7 +174,7 @@ export default function Body(event) {
   const [reason, setReason] = useState("");
   const [response, setResponse] = useState(0);
   const { isOpen, onToggle } = useDisclosure();
- 
+
   const handleSubmit = async (event) => {
     var data = {
       attendance: attendance,
@@ -156,7 +194,7 @@ export default function Body(event) {
     console.log("Sending Post request to add club");
     console.log(request);
     let res = await axios.post(
-      "http://localhost:8000/api/eventinfoss",
+      "https://iiitd-cms.herokuapp.com/api/eventinfo",
       request,
       {
         headers: {
@@ -171,8 +209,8 @@ export default function Body(event) {
 
   return (
     <>
-    {console.log(eventInfo)}
-    <Container maxW={"5xl"} py={12}>
+      {console.log(eventInfo)}
+      <Container maxW={"5xl"} py={12}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
           <Stack spacing={4}>
             <Text
@@ -223,66 +261,96 @@ export default function Body(event) {
           </Stack>
           <Flex>
             <Stack>
-            <SRLWrapper>
-              <Image
-                maxHeight="400px"
-                rounded={"md"}
-                alt={"Event Poster"}
-                src={require(`../../../../club/posters/${eventInfo["poster"].split("/")[2]}`).default}
-                onClick={() => setVisible(true)}
+              <SRLWrapper>
+                <Image
+                  maxHeight="400px"
+                  rounded={"md"}
+                  alt={"Event Poster"}
+                  // src={
+                  //   require(`../../../../club/posters/${
+                  //     eventInfo["poster"].split("/")[2]
+                  //   }`).default
+                  // }
+                  src={
+                    `${eventInfo["poster"]}` == "null"
+                      ? require("../../../../club/logo/placeholder.png").default
+                      : require(`../../../../club/posters/${
+                          eventInfo["poster"].split("/")[2]
+                        }`).default
+                  }
+                  onClick={() => setVisible(true)}
                 />
               </SRLWrapper>
               {(() => {
                 if (
                   (sessionStorage.getItem("group") == "Admin" ||
-                  sessionStorage.getItem("group") == "Club_Admin")
-                  && eventInfo["approved"] == false
+                    sessionStorage.getItem("group") == "Club_Admin") &&
+                  eventInfo["approved"] == false
                 ) {
                   return (
                     <>
-                    <Stack spacing={4}>
-                      <FormControl id="Remarks">
-                        <FormLabel>Remarks</FormLabel>
-                        <Textarea
-                          type="text"
-                          value={reason}
-                          onChange={(e) => setReason(e.target.value)}
-                          required
-                        />
-                      </FormControl>
-                    </Stack>
-                    <Flex flexDirection="row" justifyContent="space-between">
-                      <Button
-                        marginTop={10}
-                        justifyContent="space-evenly"
-                        p={4}
-                        width={"40%"}
-                        border="1px"
-                        bgGradient="linear(to-r, green.500,green.300)"
-                        _hover={{
-                          bgGradient: "linear(to-r, green.700,green.600)",
-                        }}
-                        leftIcon={
-                          <Icon as={GoCheck} color={"black"} w={5} h={5} />
-                        }
-                        onClick={() => approve_(eventInfo["id"], reason, eventInfo["name"])}
-                      >
-                        <Text>{"Approve"}</Text>
-                      </Button>
-                      <Button
-                        marginTop={10}
-                        justifyContent="space-evenly"
-                        p={4}
-                        border="1px"
-                        width={"40%"}
-                        bgGradient="linear(to-r, red.500,red.300)"
-                        _hover={{ bgGradient: "linear(to-r, red.700,red.400)" }}
-                        leftIcon={<Icon as={GoX} color={"black"} w={5} h={5} />}
-                        onClick={() => event_(eventInfo["id"], 0, reason, eventInfo["name"])}
-                      >
-                        <Text>{"Reject"}</Text>
-                      </Button>
-                    </Flex>
+                      <Stack spacing={4}>
+                        <FormControl id="Remarks">
+                          <FormLabel>Remarks</FormLabel>
+                          <Textarea
+                            type="text"
+                            value={reason}
+                            onChange={(e) => setReason(e.target.value)}
+                            required
+                          />
+                        </FormControl>
+                      </Stack>
+                      <Flex flexDirection="row" justifyContent="space-between">
+                        <Button
+                          marginTop={10}
+                          justifyContent="space-evenly"
+                          p={4}
+                          width={"40%"}
+                          border="1px"
+                          bgGradient="linear(to-r, green.500,green.300)"
+                          _hover={{
+                            bgGradient: "linear(to-r, green.700,green.600)",
+                          }}
+                          leftIcon={
+                            <Icon as={GoCheck} color={"black"} w={5} h={5} />
+                          }
+                          onClick={() =>
+                            approve_(
+                              eventInfo["id"],
+                              reason,
+                              eventInfo["name"],
+                              eventInfo["club_email"]
+                            )
+                          }
+                        >
+                          <Text>{"Approve"}</Text>
+                        </Button>
+                        <Button
+                          marginTop={10}
+                          justifyContent="space-evenly"
+                          p={4}
+                          border="1px"
+                          width={"40%"}
+                          bgGradient="linear(to-r, red.500,red.300)"
+                          _hover={{
+                            bgGradient: "linear(to-r, red.700,red.400)",
+                          }}
+                          leftIcon={
+                            <Icon as={GoX} color={"black"} w={5} h={5} />
+                          }
+                          onClick={() =>
+                            event_(
+                              eventInfo["id"],
+                              0,
+                              reason,
+                              eventInfo["name"],
+                              eventInfo["club_email"]
+                            )
+                          }
+                        >
+                          <Text>{"Reject"}</Text>
+                        </Button>
+                      </Flex>
                     </>
                   );
                 }
@@ -298,6 +366,7 @@ export default function Body(event) {
           bgGradient="linear(to-r, purple.500,red.200)"
           _hover={{ bgGradient: "linear(to-r, purple.500,red.400)" }}
           leftIcon={<Icon as={IoAlarmOutline} color={"black"} w={5} h={5} />}
+          onClick={() => notify_(eventInfo)}
         >
           <Text>{"Notify Me"}</Text>
         </Button>
@@ -342,7 +411,7 @@ export default function Body(event) {
                 <Heading ml={5} marginTop={20} mb={5}>
                   Post Event Statistics
                 </Heading>
-                <Stack spacing={4} >
+                <Stack spacing={4}>
                   <FormControl id="Attendance">
                     <FormLabel>Attendance</FormLabel>
                     <Input
@@ -358,7 +427,7 @@ export default function Body(event) {
                       color={"white"}
                       _hover={{ bg: "blue.500" }}
                       onClick={(e) => handleSubmit(e)}
-                      >
+                    >
                       Submit
                     </Button>
                   </Stack>

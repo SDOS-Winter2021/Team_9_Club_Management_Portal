@@ -38,7 +38,7 @@ export default function Body() {
     console.log("Sending Post request to add club");
     console.log(request);
     let res = await axios.post(
-      "http://localhost:8000/api/clubinfo",
+      "https://iiitd-cms.herokuapp.com/api/clubinfo",
       request,
       {
         headers: {
@@ -201,7 +201,14 @@ export default function Body() {
                 bg={"blue.400"}
                 color={"white"}
                 _hover={{ bg: "blue.500" }}
-                onClick={(e) => handleSubmit(e)}
+                onClick={(e) => {
+                  handleSubmit(e);
+                  alert("Club Created!");
+                  history.push({
+                    pathname: "/home",
+                  });
+                  location.reload();
+                }}
               >
                 Submit
               </Button>

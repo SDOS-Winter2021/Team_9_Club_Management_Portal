@@ -79,7 +79,7 @@ class Home_Page extends React.Component {
   getUser = () => {
     console.log("Getting User");
     axios
-      .get("http://localhost:8000/api/user/info")
+      .get("https://iiitd-cms.herokuapp.com/api/user/info")
       .then((data) => this.setState({ user_info: data.data }));
   };
 
@@ -106,7 +106,9 @@ class Home_Page extends React.Component {
     return (
       <>
         {console.log(this.state.user_info)}
-        {console.log(this.state.user_info.user_club_name + " USER CLUB NAME information")}
+        {console.log(
+          this.state.user_info.user_club_name + " USER CLUB NAME information"
+        )}
         {console.log(this.state.user_info.is_authenticated)}
         {this.setInfo()}
         <ThemeProvider theme={theme}>
