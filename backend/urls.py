@@ -8,6 +8,9 @@ urlpatterns = [
         r"^clubs$", views.CLUB_LIST
     ),  # list all club events which are approved it is passed a parameter 'name' which is name of club
     url(
+        r"^notify$", views.NOTIFY_EVENT
+    ),  # Create an event for a student to add to their calendar
+    url(
         r"^clubs/(?P<pk>[0-9]+)$", views.CLUB_DETAIL
     ),  # lists a particular event by id, this id is the number associated with each entry in Monogodb
     url(
@@ -23,4 +26,5 @@ urlpatterns = [
     url(r"^clubs/approve/(?P<pk>[0-9]+)$", views.approve_event),
     path("user/info", views.USER_INFO),
     url(r"^users/(?P<pk>[0-9]+)$", views.USERS_ID),
+    url(r"^clubs/sorted",views.DATE_EVENT),
 ]

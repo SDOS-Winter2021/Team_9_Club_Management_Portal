@@ -17,33 +17,111 @@ import {
   Container,
   SimpleGrid,
   Button,
+  Collapse,
+  Link,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  useColorModeValue,
+  useBreakpointValue,
+  useDisclosure,
+  IconButton,
+  FormControl,
+  FormLabel,
+  Input,
+  Textarea,
 } from "@chakra-ui/react";
+import { IoHomeOutline } from "react-icons/io5";
+
 import { useState, useEffect } from "react";
 import axios from "axios";
-import history from "../../history";
 import { render } from "react-dom";
 import Cookies from "js-cookie";
+import { SRLWrapper } from "simple-react-lightbox";
+import history from "./../../history";
+import emailjs from "emailjs-com";
 
 const csrftoken = Cookies.get("csrftoken");
 
-function event_(event_id, is_approved) {
-  console.log(event_id, is_approved);
-  let res = axios.put(`https://iiitd-cms.herokuapp.com/api/event/edit`, {
-    id: event_id,
-    approved: is_approved,
-  });
+function event_(event_id, is_approved, remarks, event_name, coord_email) {
+  //data = JSON.stringify({'event_name':event_name, 'remarks':remarks, status:'rejected'}); //dunno about this
+  var templateParams = {
+    email_to_send: coord_email,
+    event_name: event_name,
+    remarks: remarks,
+    status: "rejected",
+  };
+  console.log(templateParams);
+  console.log("TEMPLATEPARAMS");
+  emailjs
+    .send(
+      "service_9u4bet3",
+      "template_2sml7ci",
+      templateParams,
+      "user_R1cJopLy4W0fZMs6laGqY"
+    )
+    .then(
+      (result) => {
+        delete_(event_id); //This is if you still want the page to reload (since e.preventDefault() cancelled that behavior)
+      },
+      (error) => {
+        console.log(error.text);
+      }
+    );
 }
 
-function notify_(event_id, is_approved) {
-  console.log(event_id, is_approved);
-  let res = axios.put(`https://iiitd-cms.herokuapp.com/api/event/edit`, {
-    id: event_id,
-    approved: is_approved,
-  });
+function notify_(eventInfo) {
+  var data = {
+    name: eventInfo["name"],
+    date_time: eventInfo["date_time"],
+    end_date_time: eventInfo["end_date_time"],
+    location: eventInfo["location"],
+    description: eventInfo["description"],
+  };
+  console.log(data);
+  var event_info = new FormData();
+  data = JSON.stringify(data); //dunno about this
+  event_info.append("request", data);
+
+  var res = axios.post(
+    "https://iiitd-cms.herokuapp.com/api/notify",
+    event_info,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "X-CSRFToken": csrftoken,
+      },
+    }
+  );
+  alert("Event added to your calendar");
+  console.log(res);
+  return res.status;
 }
 
-function approve_(event_id) {
-  console.log(event_id);
+function approve_(event_id, remarks, event_name, coord_email) {
+  var templateParams = {
+    email_to_send: coord_email,
+    event_name: event_name,
+    remarks: remarks,
+    status: "approved",
+  };
+  emailjs
+    .send(
+      "service_9u4bet3",
+      "template_2sml7ci",
+      templateParams,
+      "user_R1cJopLy4W0fZMs6laGqY"
+    )
+    .then(
+      (result) => {
+        history.push(`/home`);
+        location.reload();
+        //window.location.reload(); //This is if you still want the page to reload (since e.preventDefault() cancelled that behavior)
+      },
+      (error) => {
+        console.log(error.text);
+      }
+    );
   let rest = axios.put(
     `https://iiitd-cms.herokuapp.com/api/clubs/approve/${event_id}`,
     {},
@@ -56,7 +134,6 @@ function approve_(event_id) {
 }
 
 function delete_(event_id) {
-  console.log(event_id);
   let res = axios.delete(
     `https://iiitd-cms.herokuapp.com/api/clubs/${event_id}`,
     {
@@ -72,8 +149,6 @@ function delete_(event_id) {
 }
 
 function edit_(event_info) {
-  console.log(event_info);
-  console.log(event_info.description);
   sessionStorage.setItem("event_data_name", event_info.name);
   sessionStorage.setItem("event_data_desc", event_info.description);
   sessionStorage.setItem("event_data_dt", event_info.date_time);
@@ -94,16 +169,47 @@ const formatDate = (dateString) => {
 
 export default function Body(event) {
   const eventInfo = event.eventid;
-  console.log(eventInfo);
+  const [visible, setVisible] = useState(false);
+  const [attendance, setAttendance] = useState(0);
+  const [reason, setReason] = useState("");
+  const [response, setResponse] = useState(0);
+  const { isOpen, onToggle } = useDisclosure();
+
+  const handleSubmit = async (event) => {
+    var data = {
+      attendance: attendance,
+      //response: response,
+      // logo: logo,
+    };
+    //console.log(data);
+    data = JSON.stringify(data);
+    var club_info = new FormData();
+    club_info.append("request", data);
+    //club_info = JSON.stringify(club_info);
+    let eResponse = await clubOut(club_info);
+    console.log(eResponse);
+  };
+
+  const clubOut = async (request) => {
+    console.log("Sending Post request to add club");
+    console.log(request);
+    let res = await axios.post(
+      "https://iiitd-cms.herokuapp.com/api/eventinfo",
+      request,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "X-CSRFToken": csrftoken,
+        },
+      }
+    );
+    console.log(res);
+    return await res.status;
+  };
+
   return (
     <>
-      {console.log(sessionStorage.getItem("user_club_name") + "BLAH BLAH")}
-      {console.log(eventInfo["club_name"])}
-      {console.log(
-        sessionStorage.getItem("user_club_name") == eventInfo["club_name"]
-      )}
-      {console.log(sessionStorage.getItem("group"))}
-      {console.log(eventInfo["poster"] + "POSTER")}
+      {console.log(eventInfo)}
       <Container maxW={"5xl"} py={12}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
           <Stack spacing={4}>
@@ -155,52 +261,97 @@ export default function Body(event) {
           </Stack>
           <Flex>
             <Stack>
-              <Image
-                maxHeight="400px"
-                rounded={"md"}
-                alt={"feature image"}
-                src={
-                  "https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg"
-                }
-              />
+              <SRLWrapper>
+                <Image
+                  maxHeight="400px"
+                  rounded={"md"}
+                  alt={"Event Poster"}
+                  // src={
+                  //   require(`../../../../club/posters/${
+                  //     eventInfo["poster"].split("/")[2]
+                  //   }`).default
+                  // }
+                  src={
+                    `${eventInfo["poster"]}` == "null"
+                      ? require("../../../../club/logo/placeholder.png").default
+                      : require(`../../../../club/posters/${
+                          eventInfo["poster"].split("/")[2]
+                        }`).default
+                  }
+                  onClick={() => setVisible(true)}
+                />
+              </SRLWrapper>
               {(() => {
                 if (
-                  sessionStorage.getItem("group") == "Admin" ||
-                  sessionStorage.getItem("group") == "Club_Admin"
+                  (sessionStorage.getItem("group") == "Admin" ||
+                    sessionStorage.getItem("group") == "Club_Admin") &&
+                  eventInfo["approved"] == false
                 ) {
                   return (
-                    <Flex flexDirection="row" justifyContent="space-between">
-                      <Button
-                        marginTop={10}
-                        justifyContent="space-evenly"
-                        p={4}
-                        width={"40%"}
-                        border="1px"
-                        bgGradient="linear(to-r, green.500,green.300)"
-                        _hover={{
-                          bgGradient: "linear(to-r, green.700,green.600)",
-                        }}
-                        leftIcon={
-                          <Icon as={GoCheck} color={"black"} w={5} h={5} />
-                        }
-                        onClick={() => approve_(eventInfo["id"])}
-                      >
-                        <Text>{"Approve"}</Text>
-                      </Button>
-                      <Button
-                        marginTop={10}
-                        justifyContent="space-evenly"
-                        p={4}
-                        border="1px"
-                        width={"40%"}
-                        bgGradient="linear(to-r, red.500,red.300)"
-                        _hover={{ bgGradient: "linear(to-r, red.700,red.400)" }}
-                        leftIcon={<Icon as={GoX} color={"black"} w={5} h={5} />}
-                        onClick={() => event_(eventInfo["id"], 0)}
-                      >
-                        <Text>{"Reject"}</Text>
-                      </Button>
-                    </Flex>
+                    <>
+                      <Stack spacing={4}>
+                        <FormControl id="Remarks">
+                          <FormLabel>Remarks</FormLabel>
+                          <Textarea
+                            type="text"
+                            value={reason}
+                            onChange={(e) => setReason(e.target.value)}
+                            required
+                          />
+                        </FormControl>
+                      </Stack>
+                      <Flex flexDirection="row" justifyContent="space-between">
+                        <Button
+                          marginTop={10}
+                          justifyContent="space-evenly"
+                          p={4}
+                          width={"40%"}
+                          border="1px"
+                          bgGradient="linear(to-r, green.500,green.300)"
+                          _hover={{
+                            bgGradient: "linear(to-r, green.700,green.600)",
+                          }}
+                          leftIcon={
+                            <Icon as={GoCheck} color={"black"} w={5} h={5} />
+                          }
+                          onClick={() =>
+                            approve_(
+                              eventInfo["id"],
+                              reason,
+                              eventInfo["name"],
+                              eventInfo["club_email"]
+                            )
+                          }
+                        >
+                          <Text>{"Approve"}</Text>
+                        </Button>
+                        <Button
+                          marginTop={10}
+                          justifyContent="space-evenly"
+                          p={4}
+                          border="1px"
+                          width={"40%"}
+                          bgGradient="linear(to-r, red.500,red.300)"
+                          _hover={{
+                            bgGradient: "linear(to-r, red.700,red.400)",
+                          }}
+                          leftIcon={
+                            <Icon as={GoX} color={"black"} w={5} h={5} />
+                          }
+                          onClick={() =>
+                            event_(
+                              eventInfo["id"],
+                              0,
+                              reason,
+                              eventInfo["name"],
+                              eventInfo["club_email"]
+                            )
+                          }
+                        >
+                          <Text>{"Reject"}</Text>
+                        </Button>
+                      </Flex>
+                    </>
                   );
                 }
               })()}
@@ -213,14 +364,15 @@ export default function Body(event) {
           p={4}
           border="1px"
           bgGradient="linear(to-r, purple.500,red.200)"
-          _hover={{ bgGradient: "linear(to-r, purple.700,red.400)" }}
+          _hover={{ bgGradient: "linear(to-r, purple.500,red.400)" }}
           leftIcon={<Icon as={IoAlarmOutline} color={"black"} w={5} h={5} />}
+          onClick={() => notify_(eventInfo)}
         >
           <Text>{"Notify Me"}</Text>
         </Button>
         {(() => {
           if (
-            sessionStorage.getItem("group") == "Club_Coordinator" &&
+            sessionStorage.getItem("group") == "Admin" ||
             sessionStorage.getItem("user_club_name") == eventInfo["club_name"]
           ) {
             return (
@@ -228,7 +380,7 @@ export default function Body(event) {
                 <Heading ml={5} marginTop={20}>
                   Admin Information
                 </Heading>
-                <SimpleGrid columns={1} p={5} gap={6} maxWidth="25%">
+                <SimpleGrid columns={1} p={5} gap={6} maxWidth="50%">
                   <Button
                     justifyContent="space-evenly"
                     p={4}
@@ -256,6 +408,30 @@ export default function Body(event) {
                     <Text>{"Delete Event"}</Text>
                   </Button>
                 </SimpleGrid>
+                <Heading ml={5} marginTop={20} mb={5}>
+                  Post Event Statistics
+                </Heading>
+                <Stack spacing={4}>
+                  <FormControl id="Attendance">
+                    <FormLabel>Attendance</FormLabel>
+                    <Input
+                      type="text"
+                      value={attendance}
+                      onChange={(e) => setAttendance(e.target.value)}
+                      required
+                    />
+                  </FormControl>
+                  <Stack spacing={10}>
+                    <Button
+                      bg={"blue.400"}
+                      color={"white"}
+                      _hover={{ bg: "blue.500" }}
+                      onClick={(e) => handleSubmit(e)}
+                    >
+                      Submit
+                    </Button>
+                  </Stack>
+                </Stack>
               </>
             );
           }
@@ -264,3 +440,8 @@ export default function Body(event) {
     </>
   );
 }
+
+/*
+sessionStorage.getItem("group") == "Club_Coordinator" &&
+            sessionStorage.getItem("user_club_name") == eventInfo["club_name"]
+            */

@@ -23,6 +23,7 @@ import {
   IoLaptopOutline,
 } from "react-icons/io5";
 import { FaDrum, FaRegMinusSquare } from "react-icons/fa";
+import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Head from "next/head";
 
@@ -32,15 +33,10 @@ const formatDate = (dateString) => {
 };
 
 const Body = (Info_G, Info_E) => {
+  const [stats, setstats] = useState([]);
+  const [ename, setEname] = useState([]);
   return (
     <>
-      {console.log(Info_G.Info_G.name)}
-      {console.log(Info_G.Info_E)}
-      {console.log(sessionStorage.getItem("user_club_name"))}
-      {console.log(
-        sessionStorage.getItem("user_club_name") == Info_G.Info_G.name
-      )}
-      {console.log("I AM HERE")}
       <Container maxW={"5xl"} py={12}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
           <Stack spacing={4}>
@@ -159,7 +155,11 @@ const Body = (Info_G, Info_E) => {
               rounded={"md"}
               alt={"feature image"}
               src={
-                "https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg"
+                `../../../../club/logo/${Info_G.Info_G.logo.split("/")[2]}`
+                  ? require(`../../../../club/logo/${
+                      Info_G.Info_G.logo.split("/")[2]
+                    }`).default
+                  : require("../../../../club/logo/placeholder.png").default
               }
             />
           </Flex>
@@ -250,23 +250,23 @@ const Body = (Info_G, Info_E) => {
               spacingX="10"
               spacingY="14"
             >
-              {Object.keys(Info_G.Info_E).map((user, i) => (
+              {Object.keys(Info_G.Info_FE).map((user, i) => (
                 <Stack spacing="6" direction={{ base: "column", md: "row" }}>
                   <Box fontSize="2xl">{<FaRegMinusSquare />}</Box>
                   <Stack spacing="1">
                     <Text fontWeight="extrabold" fontSize="lg">
                       <Button
                         onClick={() => {
-                          history.push(`/event/${Info_G.Info_E[i].id}`);
+                          history.push(`/event/${Info_G.Info_FE[i].id}`);
                           location.reload();
                         }}
                       >
-                        {Info_G.Info_E[i].name}
+                        {Info_G.Info_FE[i].name}
                       </Button>
                     </Text>
                     <Box color={"gray.600"}>
-                      {`${Info_G.Info_E[i].location}`} on{" "}
-                      {`${formatDate(Info_G.Info_E[i].date_time)}`}
+                      {`${Info_G.Info_FE[i].location}`} on{" "}
+                      {`${formatDate(Info_G.Info_FE[i].date_time)}`}
                     </Box>
                   </Stack>
                 </Stack>
@@ -287,7 +287,7 @@ const Body = (Info_G, Info_E) => {
           paddingRight={2}
           align="center"
         >
-          Previous Events (Not Implemented As of Yet)
+          Previous Events
         </Text>
         <Box as="section" py="24">
           <Box
@@ -300,30 +300,49 @@ const Body = (Info_G, Info_E) => {
               spacingX="10"
               spacingY="14"
             >
-              {Object.keys(Info_G.Info_E).map((user, i) => (
+              {Object.keys(Info_G.Info_PE).map((user, i) => (
                 <Stack spacing="6" direction={{ base: "column", md: "row" }}>
                   <Box fontSize="2xl">{<FaRegMinusSquare />}</Box>
                   <Stack spacing="1">
                     <Text fontWeight="extrabold" fontSize="lg">
                       <Button
                         onClick={() => {
-                          history.push(`/event/${Info_G.Info_E[i].id}`);
+                          history.push(`/event/${Info_G.Info_PE[i].id}`);
                           location.reload();
                         }}
                       >
-                        {Info_G.Info_E[i].name}
+                        {Info_G.Info_PE[i].name}
                       </Button>
                     </Text>
                     <Box color={"gray.600"}>
-                      {`${Info_G.Info_E[i].location}`} on{" "}
-                      {`${formatDate(Info_G.Info_E[i].date_time)}`}
+                      {`${Info_G.Info_PE[i].location}`} on{" "}
+                      {`${formatDate(Info_G.Info_PE[i].date_time)}`}
                     </Box>
                   </Stack>
+                  {ename.push(Info_G.Info_PE[i].name)}
+                  {stats.push(10)}
                 </Stack>
               ))}
             </SimpleGrid>
           </Box>
         </Box>
+        <Text
+          textTransform={"uppercase"}
+          color={"red.400"}
+          fontWeight={600}
+          fontSize={"sm"}
+          bg={useColorModeValue("red.50", "red.900")}
+          p={2}
+          alignSelf={"flex-start"}
+          rounded={"md"}
+          mt={50}
+          paddingRight={2}
+          align="center"
+        >
+          Event Statistics
+        </Text>
+        {console.log(ename)}
+        {console.log(stats)}
       </Container>
     </>
   );

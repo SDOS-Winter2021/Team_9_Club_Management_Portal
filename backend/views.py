@@ -5,15 +5,26 @@ from django.http import HttpResponseRedirect, request
 from .models import *
 from .serializers import *
 from .utils import *
+from dateutil.tz import UTC
 
+import pytz
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 from rest_framework import status
 from rest_framework.decorators import api_view
+import dateutil.parser
 from django.views.generic import TemplateView
 import json
 from datetime import datetime, timedelta
 from django.conf import settings
+
+from allauth.socialaccount.models import SocialApp, SocialAccount
+from google.oauth2.credentials import Credentials
+
+import httplib2
+from apiclient.discovery import build
+from oauth2client.client import AccessTokenCredentials
+
 
 import os
 from django.contrib.auth.decorators import login_required
@@ -40,6 +51,7 @@ def CLUB_UPCOMING(request):
     future = datetime.now().date() + timedelta(days=3)
     if request.method == "GET":
         clubs = CLUB.objects.all()
+        clubs = clubs.filter(approved=True)
         clubs = clubs.filter(date_time__gte=today, date_time__lt=future).order_by(
             "date_time"
         )[:10]
@@ -48,6 +60,23 @@ def CLUB_UPCOMING(request):
 
 
 # The following api can be used to approved events for a club with 'name',  this api can also be used to post new events with and without an initial image field
+@api_view(["POST"])
+def NOTIFY_EVENT(request):
+    if request.method=="POST":
+        print("NOTIFY EVENT")
+        club_data = json.loads(request.data["request"])
+        print(request.data, type(request.data), type(request.data["request"]))
+        event_temp = eval(request.data["request"])
+        print(event_temp)
+        event_details = {}
+        event_details["start_datetime"] = event_temp["date_time"]
+        event_details["end_date_time"] = event_temp["end_date_time"]
+        event_details["summary"] = event_temp["name"]
+        event_details["desc"] = event_temp["description"]
+        event_details["location"] = event_temp["location"]
+        CREATE_EVENT(request, event_details)
+    return JsonResponse({0:0}, status=status.HTTP_201_CREATED)
+
 @api_view(["GET", "POST"])
 def CLUB_LIST(request):
     if request.method == "GET":
@@ -65,15 +94,25 @@ def CLUB_LIST(request):
         club_data = json.loads(request.data["request"])
         # print(club_data)
         print(request.data, type(request.data), type(request.data["request"]))
+        event_temp = eval(request.data["request"])
+        print(event_temp)
+        event_details = {}
+        event_details["start_datetime"] = event_temp["date_time"]
+        event_details["end_date_time"] = event_temp["end_date_time"]
+        event_details["summary"] = event_temp["name"]
+        event_details["desc"] = event_temp["description"]
+        event_details["location"] = event_temp["location"]
         # club_serializer=CLUBSerializer(data=request.data)
         if "poster" in request.data and request.data["poster"]:
             p = request.data["poster"]
+            print(p.name, p, type(p), type(p.name), "POSTER_NAME")
             clubs.poster.save(p.name, p, save=True)
         print(club_data, type(club_data))
         club_serializer = CLUBSerializer(clubs, data=club_data)
         # print("THIS IS DATA",club_data,club_serializer.is_valid())
         if club_serializer.is_valid():
             club_serializer.save()
+            CREATE_EVENT(request, event_details)
             return JsonResponse(club_serializer.data, status=status.HTTP_201_CREATED)
         return JsonResponse(club_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -114,16 +153,26 @@ def CLUB_DETAIL(request, pk):
 
 
 # The follwoing api can be used to get all the events which are not approved.
+@login_required(login_url="/login")
 @api_view(["GET"])
 def CLUB_EVENT_PENDING(request):
     if request.method == "GET":
         clubs = CLUB.objects.all()
-        name = request.GET.get("name", None)
-        if name is not None:
-            clubs = clubs.filter(club_name__icontains=name)
-            clubs = clubs.filter(approved=False)
+        clubs = clubs.filter(approved=False)
         club_serializer = CLUBSerializer(clubs, many=True)
         return JsonResponse(club_serializer.data, safe=False)
+
+
+# @api_view(["GET"])
+# def CLUB_EVENT_PENDING(request):
+#     if request.method == "GET":
+#         clubs = CLUB.objects.all()
+#         name = request.GET.get("name", None)
+#         if name is not None:
+#             clubs = clubs.filter(club_name__icontains=name)
+#             clubs = clubs.filter(approved=False)
+#         club_serializer = CLUBSerializer(clubs, many=True)
+#         return JsonResponse(club_serializer.data, safe=False)
 
 # The follwoing api can be used to get all the events which are approved.
 @api_view(["GET"])
@@ -258,6 +307,7 @@ def USER_INFO(request):
     print("ADDING user: ", request.user, "to a group")
     if request.method == "GET":
         if request.user.is_authenticated:
+            #create_event(request)
             user = request.user
             okuser = ""
             if len(request.user.groups.all()) == 0:
@@ -287,3 +337,95 @@ def USER_INFO(request):
             )
         else:
             return JsonResponse({"is_authenticated": request.user.is_authenticated})
+
+@api_view(["GET"])
+@login_required
+def DATE_EVENT(request):
+	if request.method=="GET":
+		clubs=CLUB.objects.all()
+		today=datetime.now().date()
+		name=request.GET.get("name",None)
+		time=request.GET.get("time",None)
+		if name is not None and time=="past":
+			clubs=clubs.filter(club_name__icontains=name)
+			clubs=clubs.filter(approved=True)
+			clubs=clubs.filter(date_time__lt=today).order_by("date_time")
+		elif name is not None and time=="future":
+			clubs=clubs.filter(club_name__icontains=name)
+			clubs=clubs.filter(approved=True)
+			clubs=clubs.filter(date_time__gte=today).order_by("date_time")
+		club_serializer=CLUBSerializer(clubs,many=True)
+		return JsonResponse(club_serializer.data,safe=False)
+
+
+
+def get_credentials(request):
+    app = SocialApp.objects.get(provider='google')
+    account = SocialAccount.objects.get(user=request.user)
+    print(account, app, type(app), "ACCOUNT APP")
+    user_tokens = account.socialtoken_set.first()
+
+    creds = Credentials(
+        token=user_tokens.token,
+        client_id=app.client_id,
+        client_secret=app.secret
+    )
+    print(creds, "CREDENTIALS")
+    # http = httplib2.Http()
+    # http = creds.authorize(http)
+    service = build(serviceName='calendar', version='v3',
+           credentials=creds)
+    return service
+
+
+def CREATE_EVENT(request, event_details):
+    service = get_credentials(request)
+    start_datetime = event_details["start_datetime"] #datetime.now(tz=pytz.utc)
+    start_datetime = dateutil.parser.parse(start_datetime)
+    start_datetime = start_datetime.astimezone(UTC)
+    #end_date_time = (start_datetime + timedelta(minutes=45)).isoformat()
+    end_date_time = dateutil.parser.parse(event_details["end_date_time"])
+    end_date_time = end_date_time.astimezone(UTC)
+    print(start_datetime, end_date_time, "DATE")
+    event = (
+        service.events()
+        .insert(
+            calendarId='primary', #"CALENDARID@group.calendar.google.com",
+            body={
+                "summary": event_details["summary"],
+                'location': event_details["location"],
+                "description": event_details["desc"],
+                "start": {"dateTime": start_datetime.isoformat()},
+                "end": {
+                    "dateTime": end_date_time.isoformat() #(datetime.fromisoformat(start_datetime) + timedelta(minutes=45)).isoformat()
+                },
+                'reminders': {
+                  'useDefault': False,
+                  'overrides': [
+                    {'method': 'email', 'minutes': 24 * 60},
+                    {'method': 'popup', 'minutes': 10},
+                  ],
+                },
+            },
+        )
+        .execute()
+    )
+
+    print(event)
+    
+
+
+# def connect_helper(request):
+#     user = Users.objects.get(email__icontains=request.user.email)
+#     print(user, "REQUEST USER")
+#     c = user.social_auth.get(provider='google-oauth2')
+#     access_token = c.tokens['access_token']
+#     print(c, access_token, "C, Access_token")
+#     credentials = AccessTokenCredentials(access_token, 'my-user-agent/1.0')
+#     print(credentials, "creds")
+#     http = httplib2.Http()
+#     http = credentials.authorize(http)
+#     service = build(serviceName='calendar', version='v3', http=http,
+#            developerKey='...')
+    
+#     return service

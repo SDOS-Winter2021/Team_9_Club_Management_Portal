@@ -18,7 +18,6 @@ import history from "./../../history";
 const Header = (Info) => {
   return (
     <>
-      {console.log(Info)}
       <Flex
         flexDirection="row"
         mt={0}
@@ -27,8 +26,8 @@ const Header = (Info) => {
       >
         <Icon
           as={IoHomeOutline}
-          w={5}
-          h={5}
+          w={30}
+          h={20}
           justifySelf="flex-end"
           onClick={() => {
             history.push(`/home`);

@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'r5()+jeg3^vbez)2d)1=ijn1lb=kmd+3y7!i3*b)2j&(z3w4ao'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', 'cms-iiitd.herokuapp', 'iiitd-cms.herokuapp']
 
@@ -156,6 +156,16 @@ LOGIN_REDIRECT_URL = '/login/'
 SOCIALACCOUNT_EMAIL_REQUIRED  = True
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+            'https://www.googleapis.com/auth/calendar',
+            'https://www.googleapis.com/auth/calendar.events',
+        ]
+    }
+}
 
 
 # Activate Django-Heroku.

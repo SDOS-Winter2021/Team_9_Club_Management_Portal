@@ -20,10 +20,11 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { withRouter } from "react-router";
+import SimpleReactLightbox from "simple-react-lightbox";
 
 class Events_Page extends React.Component {
   state = {
-    eventInfo: [],
+    eventInfo: { poster: "club/logo/placeholder2.png" },
   };
 
   getEventInfo = (id) => {
@@ -77,13 +78,18 @@ class Events_Page extends React.Component {
   render() {
     console.log("getting rendered");
     return (
-      <ThemeProvider theme={theme}>
-        <CSSReset />
-        <Header Info={this.state.eventInfo}></Header>
-        <Body eventid={this.state.eventInfo}></Body>
-      </ThemeProvider>
+      <SimpleReactLightbox>
+        <ThemeProvider theme={theme}>
+          <CSSReset />
+          <Header Info={this.state.eventInfo}></Header>
+          <Body eventid={this.state.eventInfo}></Body>
+        </ThemeProvider>
+      </SimpleReactLightbox>
     );
   }
 }
 
 export default withRouter(Events_Page);
+/*
+
+*/
