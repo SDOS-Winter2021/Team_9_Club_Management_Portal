@@ -79,7 +79,7 @@ class Home_Page extends React.Component {
   getUser = () => {
     console.log("Getting User");
     axios
-      .get("https://iiitd-cms.herokuapp.com/api/user/info")
+      .get("http://localhost:8000/api/user/info")
       .then((data) => this.setState({ user_info: data.data }));
   };
 

@@ -84,7 +84,7 @@ function notify_(eventInfo) {
   event_info.append("request", data);
 
   var res = axios.post(
-    "https://iiitd-cms.herokuapp.com/api/notify",
+    "http://localhost:8000/api/notify",
     event_info,
     {
       headers: {
@@ -123,7 +123,7 @@ function approve_(event_id, remarks, event_name, coord_email) {
       }
     );
   let rest = axios.put(
-    `https://iiitd-cms.herokuapp.com/api/clubs/approve/${event_id}`,
+    `http://localhost:8000/api/clubs/approve/${event_id}`,
     {},
     {
       headers: {
@@ -135,7 +135,7 @@ function approve_(event_id, remarks, event_name, coord_email) {
 
 function delete_(event_id) {
   let res = axios.delete(
-    `https://iiitd-cms.herokuapp.com/api/clubs/${event_id}`,
+    `http://localhost:8000/api/clubs/${event_id}`,
     {
       headers: {
         "X-CSRFToken": csrftoken,
@@ -194,7 +194,7 @@ export default function Body(event) {
     console.log("Sending Post request to add club");
     console.log(request);
     let res = await axios.post(
-      "https://iiitd-cms.herokuapp.com/api/eventinfo",
+      "http://localhost:8000/api/eventinfo",
       request,
       {
         headers: {

@@ -49,7 +49,7 @@ class Clubs extends React.Component {
   getClubs = () => {
     console.log("Getting Clubs");
     axios
-      .get("https://iiitd-cms.herokuapp.com/api/clubinfo")
+      .get("http://localhost:8000/api/clubinfo")
       .then((data) => this.setState({ clubs: data.data }));
   };
 
