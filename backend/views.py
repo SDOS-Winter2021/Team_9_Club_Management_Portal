@@ -301,6 +301,24 @@ def approve_event(request, pk):
             {"message": "event approved"}, status=status.HTTP_201_CREATED
         )
 
+@api_view(["PUT"])
+def ADD_ATTENDANCE(request, pk):
+    print("ALLO")
+    try:
+        clubs = CLUB.objects.get(pk=pk)
+    except CLUB.DoesNotExist:
+        return JsonResponse(
+            {"message: The given club does not exist"}, status=status.HTTP_404_NOT_FOUND
+        )
+    if request.method == "PUT":
+        parser_classes = (MultipartJsonParser, JSONParser)
+        attendancedata = json.loads(request.data["request"])
+        clubs.attendance = attendancedata["attendance"]
+        clubs.save()
+        return JsonResponse(
+            {"message": "attendance added"}, status=status.HTTP_201_CREATED
+        )
+
 
 @api_view(["GET"])
 def USER_INFO(request):

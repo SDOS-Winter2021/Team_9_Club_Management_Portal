@@ -352,35 +352,47 @@ const Body = (Info_G, Info_E) => {
             </SimpleGrid>
           </Box>
         </Box>
-        <Text
-          textTransform={"uppercase"}
-          color={"red.400"}
-          fontWeight={600}
-          fontSize={"sm"}
-          bg={useColorModeValue("red.50", "red.900")}
-          p={2}
-          alignSelf={"flex-start"}
-          rounded={"md"}
-          mt={50}
-          paddingRight={2}
-          align="center"
-        >
-          Event Statistics
-        </Text>
-        <Line
-          data={graph_plot(Info_G.Info_PE)}
-          options={{
-            title:{
-              display:true,
-              text:'Attendance per Event',
-              fontSize:20
-            },
-            legend:{
-              display:true,
-              position:'right'
-            }
-          }}
-        />
+        {(() => {
+          if (
+            sessionStorage.getItem("group") == "Admin" ||
+            sessionStorage.getItem("user_club_name") == Info_G.Info_G.name ||
+            sessionStorage.getItem("group") == "Club_Admin" 
+          ) {
+            return (
+            <>
+              <Text
+                textTransform={"uppercase"}
+                color={"red.400"}
+                fontWeight={600}
+                fontSize={"sm"}
+                bg={useColorModeValue("red.50", "red.900")}
+                p={2}
+                alignSelf={"flex-start"}
+                rounded={"md"}
+                mt={50}
+                paddingRight={2}
+                align="center"
+              >
+                Event Statistics
+              </Text>
+              <Line
+                data={graph_plot(Info_G.Info_PE)}
+                options={{
+                  title:{
+                    display:true,
+                    text:'Attendance per Event',
+                    fontSize:20
+                  },
+                  legend:{
+                    display:true,
+                    position:'right'
+                  }
+                }}
+              />
+          </>
+          );
+          }
+        })()}
       </Container>
     </>
   );

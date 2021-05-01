@@ -23,6 +23,7 @@ urlpatterns = [
     url(r"^clubinfo$", views.CLUB_GENERAL_ADD),
     url(r"^clubinfo/(?P<pk>[0-9]+)$", views.CLUB_GENERAL_ID),
     url(r"^users$", views.ADD_USERS),
+    url(r"^attendance/(?P<pk>[0-9]+)$", views.ADD_ATTENDANCE),
     url(r"^clubs/approve/(?P<pk>[0-9]+)$", views.approve_event),
     path("user/info", views.USER_INFO),
     url(r"^users/(?P<pk>[0-9]+)$", views.USERS_ID),
