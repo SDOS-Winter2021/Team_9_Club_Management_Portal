@@ -40,27 +40,7 @@ class App extends Component{
         return (
                 <div className="App">
                     <Routes/>
-                    <ThemeProvider theme={theme}>
-
-                    <Box bg="gray.50" px={4} className="fixed-bottom">
-                        <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-                          <Text fontSize="md">
-                            @ Team 9, SDOS - CSE583
-                          </Text>
-                          <Button
-                            maxW={"xs"}
-                            variant={"outline"}
-                            leftIcon={<SiGmail />}
-                            bg="white"
-                            onClick={()=>{window.open("mailto:saad18409@iiitd.ac.in", "_blank");}}
-                            >
-                            <Text>Contact us</Text>
-                          </Button>
-                        </Flex>
-                    </Box>
-                </ThemeProvider>
                 </div>
-                
         );
     }
 }
