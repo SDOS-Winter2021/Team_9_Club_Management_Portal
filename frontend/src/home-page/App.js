@@ -26,6 +26,8 @@ import {
   Flex,
   Tag,
   Heading,
+  Button,
+  VisuallyHidden
 } from "@chakra-ui/react";
 import axios from "axios";
 import Header from "./components/Header";
@@ -41,7 +43,7 @@ import {
 } from 'react-floating-button-menu';
 import { MdAdd, MdClose, MdFavorite } from "react-icons/md";
 import { GiJumpAcross } from "react-icons/gi";
-import { SiCodio, SiEtsy } from "react-icons/si";
+import { SiCodio, SiEtsy, SiGmail } from "react-icons/si";
 
 class Home_Page extends React.Component {
   constructor() {
@@ -157,30 +159,26 @@ class Home_Page extends React.Component {
             onClick={() => document.getElementById('events').scrollIntoView()}
             />
         </FloatingMenu>
-      </Container>
-        </ThemeProvider>
+        </Container>
+        <Box bg="gray.50" px={4} className="fixed-bottom">
+          <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+            <Text fontSize="md">
+              @ Team 9, SDOS - CSE583
+            </Text>
+            <Button
+              maxW={"xs"}
+              variant={"outline"}
+              leftIcon={<SiGmail />}
+              bg="white"
+              onClick={()=>{window.open("mailto:saad18409@iiitd.ac.in", "_blank");}}
+            >
+              <Text>Contact us</Text>
+            </Button>
+          </Flex>
+        </Box>
+      </ThemeProvider>
       </>
     );
   }
 }
 export default Home_Page;
-/*
-<Container>
-            <Link href="#"
-                tooltip="Events"
-                icon="fa fa-sticky-note" 
-                onClick={() => document.getElementById('events').scrollIntoView()}
-                />
-            <Link href="#"
-                tooltip="Clubs"
-                icon="fa fa-user-plus" 
-                onClick={() => document.getElementById('clubs').scrollIntoView()}
-                />
-                
-            <Button
-                tooltip="Jump"
-                icon="fa fa-plus"
-                rotate={true}
-               />
-        </Container>
-        */

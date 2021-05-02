@@ -36,7 +36,7 @@ class Header extends React.Component {
             alignItems="flex-start"
             justifyContent="flex-start"
           >
-            <Text fontSize="3xl" fontWeight="bold">
+            <Text fontSize="3xl" fontWeight="bold" textAlign="center">
               ⚡️Club Management Portal
             </Text>
             <Badge variant="subtle" variantColor="pink" ml={1}>
