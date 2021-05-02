@@ -415,7 +415,7 @@ export default function Body(event) {
                       bg={"blue.400"}
                       color={"white"}
                       _hover={{ bg: "blue.500" }}
-                      onClick={(e) => handleSubmit(e)}
+                      onClick={(e) => {handleSubmit(e); alert("Attendance Submitted")}}
                     >
                       Submit
                     </Button>
