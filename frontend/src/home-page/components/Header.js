@@ -47,7 +47,7 @@ class Header extends React.Component {
         <Box bgGradient="linear(teal.500 55%, green.400 95%)" px={4} border='1px'>
           <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
             <Text fontSize="xl" fontWeight="medium">
-              Welcome, {sessionStorage.getItem("name")}
+              Hi, {sessionStorage.getItem("name")}
             </Text>
             <Button
               maxW={"xs"}

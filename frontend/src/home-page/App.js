@@ -32,12 +32,23 @@ import Header from "./components/Header";
 import Events from "./components/Events";
 import Clubs from "./components/Clubs";
 import history from "./../history";
+import { FcGoogle } from "react-icons/fc";
+import { Container} from 'react-floating-action-button'
+import {
+  FloatingMenu,
+  MainButton,
+  ChildButton,
+} from 'react-floating-button-menu';
+import { MdAdd, MdClose, MdFavorite } from "react-icons/md";
+import { GiJumpAcross } from "react-icons/gi";
+import { SiCodio, SiEtsy } from "react-icons/si";
 
 class Home_Page extends React.Component {
   constructor() {
     super();
     this.state = {
       user_info: [],
+      isOpen: false,
     };
   }
   componentDidMount() {
@@ -116,9 +127,60 @@ class Home_Page extends React.Component {
           <Header></Header>
           <Events></Events>
           <Clubs></Clubs>
+          <Container>
+
+          <FloatingMenu
+            slideSpeed={500}
+            direction="up"
+            spacing={8}
+            isOpen={this.state.isOpen}
+            style={{zIndex:1}}
+            backgroundColor="black"
+          >
+          <MainButton
+            iconResting={<GiJumpAcross style={{ fontSize: 20 }} nativeColor="white" />}
+            iconActive={<MdClose style={{ fontSize: 20 }} nativeColor="white" />}
+            onClick={() => this.setState({ isOpen: !this.state.isOpen })}
+            size={50}
+            background="linear-gradient(45deg, #FFB74D 50%, #FFD54F 90%)"
+            />
+           <ChildButton
+            icon={<SiCodio style={{ fontSize: 20 }} nativeColor="black" />}
+            background="linear-gradient(45deg, #FFB74D 50%, #FFD54F 90%)"
+            size={40}
+            onClick={() => document.getElementById('clubs').scrollIntoView()}
+            />
+          <ChildButton
+            icon={<SiEtsy style={{ fontSize: 20 }} nativeColor="black" />}
+            background="linear-gradient(45deg, #FFB74D 50%, #FFD54F 90%)"
+            size={40}
+            onClick={() => document.getElementById('events').scrollIntoView()}
+            />
+        </FloatingMenu>
+      </Container>
         </ThemeProvider>
       </>
     );
   }
 }
 export default Home_Page;
+/*
+<Container>
+            <Link href="#"
+                tooltip="Events"
+                icon="fa fa-sticky-note" 
+                onClick={() => document.getElementById('events').scrollIntoView()}
+                />
+            <Link href="#"
+                tooltip="Clubs"
+                icon="fa fa-user-plus" 
+                onClick={() => document.getElementById('clubs').scrollIntoView()}
+                />
+                
+            <Button
+                tooltip="Jump"
+                icon="fa fa-plus"
+                rotate={true}
+               />
+        </Container>
+        */
