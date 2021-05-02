@@ -110,6 +110,7 @@ class Home_Page extends React.Component {
     );
 
     if (this.state.user_info.is_authenticated == false) {
+      alert("You need to be authenticated to proceed forward!");
       history.push("/");
       location.reload();
     }

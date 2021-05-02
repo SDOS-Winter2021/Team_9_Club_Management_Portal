@@ -30,8 +30,14 @@ class Form_Page extends React.Component {
   }
 
   componentDidMount() {
+    if (sessionStorage.is_authenticated == false) {
+      alert("You need to be authenticated to proceed forward!");
+      history.push("");
+      location.reload();
+    }
     // transfers sessionStorage from one tab to another
     var sessionStorage_transfer = function (event) {
+      
       if (!event) {
         event = window.event;
       } // ie suq
@@ -62,10 +68,7 @@ class Form_Page extends React.Component {
       localStorage.setItem("getSessionStorage", "foobar");
       localStorage.removeItem("getSessionStorage", "foobar");
     }
-    if (sessionStorage.is_authenticated != "true") {
-      history.push("/");
-      location.reload();
-    }
+    
   }
 
   render() {

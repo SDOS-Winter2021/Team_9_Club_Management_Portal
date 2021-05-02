@@ -70,7 +70,8 @@ class Club_Page extends React.Component {
       localStorage.removeItem("getSessionStorage", "foobar");
     }
 
-    if (sessionStorage.is_authenticated != "true") {
+    if (sessionStorage.is_authenticated == false) {
+      alert("You need to be authenticated to proceed forward!");
       history.push("/");
       location.reload();
     }
