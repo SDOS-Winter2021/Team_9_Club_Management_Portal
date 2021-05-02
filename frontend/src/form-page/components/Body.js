@@ -83,6 +83,7 @@ class Body extends React.Component {
       this.setState({ club_email: sessionStorage.getItem("email") });
     } else {
       history.push("/home");
+      location.reload();
     }
   }
 
@@ -117,6 +118,11 @@ class Body extends React.Component {
       approved: "False",
     };
     console.log(data);
+    if (data["name"]=="" || data["date_time"]=="" || data["end_date_time"]==""){
+      alert("The following fields are required - Name, Start Date Time, End Date Time");
+      return 0;
+    }
+    else{
     console.log("IN SUBMIT PUT");
     var event_info = new FormData();
     data = JSON.stringify(data); //dunno about this
@@ -126,6 +132,7 @@ class Body extends React.Component {
     let eResponse = this.eventPut(event_info);
     console.log(eResponse);
   }
+}
 
   handleSubmitpost(event) {
     var data = {
@@ -141,6 +148,11 @@ class Body extends React.Component {
       approved: "False",
     };
     console.log(data);
+    if (data["name"]=="" || data["date_time"]=="" || data["end_date_time"]==""){
+      alert("The following fields are required - Name, Start Date Time, End Date Time");
+      return 0;
+    }
+    else{
     var event_info = new FormData();
     data = JSON.stringify(data); //dunno about this
     event_info.append("request", data);
@@ -148,8 +160,9 @@ class Body extends React.Component {
     //console.log(this.name);
     let eResponse = eventPost(event_info);
     console.log(eResponse);
+    return 1;
+    }
   }
-
   render() {
     return (
       <Flex minH={"100vh"} align={"center"} justify={"center"} bg={"gray.50"}>
@@ -162,26 +175,24 @@ class Body extends React.Component {
           </Stack>
           <Box rounded={"lg"} bg={"white"} boxShadow={"lg"} p={8}>
             <Stack spacing={4}>
-              <FormControl id="name">
+              <FormControl id="name" isRequired>
                 <FormLabel>Name</FormLabel>
                 <Input
                   type="text"
                   value={this.state.name}
                   onChange={(e) => this.setState({ name: e.target.value })}
                   placeholder={this.state.holder_name}
-                  required
                 />
               </FormControl>
-              <FormControl id="date">
+              <FormControl id="date" isRequired>
                 <FormLabel>Start Date-Time</FormLabel>
                 <Input
                   type="datetime-local"
                   value={this.state.datetime}
                   onChange={(e) => this.setState({ datetime: e.target.value })}
-                  required
                 />
               </FormControl>
-              <FormControl id="date_end">
+              <FormControl id="date_end" isRequired>
                 <FormLabel>End Date-Time</FormLabel>
                 <Input
                   type="datetime-local"
@@ -234,16 +245,20 @@ class Body extends React.Component {
                   onClick={
                     this.form_type == 0
                       ? (e) => {
-                          this.handleSubmitpost(e);
+                          status = this.handleSubmitpost(e);
+                          if (status ==1){
                           alert("Event Created");
                           history.push("/home");
                           location.reload();
+                          }
                         }
                       : (e) => {
-                          this.handleSubmitput(e);
-                          alert("Event Edited");
-                          history.push("/home");
-                          location.reload();
+                          status = this.handleSubmitput(e);
+                          if (status ==1){
+                            alert("Event Edited");
+                            history.push("/home");
+                            location.reload();
+                            }
                         }
                   }
                 >

@@ -260,11 +260,6 @@ export default function Body(event) {
                   maxHeight="400px"
                   rounded={"md"}
                   alt={"Event Poster"}
-                  // src={
-                  //   require(`../../../../club/posters/${
-                  //     eventInfo["poster"].split("/")[2]
-                  //   }`).default
-                  // }
                   src={
                     `${eventInfo["poster"]}` == "null"
                       ? require("../../../../club/logo/placeholder.png").default
