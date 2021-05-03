@@ -327,6 +327,7 @@ def USER_INFO(request):
         if request.user.is_authenticated:
             #create_event(request)
             user = request.user
+            test(request)
             okuser = ""
             if len(request.user.groups.all()) == 0:
                 alluser = Users.objects.all()
@@ -375,8 +376,12 @@ def DATE_EVENT(request):
 		club_serializer=CLUBSerializer(clubs,many=True)
 		return JsonResponse(club_serializer.data,safe=False)
 
+"""
 
 
+"""
+
+# def create_calendar():
 def get_credentials(request):
     app = SocialApp.objects.get(provider='google')
     account = SocialAccount.objects.get(user=request.user)
@@ -394,6 +399,45 @@ def get_credentials(request):
     service = build(serviceName='calendar', version='v3',
            credentials=creds)
     return service
+
+
+
+def test(request):
+    alluser = Users.objects.all()
+    alluser = alluser.filter(email__icontains=request.user.email)
+    print(alluser.values("club_name")[0]["club_name"], "CLUB NAME")
+    club_general = CLUB_GENERAL.objects.all()
+    club_general = club_general.filter(name__icontains=alluser.values("club_name")[0]["club_name"])
+    print(club_general.values('calendar_club_url')[0]['calendar_club_url'], "Calendar url")
+
+
+def get_calendar_url(request):
+    service = get_credentials(request)
+    page_token = None
+    alluser = Users.objects.all()
+    alluser = alluser.filter(email__icontains=request.user.email)
+    club_general = CLUB_GENERAL.objects.all()
+    club_general = club_general.filter(name__icontains=alluser.values("club_name")[0]["club_name"])
+    calendar_club_url = club_general.values('calendar_club_url')[0]['calendar_club_url']
+    if calendar_club_url != None:
+        return calendar_club_url
+    desired_id = ""
+    found = False
+    while True:
+        calendar_list = service.calendarList().list(pageToken=page_token).execute()
+        for calendar_list_entry in calendar_list['items']:
+            if user_club_name in calendar_list_entry['summary']:
+                found = True
+                desired_id = calendar_list_entry['id']
+        page_token = calendar_list.get('nextPageToken')
+        if not page_token:
+            break
+    if found == False:
+        return
+
+    
+
+
 
 
 def CREATE_EVENT(request, event_details):

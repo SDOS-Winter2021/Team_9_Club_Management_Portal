@@ -44,6 +44,7 @@ class CLUB_GENERAL(models.Model):
     fb_link = models.URLField(max_length=200, blank=True)
     ig_link = models.URLField(max_length=200, blank=True)
     website_link = models.URLField(max_length=200, blank=True)
+    calendar_club_url = models.CharField(max_length=300, blank=True)
 
     def __str__(self):
         return self.name
