@@ -87,6 +87,7 @@ class Events extends React.Component {
           gap={4}
           templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
           justifyContent="center"
+          id="events"
         >
           {(() => {
             if (
@@ -114,7 +115,7 @@ class Events extends React.Component {
                         alignSelf="flex-start"
                         fontSize="md"
                         fontWeight="medium"
-                        color="red.500"
+                        color="red.700"
                       >
                         {this.state.un_events[i]["club_name"]}
                       </Text>
@@ -152,7 +153,6 @@ class Events extends React.Component {
                           {this.formatDate(
                             this.state.un_events[i]["date_time"]
                           )}
-
                         </Text>
 
                         <Flex

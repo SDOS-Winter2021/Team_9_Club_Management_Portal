@@ -70,7 +70,7 @@ class Clubs extends React.Component {
   render() {
     return (
       <>
-        <SimpleGrid columns={1} p={5} gap={6}>
+        <SimpleGrid columns={1} p={5} gap={6} id="clubs">
           {this.state.clubs.map((user, i) => (
             <Button
               justifyContent="space-between"
@@ -123,6 +123,7 @@ class Clubs extends React.Component {
                   <Button
                     spacing={10}
                     mt={50}
+                    mb={40}
                     onClick={() => {
                       history.push("/clubform");
                       location.reload();

@@ -178,23 +178,19 @@ export default function Body(event) {
   const handleSubmit = async (event) => {
     var data = {
       attendance: attendance,
-      //response: response,
-      // logo: logo,
     };
-    //console.log(data);
     data = JSON.stringify(data);
     var club_info = new FormData();
     club_info.append("request", data);
-    //club_info = JSON.stringify(club_info);
-    let eResponse = await clubOut(club_info);
+    let eResponse = await attendanceOut(club_info);
     console.log(eResponse);
   };
 
-  const clubOut = async (request) => {
-    console.log("Sending Post request to add club");
+  const attendanceOut = async (request) => {
+    console.log("Sending Post request to add attendance");
     console.log(request);
-    let res = await axios.post(
-      "https://iiitd-cms.herokuapp.com/api/eventinfo",
+    let rest = axios.put(
+      `https://iiitd-cms.herokuapp.com/api/attendance/${eventInfo["id"]}`,
       request,
       {
         headers: {
@@ -203,8 +199,6 @@ export default function Body(event) {
         },
       }
     );
-    console.log(res);
-    return await res.status;
   };
 
   return (
@@ -266,11 +260,6 @@ export default function Body(event) {
                   maxHeight="400px"
                   rounded={"md"}
                   alt={"Event Poster"}
-                  // src={
-                  //   require(`../../../../club/posters/${
-                  //     eventInfo["poster"].split("/")[2]
-                  //   }`).default
-                  // }
                   src={
                     `${eventInfo["poster"]}` == "null"
                       ? require("../../../../club/logo/placeholder.png").default
@@ -426,7 +415,10 @@ export default function Body(event) {
                       bg={"blue.400"}
                       color={"white"}
                       _hover={{ bg: "blue.500" }}
-                      onClick={(e) => handleSubmit(e)}
+                      onClick={(e) => {
+                        handleSubmit(e);
+                        alert("Attendance Submitted");
+                      }}
                     >
                       Submit
                     </Button>
@@ -440,8 +432,3 @@ export default function Body(event) {
     </>
   );
 }
-
-/*
-sessionStorage.getItem("group") == "Club_Coordinator" &&
-            sessionStorage.getItem("user_club_name") == eventInfo["club_name"]
-            */

@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import history from "./../../history";
 
 const csrftoken = Cookies.get("csrftoken");
 
@@ -67,14 +68,27 @@ export default function Body() {
       club_email: clubemail,
       // logo: logo,
     };
-    //console.log(data);
-    data = JSON.stringify(data);
-    var club_info = new FormData();
-    club_info.append("request", data);
-    club_info.append("logo", logo);
-    //club_info = JSON.stringify(club_info);
-    let eResponse = await clubOut(club_info);
-    console.log(eResponse);
+
+    if (
+      data["name"] == "" ||
+      data["description"] == "" ||
+      data["coordinator1"] == "" ||
+      data["coordinator1_email"] == "" ||
+      data["club_email"] == ""
+    ) {
+      alert(
+        "The following fields are required - Name, Description, Coodinator 1 Name, Coodinator 1 Email, Club Email"
+      );
+      return 0;
+    } else {
+      data = JSON.stringify(data);
+      var club_info = new FormData();
+      club_info.append("request", data);
+      club_info.append("logo", logo);
+      let eResponse = await clubOut(club_info);
+      console.log(eResponse);
+      return 1;
+    }
   };
 
   return (
@@ -98,25 +112,23 @@ export default function Body() {
           p={8}
         >
           <Stack spacing={4}>
-            <FormControl id="name">
+            <FormControl id="name" isRequired>
               <FormLabel>Name</FormLabel>
               <Input
                 type="text"
                 value={name}
                 onChange={(e) => setname(e.target.value)}
-                required
               />
             </FormControl>
-            <FormControl id="description">
+            <FormControl id="description" isRequired>
               <FormLabel>Description</FormLabel>
               <Textarea
                 type="text"
                 value={description}
                 onChange={(e) => setdescription(e.target.value)}
-                required
               />
             </FormControl>
-            <FormControl id="coord1">
+            <FormControl id="coord1" isRequired>
               <FormLabel>Name of Co-ordinator 1</FormLabel>
               <Input
                 type="text"
@@ -140,7 +152,7 @@ export default function Body() {
                 onChange={(e) => setcoord3(e.target.value)}
               />
             </FormControl>
-            <FormControl id="coord1email">
+            <FormControl id="coord1email" isRequired>
               <FormLabel>Email ID of Co-ordinator 1</FormLabel>
               <Input
                 type="text"
@@ -164,12 +176,13 @@ export default function Body() {
                 onChange={(e) => setcoord3email(e.target.value)}
               />
             </FormControl>
-            <FormControl id="clubemail">
+            <FormControl id="clubemail" isRequired>
               <FormLabel>Email ID of Club</FormLabel>
               <Input
                 type="text"
                 value={clubemail}
                 onChange={(e) => setclubemail(e.target.value)}
+                required={true}
               />
             </FormControl>
             <FormControl id="fblink">
@@ -202,12 +215,14 @@ export default function Body() {
                 color={"white"}
                 _hover={{ bg: "blue.500" }}
                 onClick={(e) => {
-                  handleSubmit(e);
-                  alert("Club Created!");
-                  history.push({
-                    pathname: "/home",
-                  });
-                  location.reload();
+                  status = handleSubmit(e);
+                  if (status == 1) {
+                    alert("Club Created!");
+                    history.push({
+                      pathname: "/home",
+                    });
+                    location.reload();
+                  }
                 }}
               >
                 Submit

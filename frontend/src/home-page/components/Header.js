@@ -36,7 +36,7 @@ class Header extends React.Component {
             alignItems="flex-start"
             justifyContent="flex-start"
           >
-            <Text fontSize="3xl" fontWeight="bold">
+            <Text fontSize="3xl" fontWeight="bold" textAlign="center">
               ⚡️Club Management Portal
             </Text>
             <Badge variant="subtle" variantColor="pink" ml={1}>
@@ -47,7 +47,7 @@ class Header extends React.Component {
         <Box bgGradient="linear(teal.500 55%, green.400 95%)" px={4} border='1px'>
           <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
             <Text fontSize="xl" fontWeight="medium">
-              Welcome, {sessionStorage.getItem("name")}
+              Hi, {sessionStorage.getItem("name")}
             </Text>
             <Button
               maxW={"xs"}
@@ -59,7 +59,8 @@ class Header extends React.Component {
                 sessionStorage.removeItem("name");
                 sessionStorage.removeItem("group");
                 sessionStorage.removeItem("is_authenticated");
-                history.push("/accounts/logout")
+                sessionStorage.removeItem("user_club_name");
+                history.push("/accounts/logout/")
                 location.reload();
               }}
             >
