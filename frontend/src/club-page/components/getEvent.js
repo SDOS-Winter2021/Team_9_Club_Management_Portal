@@ -2,7 +2,7 @@ import axios from "axios";
 
 const getEvent = async (request) => {
   let res = await axios.get(
-    `http://localhost:8000/api/clubs/sorted?name=${request}&time=future`
+    `https://iiitd-cms.herokuapp.com/api/clubs/sorted?name=${request}&time=future`
   );
   return await res;
 };

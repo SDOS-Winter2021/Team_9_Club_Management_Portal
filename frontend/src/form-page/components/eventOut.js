@@ -13,7 +13,7 @@ const eventPost = async (request) => {
     console.log(key[0] + ", " + key[1]);
   }
   let res = await axios.post(
-    "http://localhost:8000/api/clubs",
+    "https://iiitd-cms.herokuapp.com/api/clubs",
     request,
     {
       headers: {

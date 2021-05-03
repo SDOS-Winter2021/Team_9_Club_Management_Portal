@@ -26,7 +26,7 @@ import { FaDrum, FaRegMinusSquare } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Head from "next/head";
-import {Line} from 'react-chartjs-2';
+import { Line } from "react-chartjs-2";
 
 const formatDate = (dateString) => {
   const options = { dateStyle: "short", timeStyle: "short" };
@@ -36,27 +36,29 @@ const formatDate = (dateString) => {
 const graph_plot = (event_data) => {
   var stats = [];
   var ename = [];
-  {Object.keys(event_data).map((user, i) => (
-    <>
-      {ename.push(event_data[i].name)}
-      {stats.push(event_data[i].attendance)}
-    </>
-  ))};
+  {
+    Object.keys(event_data).map((user, i) => (
+      <>
+        {ename.push(event_data[i].name)}
+        {stats.push(event_data[i].attendance)}
+      </>
+    ));
+  }
   console.log(stats);
   console.log(ename);
   var to_send = {
     labels: ename,
     datasets: [
       {
-        label: 'Attendance',
+        label: "Attendance",
         fill: false,
         lineTension: 0.5,
-        backgroundColor: 'rgba(75,192,192,1)',
-        borderColor: 'rgba(0,0,0,1)',
+        backgroundColor: "rgba(75,192,192,1)",
+        borderColor: "rgba(0,0,0,1)",
         borderWidth: 2,
-        data: stats
-      }
-    ]
+        data: stats,
+      },
+    ],
   };
   return to_send;
 };
@@ -123,7 +125,16 @@ const Body = (Info_G, Info_E) => {
                 >
                   {<Icon as={IoLaptopOutline} color={"blue.500"} w={5} h={5} />}
                 </Flex>
-                <Text fontWeight={600}>{Info_G.Info_G.website_link}</Text>
+                <Text fontWeight={600}>
+                  <Link
+                    to={Info_G.Info_G.website_link}
+                    onClick={(e) =>
+                      window.open(Info_G.Info_G.website_link, "_blank")
+                    }
+                  >
+                    {Info_G.Info_G.website_link}
+                  </Link>
+                </Text>
               </Stack>
               <Stack direction={"row"} align={"center"}>
                 <Flex
@@ -236,6 +247,9 @@ const Body = (Info_G, Info_E) => {
                 rounded={"md"}
                 border="2px"
                 borderColor="#12d5e3"
+                onClick={() => {
+                  window.open(Info_G.Info_G.calendar_club_url, "_blank");
+                }}
               >
                 <Text
                   textTransform={"uppercase"}
@@ -356,41 +370,41 @@ const Body = (Info_G, Info_E) => {
           if (
             sessionStorage.getItem("group") == "Admin" ||
             sessionStorage.getItem("user_club_name") == Info_G.Info_G.name ||
-            sessionStorage.getItem("group") == "Club_Admin" 
+            sessionStorage.getItem("group") == "Club_Admin"
           ) {
             return (
-            <>
-              <Text
-                textTransform={"uppercase"}
-                color={"red.400"}
-                fontWeight={600}
-                fontSize={"sm"}
-                bg={useColorModeValue("red.50", "red.900")}
-                p={2}
-                alignSelf={"flex-start"}
-                rounded={"md"}
-                mt={50}
-                paddingRight={2}
-                align="center"
-              >
-                Event Statistics
-              </Text>
-              <Line
-                data={graph_plot(Info_G.Info_PE)}
-                options={{
-                  title:{
-                    display:true,
-                    text:'Attendance per Event',
-                    fontSize:20
-                  },
-                  legend:{
-                    display:true,
-                    position:'right'
-                  }
-                }}
-              />
-          </>
-          );
+              <>
+                <Text
+                  textTransform={"uppercase"}
+                  color={"red.400"}
+                  fontWeight={600}
+                  fontSize={"sm"}
+                  bg={useColorModeValue("red.50", "red.900")}
+                  p={2}
+                  alignSelf={"flex-start"}
+                  rounded={"md"}
+                  mt={50}
+                  paddingRight={2}
+                  align="center"
+                >
+                  Event Statistics
+                </Text>
+                <Line
+                  data={graph_plot(Info_G.Info_PE)}
+                  options={{
+                    title: {
+                      display: true,
+                      text: "Attendance per Event",
+                      fontSize: 20,
+                    },
+                    legend: {
+                      display: true,
+                      position: "right",
+                    },
+                  }}
+                />
+              </>
+            );
           }
         })()}
       </Container>

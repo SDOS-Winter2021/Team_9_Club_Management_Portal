@@ -39,7 +39,7 @@ export default function Body() {
     console.log("Sending Post request to add club");
     console.log(request);
     let res = await axios.post(
-      "http://localhost:8000/api/clubinfo",
+      "https://iiitd-cms.herokuapp.com/api/clubinfo",
       request,
       {
         headers: {
@@ -69,18 +69,25 @@ export default function Body() {
       // logo: logo,
     };
 
-    if (data["name"]=="" || data["description"]=="" || data["coordinator1"]=="" || data["coordinator1_email"]=="" || data["club_email"]==""){
-      alert("The following fields are required - Name, Description, Coodinator 1 Name, Coodinator 1 Email, Club Email");
+    if (
+      data["name"] == "" ||
+      data["description"] == "" ||
+      data["coordinator1"] == "" ||
+      data["coordinator1_email"] == "" ||
+      data["club_email"] == ""
+    ) {
+      alert(
+        "The following fields are required - Name, Description, Coodinator 1 Name, Coodinator 1 Email, Club Email"
+      );
       return 0;
-    }
-    else{
-    data = JSON.stringify(data);
-    var club_info = new FormData();
-    club_info.append("request", data);
-    club_info.append("logo", logo);
-    let eResponse = await clubOut(club_info);
-    console.log(eResponse);
-    return 1;
+    } else {
+      data = JSON.stringify(data);
+      var club_info = new FormData();
+      club_info.append("request", data);
+      club_info.append("logo", logo);
+      let eResponse = await clubOut(club_info);
+      console.log(eResponse);
+      return 1;
     }
   };
 
@@ -209,13 +216,14 @@ export default function Body() {
                 _hover={{ bg: "blue.500" }}
                 onClick={(e) => {
                   status = handleSubmit(e);
-                  if (status == 1){
-                  alert("Club Created!");
-                  history.push({
-                    pathname: "/home",
-                  });
-                  location.reload();
-                }}}
+                  if (status == 1) {
+                    alert("Club Created!");
+                    history.push({
+                      pathname: "/home",
+                    });
+                    location.reload();
+                  }
+                }}
               >
                 Submit
               </Button>

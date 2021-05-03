@@ -84,7 +84,7 @@ function notify_(eventInfo) {
   event_info.append("request", data);
 
   var res = axios.post(
-    "http://localhost:8000/api/notify",
+    "https://iiitd-cms.herokuapp.com/api/notify",
     event_info,
     {
       headers: {
@@ -123,7 +123,7 @@ function approve_(event_id, remarks, event_name, coord_email) {
       }
     );
   let rest = axios.put(
-    `http://localhost:8000/api/clubs/approve/${event_id}`,
+    `https://iiitd-cms.herokuapp.com/api/clubs/approve/${event_id}`,
     {},
     {
       headers: {
@@ -135,7 +135,7 @@ function approve_(event_id, remarks, event_name, coord_email) {
 
 function delete_(event_id) {
   let res = axios.delete(
-    `http://localhost:8000/api/clubs/${event_id}`,
+    `https://iiitd-cms.herokuapp.com/api/clubs/${event_id}`,
     {
       headers: {
         "X-CSRFToken": csrftoken,
@@ -190,7 +190,7 @@ export default function Body(event) {
     console.log("Sending Post request to add attendance");
     console.log(request);
     let rest = axios.put(
-      `http://localhost:8000/api/attendance/${eventInfo['id']}`,
+      `https://iiitd-cms.herokuapp.com/api/attendance/${eventInfo["id"]}`,
       request,
       {
         headers: {
@@ -415,7 +415,10 @@ export default function Body(event) {
                       bg={"blue.400"}
                       color={"white"}
                       _hover={{ bg: "blue.500" }}
-                      onClick={(e) => {handleSubmit(e); alert("Attendance Submitted")}}
+                      onClick={(e) => {
+                        handleSubmit(e);
+                        alert("Attendance Submitted");
+                      }}
                     >
                       Submit
                     </Button>
@@ -429,4 +432,3 @@ export default function Body(event) {
     </>
   );
 }
-

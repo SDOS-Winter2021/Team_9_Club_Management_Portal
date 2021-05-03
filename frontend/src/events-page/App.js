@@ -29,7 +29,7 @@ class Events_Page extends React.Component {
 
   getEventInfo = (id) => {
     let res = axios
-      .get(`http://localhost:8000/api/clubs/${id}`)
+      .get(`https://iiitd-cms.herokuapp.com/api/clubs/${id}`)
       .then((data) => this.setState({ eventInfo: data.data }));
   };
 

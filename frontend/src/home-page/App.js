@@ -27,7 +27,7 @@ import {
   Tag,
   Heading,
   Button,
-  VisuallyHidden
+  VisuallyHidden,
 } from "@chakra-ui/react";
 import axios from "axios";
 import Header from "./components/Header";
@@ -35,12 +35,12 @@ import Events from "./components/Events";
 import Clubs from "./components/Clubs";
 import history from "./../history";
 import { FcGoogle } from "react-icons/fc";
-import { Container} from 'react-floating-action-button'
+import { Container } from "react-floating-action-button";
 import {
   FloatingMenu,
   MainButton,
   ChildButton,
-} from 'react-floating-button-menu';
+} from "react-floating-button-menu";
 import { MdAdd, MdClose, MdFavorite } from "react-icons/md";
 import { GiJumpAcross } from "react-icons/gi";
 import { SiCodio, SiEtsy, SiGmail } from "react-icons/si";
@@ -92,7 +92,7 @@ class Home_Page extends React.Component {
   getUser = () => {
     console.log("Getting User");
     axios
-      .get("http://localhost:8000/api/user/info")
+      .get("https://iiitd-cms.herokuapp.com/api/user/info")
       .then((data) => this.setState({ user_info: data.data }));
   };
 
@@ -131,53 +131,67 @@ class Home_Page extends React.Component {
           <Events></Events>
           <Clubs></Clubs>
           <Container>
-
-          <FloatingMenu
-            slideSpeed={500}
-            direction="up"
-            spacing={8}
-            isOpen={this.state.isOpen}
-            style={{zIndex:1}}
-            backgroundColor="black"
+            <FloatingMenu
+              slideSpeed={500}
+              direction="up"
+              spacing={8}
+              isOpen={this.state.isOpen}
+              style={{ zIndex: 1 }}
+              backgroundColor="black"
+            >
+              <MainButton
+                iconResting={
+                  <GiJumpAcross style={{ fontSize: 20 }} nativeColor="white" />
+                }
+                iconActive={
+                  <MdClose style={{ fontSize: 20 }} nativeColor="white" />
+                }
+                onClick={() => this.setState({ isOpen: !this.state.isOpen })}
+                size={50}
+                background="linear-gradient(45deg, #FFB74D 50%, #FFD54F 90%)"
+              />
+              <ChildButton
+                icon={<SiCodio style={{ fontSize: 20 }} nativeColor="black" />}
+                background="linear-gradient(45deg, #FFB74D 50%, #FFD54F 90%)"
+                size={40}
+                onClick={() =>
+                  document.getElementById("clubs").scrollIntoView()
+                }
+              />
+              <ChildButton
+                icon={<SiEtsy style={{ fontSize: 20 }} nativeColor="black" />}
+                background="linear-gradient(45deg, #FFB74D 50%, #FFD54F 90%)"
+                size={40}
+                onClick={() =>
+                  document.getElementById("events").scrollIntoView()
+                }
+              />
+            </FloatingMenu>
+          </Container>
+          <Box
+            bg="gray.50"
+            px={4}
+            width="100%"
+            mt={50}
+            h={20}
+            alignContent="center"
           >
-          <MainButton
-            iconResting={<GiJumpAcross style={{ fontSize: 20 }} nativeColor="white" />}
-            iconActive={<MdClose style={{ fontSize: 20 }} nativeColor="white" />}
-            onClick={() => this.setState({ isOpen: !this.state.isOpen })}
-            size={50}
-            background="linear-gradient(45deg, #FFB74D 50%, #FFD54F 90%)"
-            />
-           <ChildButton
-            icon={<SiCodio style={{ fontSize: 20 }} nativeColor="black" />}
-            background="linear-gradient(45deg, #FFB74D 50%, #FFD54F 90%)"
-            size={40}
-            onClick={() => document.getElementById('clubs').scrollIntoView()}
-            />
-          <ChildButton
-            icon={<SiEtsy style={{ fontSize: 20 }} nativeColor="black" />}
-            background="linear-gradient(45deg, #FFB74D 50%, #FFD54F 90%)"
-            size={40}
-            onClick={() => document.getElementById('events').scrollIntoView()}
-            />
-        </FloatingMenu>
-        </Container>
-        <Box bg="gray.50" px={4} width="100%" mt={50} h={20} alignContent="center">
-                        <Flex alignItems={"center"} justifyContent={"space-between"} >
-                          <Text fontSize="md">
-                            @ Team 9, SDOS - CSE583
-                          </Text>
-                          <Button
-                            maxW={"xs"}
-                            variant={"outline"}
-                            leftIcon={<SiGmail />}
-                            bg="white"
-                            onClick={()=>{window.open("mailto:saad18409@iiitd.ac.in", "_blank");}}
-                            >
-                            <Text>Contact us</Text>
-                          </Button>
-                        </Flex>
-                    </Box>
-      </ThemeProvider>
+            <Flex alignItems={"center"} justifyContent={"space-between"}>
+              <Text fontSize="md">@ Team 9, SDOS - CSE583</Text>
+              <Button
+                maxW={"xs"}
+                variant={"outline"}
+                leftIcon={<SiGmail />}
+                bg="white"
+                onClick={() => {
+                  window.open("mailto:saad18409@iiitd.ac.in", "_blank");
+                }}
+              >
+                <Text>Contact us</Text>
+              </Button>
+            </Flex>
+          </Box>
+        </ThemeProvider>
       </>
     );
   }

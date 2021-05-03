@@ -74,7 +74,7 @@ class Body extends React.Component {
       sessionStorage.removeItem("event_data_dt");
       sessionStorage.removeItem("event_data_desc");
       sessionStorage.removeItem("event_data_loc");
-    };
+    }
 
     if (sessionStorage.getItem("group") == "Club_Coordinator") {
       this.setState({ club_email: sessionStorage.getItem("email") });
@@ -88,7 +88,7 @@ class Body extends React.Component {
     console.log("allo sending info");
     console.log(this.props.info.idf);
     let res = await axios.put(
-      `http://localhost:8000/api/clubs/${this.props.info.idf}`,
+      `https://iiitd-cms.herokuapp.com/api/clubs/${this.props.info.idf}`,
       request,
       {
         headers: {
@@ -115,22 +115,29 @@ class Body extends React.Component {
       approved: "False",
     };
     console.log(data);
-    if (data["name"]=="" || data["date_time"]=="" || data["end_date_time"]=="" || data["location"]=="" || data["description"]==""){
-      alert("The following fields are required - Name, Start Date Time, End Date Time, Location, Description");
+    if (
+      data["name"] == "" ||
+      data["date_time"] == "" ||
+      data["end_date_time"] == "" ||
+      data["location"] == "" ||
+      data["description"] == ""
+    ) {
+      alert(
+        "The following fields are required - Name, Start Date Time, End Date Time, Location, Description"
+      );
       return 0;
+    } else {
+      console.log("IN SUBMIT PUT");
+      var event_info = new FormData();
+      data = JSON.stringify(data); //dunno about this
+      event_info.append("request", data);
+      event_info.append("poster", this.state.poster);
+      //console.log(this.name);
+      let eResponse = this.eventPut(event_info);
+      console.log(eResponse);
+      return 1;
     }
-    else{
-    console.log("IN SUBMIT PUT");
-    var event_info = new FormData();
-    data = JSON.stringify(data); //dunno about this
-    event_info.append("request", data);
-    event_info.append("poster", this.state.poster);
-    //console.log(this.name);
-    let eResponse = this.eventPut(event_info);
-    console.log(eResponse);
-    return 1;
   }
-}
 
   handleSubmitpost(event) {
     var data = {
@@ -146,19 +153,26 @@ class Body extends React.Component {
       approved: "False",
     };
     console.log(data);
-    if (data["name"]=="" || data["date_time"]=="" || data["end_date_time"]=="" || data["location"]=="" || data["description"]==""){
-      alert("The following fields are required - Name, Start Date Time, End Date Time, Location, Description");
+    if (
+      data["name"] == "" ||
+      data["date_time"] == "" ||
+      data["end_date_time"] == "" ||
+      data["location"] == "" ||
+      data["description"] == ""
+    ) {
+      alert(
+        "The following fields are required - Name, Start Date Time, End Date Time, Location, Description"
+      );
       return 0;
-    }
-    else{
-    var event_info = new FormData();
-    data = JSON.stringify(data); //dunno about this
-    event_info.append("request", data);
-    event_info.append("poster", this.state.poster);
-    //console.log(this.name);
-    let eResponse = eventPost(event_info);
-    console.log(eResponse);
-    return 1;
+    } else {
+      var event_info = new FormData();
+      data = JSON.stringify(data); //dunno about this
+      event_info.append("request", data);
+      event_info.append("poster", this.state.poster);
+      //console.log(this.name);
+      let eResponse = eventPost(event_info);
+      console.log(eResponse);
+      return 1;
     }
   }
   render() {
@@ -166,7 +180,9 @@ class Body extends React.Component {
       <Flex minH={"100vh"} align={"center"} justify={"center"} bg={"gray.50"}>
         <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
           <Stack align={"center"}>
-            <Heading fontSize={"4xl"} textAlign="center">Event Proposal Form</Heading>
+            <Heading fontSize={"4xl"} textAlign="center">
+              Event Proposal Form
+            </Heading>
             <Text fontSize={"lg"} color={"gray.600"}>
               Add New Event
             </Text>
@@ -244,19 +260,19 @@ class Body extends React.Component {
                     this.form_type == 0
                       ? (e) => {
                           status = this.handleSubmitpost(e);
-                          if (status ==1){
-                          alert("Event Created");
-                          history.push("/home");
-                          location.reload();
+                          if (status == 1) {
+                            alert("Event Created");
+                            history.push("/home");
+                            location.reload();
                           }
                         }
                       : (e) => {
                           status = this.handleSubmitput(e);
-                          if (status ==1){
+                          if (status == 1) {
                             alert("Event Edited");
                             history.push("/home");
                             location.reload();
-                            }
+                          }
                         }
                   }
                 >

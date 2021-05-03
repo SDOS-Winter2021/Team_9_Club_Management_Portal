@@ -74,7 +74,7 @@ def NOTIFY_EVENT(request):
         event_details["summary"] = event_temp["name"]
         event_details["desc"] = event_temp["description"]
         event_details["location"] = event_temp["location"]
-        CREATE_EVENT(request, event_details)
+        CREATE_EVENT2(request, event_details)
     return JsonResponse({0:0}, status=status.HTTP_201_CREATED)
 
 @api_view(["GET", "POST"])
@@ -327,7 +327,6 @@ def USER_INFO(request):
         if request.user.is_authenticated:
             #create_event(request)
             user = request.user
-            test(request)
             okuser = ""
             if len(request.user.groups.all()) == 0:
                 alluser = Users.objects.all()
@@ -340,6 +339,11 @@ def USER_INFO(request):
                 else:
                     request.user.groups.add(Group.objects.get(name="Student")) 
             else:
+                print("IN ELSE")
+                print(request.user.groups.all()[0], str(request.user.groups.all()[0])=="Club_Coordinator")
+                if str(request.user.groups.all()[0]) == "Club_Coordinator":
+                    print("IN REQ")
+                    get_calendar_url(request)
                 alluser = Users.objects.all()
                 alluser = alluser.filter(email__icontains=request.user.email)
                 if alluser:
@@ -376,10 +380,6 @@ def DATE_EVENT(request):
 		club_serializer=CLUBSerializer(clubs,many=True)
 		return JsonResponse(club_serializer.data,safe=False)
 
-"""
-
-
-"""
 
 # def create_calendar():
 def get_credentials(request):
@@ -408,39 +408,64 @@ def test(request):
     print(alluser.values("club_name")[0]["club_name"], "CLUB NAME")
     club_general = CLUB_GENERAL.objects.all()
     club_general = club_general.filter(name__icontains=alluser.values("club_name")[0]["club_name"])
+    print(club_general.values(), "VALUES")
     print(club_general.values('calendar_club_url')[0]['calendar_club_url'], "Calendar url")
 
 
 def get_calendar_url(request):
     service = get_credentials(request)
-    page_token = None
+    # page_token = None
     alluser = Users.objects.all()
     alluser = alluser.filter(email__icontains=request.user.email)
     club_general = CLUB_GENERAL.objects.all()
     club_general = club_general.filter(name__icontains=alluser.values("club_name")[0]["club_name"])
     calendar_club_url = club_general.values('calendar_club_url')[0]['calendar_club_url']
-    if calendar_club_url != None:
+    if calendar_club_url != None and calendar_club_url!="":
+        print(calendar_club_url, "CALENDER CLUB URL")
         return calendar_club_url
-    desired_id = ""
-    found = False
-    while True:
-        calendar_list = service.calendarList().list(pageToken=page_token).execute()
-        for calendar_list_entry in calendar_list['items']:
-            if user_club_name in calendar_list_entry['summary']:
-                found = True
-                desired_id = calendar_list_entry['id']
-        page_token = calendar_list.get('nextPageToken')
-        if not page_token:
-            break
-    if found == False:
-        return
+    else:
+        calendar = {
+            'summary': str(alluser.values("club_name")[0]["club_name"])+"_calendar",
+            'timeZone': 'Asia/Kolkata'
+        }
+        created_calendar = service.calendars().insert(body=calendar).execute()
+        print(created_calendar['id'])
+        rule = {
+            'scope': {
+                'type': 'default',
+            },
+            'role': 'reader'
+        }
+        created_rule = service.acl().insert(calendarId=created_calendar['id'], body=rule).execute()
+        created_calendar['id'] = "https://calendar.google.com/calendar/embed?src="+str(created_calendar['id'])+"&ctz=Asia%2FKolkata"
+        print(created_rule['id'])
+        club_general.update(calendar_club_url = created_calendar['id'])
+        print(club_general.values(), "CLUB VALUES")
+        club_general_serializer = CLUB_GENERALSerializer(
+            club_general, data=club_general.values()
+        )
+        if club_general_serializer.is_valid():
+            club_general_serializer.save()
+            return JsonResponse(club_general_serializer.data)
+        return JsonResponse(
+            club_general_serializer.errors, status=status.HTTP_400_BAD_REQUEST
+        )
 
-    
+    # desired_id = ""
+    # found = False
+    # while True:
+    #     calendar_list = service.calendarList().list(pageToken=page_token).execute()
+    #     for calendar_list_entry in calendar_list['items']:
+    #         if user_club_name in calendar_list_entry['summary']:
+    #             found = True
+    #             desired_id = calendar_list_entry['id']
+    #     page_token = calendar_list.get('nextPageToken')
+    #     if not page_token:
+    #         break
+    # if found == False:
+    #     return
 
-
-
-
-def CREATE_EVENT(request, event_details):
+def CREATE_EVENT2(request, event_details):
     service = get_credentials(request)
     start_datetime = event_details["start_datetime"] #datetime.now(tz=pytz.utc)
     start_datetime = dateutil.parser.parse(start_datetime)
@@ -453,6 +478,51 @@ def CREATE_EVENT(request, event_details):
         service.events()
         .insert(
             calendarId='primary', #"CALENDARID@group.calendar.google.com",
+            body={
+                "summary": event_details["summary"],
+                'location': event_details["location"],
+                "description": event_details["desc"],
+                "start": {"dateTime": start_datetime.isoformat()},
+                "end": {
+                    "dateTime": end_date_time.isoformat() #(datetime.fromisoformat(start_datetime) + timedelta(minutes=45)).isoformat()
+                },
+                'reminders': {
+                  'useDefault': False,
+                  'overrides': [
+                    {'method': 'email', 'minutes': 24 * 60},
+                    {'method': 'popup', 'minutes': 10},
+                  ],
+                },
+            },
+        )
+        .execute()
+    )
+
+    print(event)
+    
+
+
+def CREATE_EVENT(request, event_details):
+    service = get_credentials(request)
+    alluser = Users.objects.all()
+    alluser = alluser.filter(email__icontains=request.user.email)
+    club_general = CLUB_GENERAL.objects.all()
+    club_general = club_general.filter(name__icontains=alluser.values("club_name")[0]["club_name"])
+    calendar_club_url = club_general.values('calendar_club_url')[0]['calendar_club_url']
+    start = calendar_club_url.index("src=")+4
+    calendar_club_url= calendar_club_url[start:]
+    calendar_club_url = calendar_club_url[:calendar_club_url.index("&")]
+    start_datetime = event_details["start_datetime"] #datetime.now(tz=pytz.utc)
+    start_datetime = dateutil.parser.parse(start_datetime)
+    start_datetime = start_datetime.astimezone(UTC)
+    #end_date_time = (start_datetime + timedelta(minutes=45)).isoformat()
+    end_date_time = dateutil.parser.parse(event_details["end_date_time"])
+    end_date_time = end_date_time.astimezone(UTC)
+    print(start_datetime, end_date_time, "DATE")
+    event = (
+        service.events()
+        .insert(
+            calendarId=str(calendar_club_url), #"CALENDARID@group.calendar.google.com",
             body={
                 "summary": event_details["summary"],
                 'location': event_details["location"],
