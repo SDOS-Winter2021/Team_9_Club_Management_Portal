@@ -148,8 +148,8 @@ class Body extends React.Component {
       approved: "False",
     };
     console.log(data);
-    if (data["name"]=="" || data["date_time"]=="" || data["end_date_time"]==""){
-      alert("The following fields are required - Name, Start Date Time, End Date Time");
+    if (data["name"]=="" || data["date_time"]=="" || data["end_date_time"]=="" || data["location"]=="" || data["description"]==""){
+      alert("The following fields are required - Name, Start Date Time, End Date Time, Location, Description");
       return 0;
     }
     else{
@@ -203,7 +203,7 @@ class Body extends React.Component {
                   required
                 />
               </FormControl>
-              <FormControl id="location">
+              <FormControl id="location" isRequired>
                 <FormLabel>Location</FormLabel>
                 <Input
                   type="text"
@@ -218,7 +218,7 @@ class Body extends React.Component {
                   required
                 />
               </FormControl>
-              <FormControl id="description">
+              <FormControl id="description" isRequired>
                 <FormLabel>Description</FormLabel>
                 <Textarea
                   type="text"
