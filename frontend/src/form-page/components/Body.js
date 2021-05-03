@@ -24,9 +24,7 @@ const csrftoken = Cookies.get("csrftoken");
 class Body extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props.info.idf + "IDF");
     this.form_type = this.props.info.type;
-    console.log(this.form_type == 0);
     this.state = {
       club_name: "",
       name: "",
@@ -41,7 +39,6 @@ class Body extends React.Component {
       holder_location: "",
       holder_description: "",
     };
-    console.log(this.state);
   }
 
   componentDidMount() {
@@ -77,7 +74,7 @@ class Body extends React.Component {
       sessionStorage.removeItem("event_data_dt");
       sessionStorage.removeItem("event_data_desc");
       sessionStorage.removeItem("event_data_loc");
-    }
+    };
 
     if (sessionStorage.getItem("group") == "Club_Coordinator") {
       this.setState({ club_email: sessionStorage.getItem("email") });
@@ -118,8 +115,8 @@ class Body extends React.Component {
       approved: "False",
     };
     console.log(data);
-    if (data["name"]=="" || data["date_time"]=="" || data["end_date_time"]==""){
-      alert("The following fields are required - Name, Start Date Time, End Date Time");
+    if (data["name"]=="" || data["date_time"]=="" || data["end_date_time"]=="" || data["location"]=="" || data["description"]==""){
+      alert("The following fields are required - Name, Start Date Time, End Date Time, Location, Description");
       return 0;
     }
     else{
@@ -131,6 +128,7 @@ class Body extends React.Component {
     //console.log(this.name);
     let eResponse = this.eventPut(event_info);
     console.log(eResponse);
+    return 1;
   }
 }
 
