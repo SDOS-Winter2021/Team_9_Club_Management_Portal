@@ -12,3 +12,6 @@ Club Management Portal for SA office @ IIIT Delhi
  - Some links are yet to be made.
  - Once on a club page, you can view additional details, social media information, upcoming and previous events. Also, there is a button `Propose Events` to add new events. At this moment anyone can add new events and they get automcatically approved but the club will not get associated with that event because user authetication is what ties this all together.
  - The event form allows you to fill all necessary details and attach a poster/image.
+
+Link to the presentation: https://docs.google.com/presentation/d/1kTYrZEKua9KWKKJ7ojpU7yh4PnO5E_Z8p2gMZOgwem8/edit?usp=sharing
+Heroku Link to access: https://iiitd-cms.herokuapp.com/
